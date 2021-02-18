@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
+import MemberSummary from './components/MemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
@@ -22,6 +23,9 @@ function App () {
           </div>
           <TeamList />
         </Route>
+
+        {/* TEAM DASHBOARD */}
+
         <Route path='/team/:teamPk'>
           <div className='App'>
             <header className='App-header'>
@@ -45,6 +49,8 @@ function App () {
           <div>Create a Team Page
           </div>
         </Route>
+
+        {/* USER DASHBOARD */}
         <Route path='/my-profile'>
           <div className='App'>
             <header className='App-header'>
@@ -56,6 +62,7 @@ function App () {
           </div>
           <div>My Profile Page</div>
         </Route>
+
         <Route path='/report'>
           <div>Mark my Goal Completion</div>
         </Route>
@@ -72,7 +79,7 @@ function App () {
                   <Card>
                     <Card.Body>
                       {team && (
-                        <TeamDashboard showTeam={team} />
+                        <MemberSummary team={team} displayHeight='vh65' />
                       )}
                     </Card.Body>
                   </Card>
