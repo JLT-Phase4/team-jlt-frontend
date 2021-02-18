@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { Redirect, Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import fakeTeams from './../fakeTeams'
 
 const TeamList = (props) => {

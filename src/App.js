@@ -1,58 +1,85 @@
 
 import './App.css'
-// import createPersistedState from 'use-persisted-state'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
+import Carousel from 'react-bootstrap/Carousel'
+import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
 
-// import { LinkContainer } from 'react-router-bootstrap'
-// import { useEffect, useState } from 'react'
-
-// const useUsername = createPersistedState('team_username')
-// const useToken = createPersistedState('team_token')
-
 function App () {
-  // const [username, setUsername] = useUsername()
-  // const [token, setToken] = useToken()
-
-  // function setAuth (username, token) {
-  //   setUsername(username)
-  //   setToken(token)
-  // }
-
   return (
     <Router>
-      <div className='App'>
-        <header className='App-header'>
-          <Link to='/'>Home</Link>
-          <Link to='/create-team'>Create a Team</Link>
-          <Link to='/teams'>List Teams</Link>
-          <Link to='/my-profile'>Member Profile</Link>
-        </header>
-      </div>
       <Switch>
         <Route path='/teams'>
-          <>
-            <div>Team List Page</div>
-            <TeamList />
-          </>
+          <div className='App'>
+            <header className='App-header'>
+              <Link to='/'>Home</Link>
+              <Link to='/create-team'>Create a Team</Link>
+              <Link to='/teams'>List Teams</Link>
+              <Link to='/my-profile'>Member Profile</Link>
+            </header>
+          </div>
+          <TeamList />
         </Route>
         <Route path='/team/:teamPk'>
-          <>
-            <div>Team Dashboard</div>
-            <TeamDashboard teams={fakeTeams} />
-          </>
+          <div className='App'>
+            <header className='App-header'>
+              <Link to='/'>Home</Link>
+              <Link to='/create-team'>Create a Team</Link>
+              <Link to='/teams'>List Teams</Link>
+              <Link to='/my-profile'>Member Profile</Link>
+            </header>
+          </div>
+          <TeamDashboard teams={fakeTeams} />
         </Route>
         <Route path='/create-team'>
+          <div className='App'>
+            <header className='App-header'>
+              <Link to='/'>Home</Link>
+              <Link to='/create-team'>Create a Team</Link>
+              <Link to='/teams'>List Teams</Link>
+              <Link to='/my-profile'>Member Profile</Link>
+            </header>
+          </div>
           <div>Create a Team Page
           </div>
         </Route>
         <Route path='/my-profile'>
+          <div className='App'>
+            <header className='App-header'>
+              <Link to='/'>Home</Link>
+              <Link to='/create-team'>Create a Team</Link>
+              <Link to='/teams'>List Teams</Link>
+              <Link to='/my-profile'>Member Profile</Link>
+            </header>
+          </div>
           <div>My Profile Page</div>
         </Route>
+        <Route path='/report'>
+          <div>Mark my Goal Completion</div>
+        </Route>
         <Route path='/'>
-          <div>Home Page</div>
+          <div className='home-header flex-sa'>
+            <div className='home-button'>Create a Team</div>
+            <div className='home-button'>Join a Team</div>
+            <Link to='/teams' className='home-button'>Your Teams</Link>
+          </div>
+          <Carousel className='carousel-holder'>
+            {fakeTeams.map((team, idx) => (
+              <Carousel.Item key={idx}>
+                <div className='flex-col'>
+                  <Card>
+                    <Card.Body>
+                      {team && (
+                        <TeamDashboard showTeam={team} />
+                      )}
+                    </Card.Body>
+                  </Card>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </Route>
       </Switch>
     </Router>
