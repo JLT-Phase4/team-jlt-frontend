@@ -2,6 +2,10 @@
 import './App.css'
 // import createPersistedState from 'use-persisted-state'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import TeamList from './components/TeamList'
+import TeamDashboard from './components/TeamDashboard'
+import fakeTeams from './fakeTeams'
+
 // import { LinkContainer } from 'react-router-bootstrap'
 // import { useEffect, useState } from 'react'
 
@@ -29,7 +33,16 @@ function App () {
       </div>
       <Switch>
         <Route path='/teams'>
-          <div>Team List Page</div>
+          <>
+            <div>Team List Page</div>
+            <TeamList />
+          </>
+        </Route>
+        <Route path='/team/:teamPk'>
+          <>
+            <div>Team Dashboard</div>
+            <TeamDashboard teams={fakeTeams} />
+          </>
         </Route>
         <Route path='/create-team'>
           <div>Create a Team Page
