@@ -16,7 +16,7 @@ const MemberDashboard = ({ users }) => {
     <>
       {user && (
 
-        <div className='dashboard-container'>
+        <div className='member-dashboard-container'>
           <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${user.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
