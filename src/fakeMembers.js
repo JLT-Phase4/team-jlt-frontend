@@ -1,4 +1,4 @@
-export const fakeUsers = [
+export const fakeMembers = [
   {
     userPk: '1',
     username: 'jessicarabbit',
@@ -25,4 +25,4 @@ export const fakeUsers = [
   }
 ]
 
-export default fakeUsers
+export default fakeMembers

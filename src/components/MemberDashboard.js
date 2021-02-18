@@ -1,27 +1,27 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-const MemberDashboard = ({ users }) => {
+const MemberDashboard = ({ members }) => {
   const { username } = useParams()
-  const [user, setUser] = useState()
+  const [member, setMember] = useState()
   useEffect(updateTeam, [username])
   function updateTeam () {
-    for (const candidate of users) {
+    for (const candidate of members) {
       if (candidate.username === username) {
-        setUser(candidate)
+        setMember(candidate)
       }
     }
   }
   return (
     <>
-      {user && (
+      {member && (
 
         <div className='member-dashboard-container'>
-          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${user.avatarUrl})` }} />
+          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>Daily
-              {user.chores.map(chore => (
+              {member.chores.map(chore => (
                 <div key={chore.name}>
                   {(chore.type === 'daily') && (
                     <div>{chore.name}
@@ -34,7 +34,7 @@ const MemberDashboard = ({ users }) => {
               ))}
             </div>
             <div className='team-scoreblock'>Weekly
-              {user.chores.map(chore => (
+              {member.chores.map(chore => (
                 <div key={chore.name}>
                   {(chore.type === 'weekly') && (
                     <div>{chore.name}

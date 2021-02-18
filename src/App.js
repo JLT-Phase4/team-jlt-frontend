@@ -7,7 +7,7 @@ import MemberSummary from './components/MemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
-import fakeUsers from './fakeUsers'
+import fakeMembers from './fakeMembers'
 import MemberDashboard from './components/MemberDashboard'
 
 function App () {
@@ -44,26 +44,26 @@ function App () {
           <div className='App'>
             <header className='App-header'>
               <Link to='/'>Home</Link>
-              <Link to='/user/elmerfudd'>Elmer Fudd</Link>
-              <Link to='/user/jessicarabbit'>Jessica Rabbit</Link>
-              <Link to='/user/bettyboop'>Betty Boop</Link>
+              <Link to='/member/elmerfudd'>Elmer Fudd</Link>
+              <Link to='/member/jessicarabbit'>Jessica Rabbit</Link>
+              <Link to='/member/bettyboop'>Betty Boop</Link>
             </header>
           </div>
           <div>Create a Team Page
           </div>
         </Route>
 
-        {/* USER DASHBOARD */}
-        <Route path='/user/:username'>
+        {/* member DASHBOARD */}
+        <Route path='/member/:username'>
           <div className='App'>
             <header className='App-header'>
               <Link to='/'>Home</Link>
-              <Link to='/user/elmerfudd'>Elmer Fudd</Link>
-              <Link to='/user/jessicarabbit'>Jessica Rabbit</Link>
-              <Link to='/user/bettyboop'>Betty Boop</Link>
+              <Link to='/member/elmerfudd'>Elmer Fudd</Link>
+              <Link to='/member/jessicarabbit'>Jessica Rabbit</Link>
+              <Link to='/member/bettyboop'>Betty Boop</Link>
             </header>
           </div>
-          <MemberDashboard users={fakeUsers} />
+          <MemberDashboard members={fakeMembers} />
         </Route>
 
         <Route path='/report'>
