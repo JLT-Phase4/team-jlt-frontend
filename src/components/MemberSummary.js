@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const MemberSummary = ({ team, displayHeight }) => {
   return (
     <>
@@ -6,8 +8,11 @@ const MemberSummary = ({ team, displayHeight }) => {
         <div style={{ height: `${displayHeight}`, backgroundImage: `url(${team.logoUrl})` }} className='dashboard-container'>
           <div className='team-title'>We are team {team.name}!</div>
           <div className='team-scoreblock'>
-            {team.users.map(user => (
-              <div key={user.username}>Member: {user.username} Score: {user.score} </div>
+            {team.members.map(member => (
+              <ul key={member.username}>
+                <li><Link to={`/member/${member.username}`}>{member.username}</Link></li>
+                <li>{member.score}</li>
+              </ul>
             ))}
           </div>
         </div>

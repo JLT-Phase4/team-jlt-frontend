@@ -14,9 +14,9 @@ const TeamDashboard = ({ teams }) => {
     }
   }
   return (
-    <MemberSummary team={team} displayHeight='vh100' />
-    // <Nav???>
-    // <TeamFeed></TeamFeed>
+    <MemberSummary team={team} displayHeight='50vh' />
+  // <Nav???>
+  // <TeamFeed></TeamFeed>
   )
 }
 
