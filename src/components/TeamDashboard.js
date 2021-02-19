@@ -14,9 +14,11 @@ const TeamDashboard = ({ teams }) => {
     }
   }
   return (
-    <MemberSummary team={team} displayHeight='50vh' />
-  // <Nav???>
-  // <TeamFeed></TeamFeed>
+    <div>
+      <MemberSummary team={team} displayHeight='100vh' />
+      <button className='team-dash-button'>Track my chores</button>
+      {/* {if captain display button "send notifications"} */}
+    </div>
   )
 }
 

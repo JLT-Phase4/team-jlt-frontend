@@ -72,10 +72,11 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  width: 50%;
   background-size: cover;
+  margin: 40px;
 }
-.dashboard-container {
+.team-dashboard-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,10 +93,20 @@ a {
 
 }
 
-.team-scoreblock {
+.team-scoreblock li {
   border: 2px solid white;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.311);
+}
+
+.team-dash-button {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+ul {
+  list-style-type: none;
 }
 
 .card {
