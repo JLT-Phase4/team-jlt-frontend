@@ -5,7 +5,7 @@ const MemberSummary = ({ team, displayHeight }) => {
     <>
       {team && (
 
-        <div className='member-dashboard-container' style={{ height: `${displayHeight}`, backgroundImage: `url(${team.logoUrl})` }}>
+        <div className='team-dashboard-container' style={{ height: `${displayHeight}`, backgroundImage: `url(${team.logoUrl}` }}>
           <div className='team-title'>We are team {team.name}!</div>
           <div className='team-scoreblock'>
             {team.members.map(member => (

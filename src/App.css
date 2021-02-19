@@ -67,7 +67,29 @@ a {
   font-size: 18px;
 }
 
+.team-feed-container {
+  height: 300px;
+  color: white;
+  border: 3px solid white;
+  display: inline;
+  width: 30%;
+  height: 100vh;
+  margin-right: 40px;
+  margin-top: 0px;
+  background-size: cover;
+  float: right;
+  
+}
+
 .member-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+}
+
+.team-dashboard-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,21 +97,14 @@ a {
   width: 50%;
   background-size: cover;
   margin: 40px;
-}
-.team-dashboard-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* height: 100vh; */
-  background-size: cover;
-  /* top: 50vh; */
+  margin-top: 100px;
 }
 
 .team-title {
   font-size: 30px;
   margin-bottom: 20px;
   background-color: rgba(0, 0, 0, 0.311);
+  text-align: center;
 
 }
 
@@ -103,6 +118,9 @@ a {
   border-radius: 50%;
   width: 200px;
   height: 200px;
+  margin-top: 60px;
+  margin-left: 150px;
+  margin-bottom: 60px;
 }
 
 ul {
