@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-const MemberDashboard = ({ members }) => {
+const MemberDashboard = ({ members, choreDays }) => {
   const { username } = useParams()
   const [member, setMember] = useState()
   useEffect(updateTeam, [username])
@@ -20,6 +20,12 @@ const MemberDashboard = ({ members }) => {
           <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
           <Link to={`/member/chores/${username}`}>See chore detail for {username}</Link>
+          {/* <Link to={`/member/chores/monday/${username}`}>Chore detail for Monday</Link> */}
+          <div className='flex'>
+            {choreDays.map(day => (
+              <Link style={{ marginRight: '5px', marginLeft: '5px' }} key={day} to={`/member/chores/${day}/${username}`}>{day.toUpperCase()}</Link>
+            ))}
+          </div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
               <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>Today</div>

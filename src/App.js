@@ -10,12 +10,14 @@ import fakeTeams from './fakeTeams'
 import fakeMembers from './fakeMembers'
 import MemberDashboard from './components/MemberDashboard'
 import ChoreDashboard from './components/ChoreDashboard'
+import DailyChoreDashboard from './components/DailyChoreDashboard'
 import { useState } from 'react'
 import fakeMemberChores from './fakeMemberChores'
 
 function App () {
   const [pod, setPod] = useState('C')
   const [teams, setTeams] = useState([])
+  const choreDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'anyday']
 
   function handleSetPod (podChoice) {
     setPod(podChoice)
@@ -54,17 +56,23 @@ function App () {
           </div>
         </Route>
 
+        {/* Member chore Detail for Day Dashboard */}
+        <Route path='/member/chores/:day/:username'>
+          <div className='App' />
+          <DailyChoreDashboard members={fakeMembers} chores={fakeMemberChores} />
+        </Route>
+
         {/* Member chore Detail Dashboard */}
         <Route path='/member/chores/:username'>
           <div className='App' />
-          <ChoreDashboard members={fakeMembers} chores={fakeMemberChores} />
+          <ChoreDashboard members={fakeMembers} chores={fakeMemberChores} choreDays={choreDays} />
         </Route>
 
         {/* member DASHBOARD */}
 
         <Route path='/member/:username'>
           <div className='App' />
-          <MemberDashboard members={fakeMembers} />
+          <MemberDashboard members={fakeMembers} choreDays={choreDays} />
         </Route>
 
         <Route path='/report'>
