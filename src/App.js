@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
-import MemberSummary from './components/MemberSummary'
+import CarouselMemberSummary from './components/CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
@@ -101,7 +101,7 @@ function App () {
                       <div className='flex-col'>
                         <Card>
                           <Card.Body>
-                            <MemberSummary team={team} displayHeight='40vh' />
+                            <CarouselMemberSummary team={team} displayHeight='40vh' />
                           </Card.Body>
                         </Card>
                       </div>

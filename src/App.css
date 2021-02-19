@@ -89,7 +89,7 @@ a {
   display: inline;
   width: 30%;
   height: 100vh;
-  margin-right: 40px;
+  margin-right: 4%;
   margin-top: 0px;
   background-size: cover;
   float: right;
@@ -113,8 +113,8 @@ a {
   align-items: center;
   width: 50%;
   background-size: cover;
-  margin: 40px;
-  margin-top: 100px;
+  margin: 6%;
+  margin-top: 8%;
   border-radius: 25px;
 }
 
@@ -132,14 +132,26 @@ a {
   background-color: rgba(0, 0, 0, 0.311);
 }
 
+.team-scoreblock ul {
+  padding-left: 0px;
+  margin-bottom: 5%;
+}
 .team-dash-button {
   border-radius: 50%;
   width: 200px;
   height: 200px;
-  margin-top: 60px;
-  margin-left: 150px;
-  margin-bottom: 60px;
+  margin-top: 0px;
+  margin-left: 15%;
+  margin-bottom: 4%;
   font-weight: bold;
+}
+
+/* why isnt this working? */
+@media only screen and (max-width:900px) {
+  .team-dash-button {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 ul {
