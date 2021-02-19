@@ -20,11 +20,12 @@ const MemberDashboard = ({ members }) => {
           <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
-            <div className='team-scoreblock'>Daily
+            <div className='team-scoreblock'>
+              <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>Today</div>
               {member.chores.map(chore => (
                 <div key={chore.name}>
                   {(chore.type === 'daily') && (
-                    <div>{chore.name}
+                    <div><span style={{ fontSize: '22px' }}>{chore.name}</span>
                       {chore.complete
                         ? <span className='material-icons'>check_box</span>
                         : <span className='material-icons'>check_box_outline_blank</span>}
@@ -33,11 +34,12 @@ const MemberDashboard = ({ members }) => {
                 </div>
               ))}
             </div>
-            <div className='team-scoreblock'>Weekly
+            <div className='team-scoreblock'>
+              <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>This Week</div>
               {member.chores.map(chore => (
                 <div key={chore.name}>
                   {(chore.type === 'weekly') && (
-                    <div>{chore.name}
+                    <div><span style={{ fontSize: '22px' }}>{chore.name}</span>
                       {chore.complete
                         ? <span className='material-icons'>check_box</span>
                         : <span className='material-icons'>check_box_outline_blank</span>}
