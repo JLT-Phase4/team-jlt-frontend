@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import MemberSummary from './MemberSummary'
+import TeamFeed from './TeamFeed'
 
 const TeamDashboard = ({ teams }) => {
   const { teamPk } = useParams()
@@ -14,9 +15,12 @@ const TeamDashboard = ({ teams }) => {
     }
   }
   return (
-    <MemberSummary team={team} displayHeight='50vh' />
-  // <Nav???>
-  // <TeamFeed></TeamFeed>
+    <div>
+      <TeamFeed team={team} />
+      <MemberSummary team={team} displayHeight='100vh' />
+      <button className='team-dash-button'>Track my chores</button>
+      {/* {if captain display button "send notifications"} */}
+    </div>
   )
 }
 
