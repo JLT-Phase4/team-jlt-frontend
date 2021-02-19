@@ -1,6 +1,7 @@
 export const fakeTeams = [
   {
     teamPk: '1',
+    pod: 'A',
     name: 'Red Pandas',
     logoUrl: 'https://images.unsplash.com/photo-1590692464206-7c465d86d95f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2851&q=80',
     slogan: 'I hope you have a really happy birthday.',
@@ -12,6 +13,7 @@ export const fakeTeams = [
 
   {
     teamPk: '2',
+    pod: 'B',
     name: 'Dancing Otters',
     logoUrl: 'https://images.unsplash.com/photo-1595854443827-9d1a1ae30f0d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
     slogan: 'Yay its another year!',
@@ -23,12 +25,24 @@ export const fakeTeams = [
   },
   {
     teamPk: '3',
+    pod: 'B',
     name: 'Grooving Geese',
     logoUrl: 'https://images.unsplash.com/photo-1529456589219-228196a9c50d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2038&q=80',
     slogan: 'Music!',
     members: [{ username: 'Dan', score: '1/7' },
       { username: 'David', score: '1/7' },
       { username: 'Matt', score: '1/7' }],
+    captain: [{ username: 'captain_papa' }]
+  },
+  {
+    teamPk: '4',
+    pod: 'A',
+    name: 'Friends',
+    logoUrl: 'https://images.unsplash.com/photo-1548705085-101177834f47?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=3289&q=80',
+    slogan: 'Music!',
+    members: [{ username: 'joey', score: '1/7' },
+      { username: 'phoebe', score: '1/7' },
+      { username: 'rachel', score: '1/7' }],
     captain: [{ username: 'captain_papa' }]
 
   }

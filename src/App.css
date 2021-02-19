@@ -9,6 +9,8 @@ body {
   color: white;
 }
 .banner {
+  display: flex;
+  margin-top: 50px;
   font-size: 50px;
   font-weight: 300;
   text-align: center;
@@ -24,6 +26,13 @@ body {
   border-radius: 120px;
   text-align: center;
   line-height: 160px;
+}
+
+.footer-feed {
+  position: fixed;
+  bottom: 0;
+  /* margin-bottom: 50px; */
+  font-size: 30px;
 }
 
 .flex {
@@ -44,6 +53,12 @@ body {
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-header {
@@ -73,6 +88,7 @@ a {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  height: 60vh;
   background-size: cover;
 }
 .dashboard-container {
