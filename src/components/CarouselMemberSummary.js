@@ -13,6 +13,8 @@ const CarouselMemberSummary = ({ team, displayHeight }) => {
             {team.members.map(member => (
               <ul key={member.username}>
                 <li>{member.username} <br /> score: {member.score} </li>
+                {/* <li>{member.username} </li>
+                <li>score: {member.score} </li> */}
               </ul>
             ))}
           </div>
