@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-const ChoreDashboard = ({ members, chores }) => {
+const DailyChoreDashboard = ({ members, chores, choreDays }) => {
   const { username } = useParams()
+  const { day } = useParams()
   const [member, setMember] = useState()
   const [memberChores, setMemberChores] = useState()
-
   useEffect(updateTeam, [username])
-  useEffect(updateChores, [username])
+  useEffect(updateChores, [username, day])
 
   function updateChores () {
     let newChores = []
     for (const chore of chores) {
-      if (chore.username === username) {
-        newChores = newChores.concat(chore)
+      for (const newDay in chore.days) {
+        if (chore.username === username && chore.days[newDay].day === day && chore.days[newDay].status === true) {
+          newChores = newChores.concat(chore)
+        }
       }
     }
     setMemberChores(newChores)
@@ -26,21 +28,18 @@ const ChoreDashboard = ({ members, chores }) => {
       }
     }
   }
-
   return (
     <>
-      {member && (
+      {(member && memberChores) && (
 
         <div className='member-dashboard-container'>
           <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
+              <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>{day.toUpperCase()} Chores</div>
               {memberChores.map((chore, idx) => (
-                <div className='flex' style={{ fontSize: '25px', fontWeight: '600' }} key={idx}>{chore.chore_name}
-                  {chore.days.map((day, idx) => (
-                    <div key={idx}>{day.status === true && (<span style={{ fontSize: '18px', fontWeight: '300', marginLeft: '3px', marginRight: '3px' }}>{day.day}</span>)}</div>
-                  ))}
+                <div style={{ fontSize: '25px', fontWeight: '600' }} key={idx}>{chore.chore_name}
                 </div>
               ))}
             </div>
@@ -51,4 +50,4 @@ const ChoreDashboard = ({ members, chores }) => {
   )
 }
 
-export default ChoreDashboard
+export default DailyChoreDashboard
