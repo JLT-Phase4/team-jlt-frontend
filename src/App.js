@@ -9,7 +9,9 @@ import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
 import fakeMembers from './fakeMembers'
 import MemberDashboard from './components/MemberDashboard'
+import ChoreDashboard from './components/ChoreDashboard'
 import { useState } from 'react'
+import fakeMemberChores from './fakeMemberChores'
 
 function App () {
   const [pod, setPod] = useState('C')
@@ -52,6 +54,12 @@ function App () {
           </div>
         </Route>
 
+        {/* Member chore Detail Dashboard */}
+        <Route path='/member/chores/:username'>
+          <div className='App' />
+          <ChoreDashboard members={fakeMembers} chores={fakeMemberChores} />
+        </Route>
+
         {/* member DASHBOARD */}
 
         <Route path='/member/:username'>
@@ -76,7 +84,7 @@ function App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                </div>
+                  </div>
                 : <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
@@ -91,7 +99,7 @@ function App () {
                       )}
                     </div>
                   ))}
-                  </>}
+                </>}
             </div>
             {teams.length > 0 && (
               <Carousel>
