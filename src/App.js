@@ -76,7 +76,7 @@ function App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                </div>
+                  </div>
                 : <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
@@ -91,7 +91,7 @@ function App () {
                       )}
                     </div>
                   ))}
-                  </>}
+                </>}
             </div>
             {teams.length > 0 && (
               <Carousel>
@@ -101,7 +101,7 @@ function App () {
                       <div className='flex-col'>
                         <Card>
                           <Card.Body>
-                            <CarouselMemberSummary team={team} displayHeight='40vh' />
+                            <CarouselMemberSummary team={team} displayHeight='50vh' />
                           </Card.Body>
                         </Card>
                       </div>
