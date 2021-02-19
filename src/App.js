@@ -9,7 +9,9 @@ import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
 import fakeMembers from './fakeMembers'
 import MemberDashboard from './components/MemberDashboard'
+import ChoreDashboard from './components/ChoreDashboard'
 import { useState } from 'react'
+import fakeMemberChores from './fakeMemberChores'
 
 function App () {
   const [pod, setPod] = useState('C')
@@ -50,6 +52,12 @@ function App () {
           <div className='App' />
           <div>Create a Team Page
           </div>
+        </Route>
+
+        {/* Member chore Detail Dashboard */}
+        <Route path='/member/chores/:username'>
+          <div className='App' />
+          <ChoreDashboard members={fakeMembers} chores={fakeMemberChores} />
         </Route>
 
         {/* member DASHBOARD */}

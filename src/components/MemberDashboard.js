@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 const MemberDashboard = ({ members }) => {
   const { username } = useParams()
@@ -19,6 +19,7 @@ const MemberDashboard = ({ members }) => {
         <div className='member-dashboard-container'>
           <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
           <div className='team-title'>{username}'s page!</div>
+          <Link to={`/member/chores/${username}`}>See chore detail for {username}</Link>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
               <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>Today</div>
