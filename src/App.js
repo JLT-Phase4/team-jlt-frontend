@@ -76,7 +76,7 @@ function App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                  </div>
+                </div>
                 : <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
