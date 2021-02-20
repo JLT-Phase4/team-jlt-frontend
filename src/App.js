@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
+// import _CarouselMemberSummary from './components/_CarouselMemberSummary'
 import CarouselMemberSummary from './components/CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
@@ -13,6 +14,7 @@ import ChoreDashboard from './components/ChoreDashboard'
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import { useState } from 'react'
 import fakeMemberChores from './fakeMemberChores'
+// import HomeScoreCards from './components/HomeScoreCards'
 
 function App () {
   const [pod, setPod] = useState('C')
@@ -82,7 +84,7 @@ function App () {
         <Route path='/'>
           <div>
             <div className='home-header flex-sa'>
-              <Link to='/create-team' className='home-button'>Create a Team</Link>
+              {/* <Link to='/create-team' className='home-button'>Create a Team</Link> */}
               <div className='home-button' onClick={() => handleSetPod('A')}>Choose Pod A</div>
               <div className='home-button' onClick={() => handleSetPod('B')}>Choose Pod B</div>
               {(teams.length === 0)
@@ -92,7 +94,8 @@ function App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                  </div>
+                </div>
+                // :                <HomeScoreCards teams={teams} />
                 : <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
@@ -100,14 +103,16 @@ function App () {
                         <Link to={`/team/${team.teamPk}`} className='flex-col'>
                           <Card>
                             <Card.Body>
-                              <div className='home-scorecard'>{team.name}<div style={{ width: '100px', height: '120px', backgroundColor: 'blue' }} /></div>
+                              <div className='home-scorecard'>{team.name}
+                                <div style={{ height: '105px', width: '80px', backgroundColor: '#3a93eb' }} />
+                              </div>
                             </Card.Body>
                           </Card>
                         </Link>
                       )}
                     </div>
                   ))}
-                </>}
+                  </>}
             </div>
             {teams.length > 0 && (
               <Carousel>
