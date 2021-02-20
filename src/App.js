@@ -3,7 +3,8 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
-import _CarouselMemberSummary from './components/_CarouselMemberSummary'
+// import _CarouselMemberSummary from './components/_CarouselMemberSummary'
+import CarouselMemberSummary from './components/CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
@@ -13,6 +14,7 @@ import ChoreDashboard from './components/ChoreDashboard'
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import { useState } from 'react'
 import fakeMemberChores from './fakeMemberChores'
+// import HomeScoreCards from './components/HomeScoreCards'
 
 function App () {
   const [pod, setPod] = useState('C')
@@ -92,15 +94,19 @@ function App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                  </div>
-                : <>
+                </div>
+                :
+                // <HomeScoreCards teams={teams} />
+                <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
                       {(team) && (
                         <Link to={`/team/${team.teamPk}`} className='flex-col'>
                           <Card>
                             <Card.Body>
-                              <div className='home-scorecard'>{team.name}<div style={{ width: '80px', height: '105px', background: 'linear-gradient(#3a93eb, #052075)' }}><div style={{ width: '80px', height: `${100 - team.score * 100}px`, borderBottom: 'dotted 3px #eae5e7', backgroundColor: '#0e0e0e' }} /></div></div>
+                              <div className='home-scorecard'>{team.name}
+                                <div style={{ height: '105px', width: '80px', backgroundColor: '#3a93eb' }} />
+                              </div>
                             </Card.Body>
                           </Card>
                         </Link>
@@ -117,7 +123,7 @@ function App () {
                       <div className='flex-col'>
                         <Card>
                           <Card.Body>
-                            <_CarouselMemberSummary team={team} displayHeight='50vh' />
+                            <CarouselMemberSummary team={team} displayHeight='50vh' />
                           </Card.Body>
                         </Card>
                       </div>
