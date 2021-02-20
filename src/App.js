@@ -95,9 +95,8 @@ function App () {
                     </div>
                   ))}
                 </div>
-                :
-                // <HomeScoreCards teams={teams} />
-                <>
+                // :                <HomeScoreCards teams={teams} />
+                : <>
                   {teams.map((team, idx) => (
                     <div key={idx}>
                       {(team) && (
@@ -113,7 +112,7 @@ function App () {
                       )}
                     </div>
                   ))}
-                </>}
+                  </>}
             </div>
             {teams.length > 0 && (
               <Carousel>
