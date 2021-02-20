@@ -8,7 +8,8 @@ import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 // import fakeTeams from './fakeTeams'
 import { useEffect, useState } from 'react'
-import getTeams from './api'
+import { getTeams } from './api'
+
 
 function App () {
   const [teams, setTeams] = useState([])
@@ -38,7 +39,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard teams={teams} />
+          <TeamDashboard token={token} />
         </Route>
 
         <Route path='/'>
