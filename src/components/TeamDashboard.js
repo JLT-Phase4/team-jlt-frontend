@@ -2,22 +2,15 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import MemberSummary from './MemberSummary'
 import TeamFeed from './TeamFeed'
+import fakeTeamDetail from './../fakeTeamDetail'
 
-const TeamDashboard = ({ teams }) => {
-  const { teamPk } = useParams()
-  const [team, setTeam] = useState()
-  useEffect(updateTeam, [teamPk])
-  function updateTeam () {
-    for (const candidate of teams) {
-      if (candidate.teamPk === teamPk) {
-        setTeam(candidate)
-      }
-    }
-  }
+const TeamDashboard = () => {
+  // const { teamPk } = useParams()  Use for api call
+
   return (
     <div>
-      <TeamFeed team={team} />
-      <MemberSummary team={team} displayHeight='100vh' />
+      <TeamFeed team={fakeTeamDetail} />
+      <MemberSummary team={fakeTeamDetail} displayHeight='50%' />
       <button className='team-dash-button'>Track my chores</button>
       {/* {if captain display button "send notifications"} */}
     </div>
