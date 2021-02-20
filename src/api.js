@@ -14,4 +14,12 @@ export function getTeams (token) {
     .then(res => res.data)
 }
 
-export default getTeams
+export function getTeam (token, teamPk) {
+  return API
+    .get(`team-detail/${teamPk}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
