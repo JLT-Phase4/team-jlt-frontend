@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
-import CarouselMemberSummary from './components/CarouselMemberSummary'
+import _CarouselMemberSummary from './components/_CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import fakeTeams from './fakeTeams'
@@ -82,7 +82,7 @@ function App () {
         <Route path='/'>
           <div>
             <div className='home-header flex-sa'>
-              <Link to='/create-team' className='home-button'>Create a Team</Link>
+              {/* <Link to='/create-team' className='home-button'>Create a Team</Link> */}
               <div className='home-button' onClick={() => handleSetPod('A')}>Choose Pod A</div>
               <div className='home-button' onClick={() => handleSetPod('B')}>Choose Pod B</div>
               {(teams.length === 0)
@@ -100,7 +100,7 @@ function App () {
                         <Link to={`/team/${team.teamPk}`} className='flex-col'>
                           <Card>
                             <Card.Body>
-                              <div className='home-scorecard'>{team.name}<div style={{ width: '100px', height: '120px', backgroundColor: 'blue' }} /></div>
+                              <div className='home-scorecard'>{team.name}<div style={{ width: '80px', height: '105px', background: 'linear-gradient(#3a93eb, #052075)' }}><div style={{ width: '80px', height: `${100 - team.score * 100}px`, borderBottom: 'dotted 3px #eae5e7', backgroundColor: '#0e0e0e' }} /></div></div>
                             </Card.Body>
                           </Card>
                         </Link>
@@ -117,7 +117,7 @@ function App () {
                       <div className='flex-col'>
                         <Card>
                           <Card.Body>
-                            <CarouselMemberSummary team={team} displayHeight='50vh' />
+                            <_CarouselMemberSummary team={team} displayHeight='50vh' />
                           </Card.Body>
                         </Card>
                       </div>
