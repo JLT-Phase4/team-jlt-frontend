@@ -6,10 +6,22 @@ import TeamDashboard from './components/TeamDashboard'
 import CarouselMemberSummary from './components/CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
-import fakeTeams from './fakeTeams'
-import { useState } from 'react'
+// import fakeTeams from './fakeTeams'
+import { useEffect, useState } from 'react'
+import getTeams from './api'
 
 function App () {
+  const [teams, setTeams] = useState([])
+  const token = '805756d894563ce3f8a0f5c8c4bb5ae8a234ccf8'
+
+  useEffect(updateTeams, [token]) 
+
+  function updateTeams() {
+    getTeams(token)
+      .then(teams => setTeams(teams))
+  }
+
+
   return (
     <Router>
       <div className='flex-col-center'>
@@ -26,13 +38,13 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard teams={fakeTeams} />
+          <TeamDashboard teams={teams} />
         </Route>
 
         <Route path='/'>
           <div>
             <div className='home-header flex-sa'>
-              {fakeTeams.map((team, idx) => (
+              {teams.map((team, idx) => (
                 <div key={idx}>
                   {(team) && (
                     <Link to={`/team/${team.pk}`} className='flex-col'>
@@ -50,7 +62,7 @@ function App () {
 
             </div>
               <Carousel>
-                {fakeTeams.map((team, idx) => (
+                {teams.map((team, idx) => (
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
                       <div className='flex-col'>
