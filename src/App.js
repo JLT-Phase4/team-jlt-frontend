@@ -12,10 +12,25 @@ import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
 import { getTeams } from './api'
+import createPersistedState from 'use-persisted-state'
+import Login from './components/Login'
+import Register from './components/Register'
+
+const useUsername = createPersistedState('username')
+const useToken = createPersistedState('token')
 
 function App () {
   const [teams, setTeams] = useState([])
-  const token = '805756d894563ce3f8a0f5c8c4bb5ae8a234ccf8'
+  // const token = '805756d894563ce3f8a0f5c8c4bb5ae8a234ccf8'
+  const [token, setToken] = useToken()
+  const [username, setUsername] = useUsername()
+
+  function setAuth (username, token) {
+    setUsername(username)
+    setToken(token)
+  }
+
+  const isLoggedIn = (username && token)
 
   useEffect(updateTeams, [token])
 
@@ -29,7 +44,29 @@ function App () {
       <div className='flex-col-center'>
         <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link>
       </div>
+
+      <div className='register-and-login'>
+        {isLoggedIn
+          ? (
+            <span>Hello, {username} <button className='logout-button' onClick={() => setToken(null)}>Log out</button></span>
+            )
+          : (
+            <span>
+              <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link>
+            </span>
+            )}
+      </div>
+
       <Switch>
+
+        {/* CAPTAIN REG AND LOGIN */}
+        <Route path='/login'>
+          <Login isLoggedIn={isLoggedIn} setAuth={setAuth} />
+        </Route>
+        <Route path='/register'>
+          <Register isLoggedIn={isLoggedIn} setAuth={setAuth} />
+        </Route>
+
         <Route path='/teams'>
           <div className='App' />
           <TeamList />
