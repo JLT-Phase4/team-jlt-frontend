@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const CarouselMemberSummary = ({ team, displayHeight }) => {
+const HomeCarouselTeams = ({ team, displayHeight }) => {
   return (
     <>
       {team && (
@@ -22,4 +22,4 @@ const CarouselMemberSummary = ({ team, displayHeight }) => {
   )
 }
 
-export default CarouselMemberSummary
+export default HomeCarouselTeams

@@ -223,3 +223,20 @@ ul {
     width: 1250px;
   }
 }
+
+.chore-detail {
+  color: yellowgreen;
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.dashboard-style-1 {
+  background-color:#ad1457;
+  border-radius: 10px;
+}
+
+.dashboard-style-2 {
+  background-color:#e64a19;
+  border-radius: 10px;
+}

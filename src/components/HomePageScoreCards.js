@@ -8,23 +8,24 @@ const outerDivStyle = {
   background: 'linear-gradient(#3a93eb, #052075)'
 }
 
-const HomeScoreCards = ({ teams }) => {
+const HomePageScoreCards = ({ teams }) => {
   return (
-    <>
+    <div className='home-header flex-sa'>
       {teams.map((team, idx) => (
         <div key={idx}>
           {(team) && (
-            <Link to={`/team/${team.teamPk}`} className='flex-col'>
+            <Link to={`/team/${team.pk}`} className='flex-col'>
               <Card>
-                <Card.Body>
+                <Card.Body className={(team.pk === 1) ? 'dashboard-style-1' : 'dashboard-style-2'}>
                   <div className='home-scorecard'>{team.name}
                     <div style={outerDivStyle}>
                       <Spring
                         reset
                         config={{ duration: 3000 }}
                         from={{ height: '105px', width: '80px', backgroundColor: '#0e0e0e' }}
-                        to={{ height: `${105 - team.score * 100}px`, width: '80px', backgroundColor: '#0e0e0e' }}
+                        to={{ height: `${105 - 0.7 * 100}px`, width: '80px', backgroundColor: '#0e0e0e' }}
                       >
+                        {/* height in the 'to' will ultimately be dynamic with 0.7 set as team percentage */}
                         {props => (
                           <div style={props} />
                         )}
@@ -37,8 +38,8 @@ const HomeScoreCards = ({ teams }) => {
           )}
         </div>
       ))}
-    </>
+    </div>
   )
 }
 
-export default HomeScoreCards
+export default HomePageScoreCards

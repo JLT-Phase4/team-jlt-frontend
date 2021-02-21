@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const MemberSummary = ({ team, displayHeight }) => {
+const TeamMembersSummary = ({ team, displayHeight }) => {
   return (
     <>
       {team && (
@@ -23,4 +23,4 @@ const MemberSummary = ({ team, displayHeight }) => {
   )
 }
 
-export default MemberSummary
+export default TeamMembersSummary

@@ -3,7 +3,7 @@ const TeamFeed = ({ team }) => {
     <>
       {team && (
 
-        <div className='team-feed-container'>
+        <div style={{ backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
           <h1>Feed will go here:</h1>
           <ul>
             <li>notifications</li>
