@@ -6,7 +6,8 @@ import TeamDashboard from './components/TeamDashboard'
 import CarouselMemberSummary from './components/CarouselMemberSummary'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
-// import fakeTeams from './fakeTeams'
+import ChoreDashboard from './components/ChoreDashboard'
+import ChoreDetail from './components/ChoreDetail'
 import { useEffect, useState } from 'react'
 import { getTeams } from './api'
 
@@ -41,6 +42,19 @@ function App () {
           <div className='App' />
           <TeamDashboard token={token} />
         </Route>
+
+        {/* Member Chores List Dashboard */}
+        <Route path='/member/:username/chores'>
+          <div className='App' />
+          <ChoreDashboard token={token} />
+        </Route>
+
+        {/* Member Chore Detail Dashboard */}
+        <Route path='/choredetail/:chorePk'>
+          <div className='App' />
+          <ChoreDetail token={token} />
+        </Route>
+
 
         <Route path='/'>
           <div>

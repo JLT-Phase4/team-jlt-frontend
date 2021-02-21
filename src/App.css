@@ -162,6 +162,13 @@ a {
 
 }
 
+.team-slogan {
+  font-size: 25px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.311);
+  text-align: center;
+
+}
 .team-scoreblock li {
   border: 2px solid white;
   padding: 20px;

@@ -23,3 +23,23 @@ export function getTeam (token, teamPk) {
     })
     .then(res => res.data)
 }
+
+export function getMemberChores (token, username) {
+  return API
+    .get(`users/${username}/chores`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
+export function getChore (token, chorePk) {
+  return API
+    .get(`user-chore/${chorePk}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}

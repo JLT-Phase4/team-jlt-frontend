@@ -1,45 +1,42 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import { getMemberChores } from './../api'
 
-const ChoreDashboard = ({ members, chores }) => {
+const ChoreDashboard = ({ token }) => {
   const { username } = useParams()
-  const [member, setMember] = useState()
-  const [memberChores, setMemberChores] = useState()
+  const [memberChores, setMemberChores] = useState([])
 
-  useEffect(updateTeam, [username])
-  useEffect(updateChores, [username])
+  useEffect(updateChores, [token, username])
 
   function updateChores () {
-    let newChores = []
-    for (const chore of chores) {
-      if (chore.username === username) {
-        newChores = newChores.concat(chore)
-      }
-    }
-    setMemberChores(newChores)
-  }
-
-  function updateTeam () {
-    for (const candidate of members) {
-      if (candidate.username === username) {
-        setMember(candidate)
-      }
-    }
+    getMemberChores(token, username).then(chores => setMemberChores(chores))
   }
 
   return (
     <>
-      {member && (
-
+      {memberChores && (
         <div className='member-dashboard-container'>
-          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
+          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover' }} />
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
               {memberChores.map((chore, idx) => (
-                <div className='flex' style={{ fontSize: '25px', fontWeight: '600' }} key={idx}>{chore.chore_name}
-                  {chore.days.map((day, idx) => (
-                    <div key={idx}>{day.status === true && (<span style={{ fontSize: '18px', fontWeight: '300', marginLeft: '3px', marginRight: '3px' }}>{day.day}</span>)}</div>
+                <div className='flex' style={{ fontSize: '25px', fontWeight: '300' }} key={idx}>
+                  <div>
+                    <Link style={{ color: 'yellowgreen', marginRight: '10px', fontWeight: '600' }} to={`/choredetail/${chore.pk}`}>{chore.name}</Link>
+                  </div>
+                  {chore.chore_type.map((day, idx) => (
+                    <div key={idx}>
+                      {(day && day === 'MD' && (<span style={{ marginLeft: '5px' }}>M</span>))}
+                      {(day && day === 'TUE' && (<span style={{ marginLeft: '5px' }}>Tu</span>))}
+                      {(day && day === 'WED' && (<span style={{ marginLeft: '5px' }}>W</span>))}
+                      {(day && day === 'THUR' && (<span style={{ marginLeft: '5px' }}>Th</span>))}
+                      {(day && day === 'FRI' && (<span style={{ marginLeft: '5px' }}>F</span>))}
+                      {(day && day === 'SAT' && (<span style={{ marginLeft: '5px' }}>Sa</span>))}
+                      {(day && day === 'SUN' && (<span style={{ marginLeft: '5px' }}>Su</span>))}
+                      {(day && day === 'ANY' && (<span style={{ marginLeft: '5px' }}>Any</span>))}
+
+                    </div>
                   ))}
                 </div>
               ))}
