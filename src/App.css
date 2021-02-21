@@ -129,6 +129,46 @@ a {
   text-align: center;
 }
 
+.register-and-login {
+  position:absolute;
+  top:10px;
+  right: 10px;
+}
+
+.log-reg-header {
+  padding-left: 20px;
+  margin: 20px;
+  margin-top: 70px;
+}
+
+.log-reg-header-form {
+  padding-left: 20px;
+  margin: 20px;
+  width: 30%;
+}
+
+.log-reg-button {
+  margin: 20px;
+  margin-left: 0px;
+  padding: 10px;
+}
+
+.logout-button {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.log-button {
+  padding: 10px;
+  border-radius: 8px;
+  margin-left: 0px;
+}
+
+.reg-button {
+  padding: 10px;
+  border-radius: 8px;
+}
+
 .team-feed-container {
   height: 300px;
   color: white;
