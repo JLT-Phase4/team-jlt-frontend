@@ -17,6 +17,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env 
+#was line 20 the correct way to add env file?
 
 npm-debug.log*
 yarn-debug.log*

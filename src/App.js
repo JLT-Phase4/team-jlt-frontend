@@ -15,6 +15,7 @@ import { getTeams } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
+import CreateTeam from './components/CreateTeam'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -81,7 +82,8 @@ function App () {
 
         <Route path='/create-team'>
           <div className='App' />
-          <TeamDashboard token={token} />
+          {/* <TeamDashboard token={token} /> */}
+          <CreateTeam token={token} />
         </Route>
 
         {/* Member Chores List Dashboard */}
