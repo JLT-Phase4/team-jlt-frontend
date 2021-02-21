@@ -22,15 +22,15 @@ const ChoreDetail = ({ token }) => {
               {chore.detail}
             </div>
             {chore.chore_type.map((day, idx) => (
-              <div key={idx}>
-                {(day && day === 'MD' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>M</Link></span>))}
-                {(day && day === 'TUE' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>Tu</Link></span>))}
-                {(day && day === 'WED' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>W</Link></span>))}
-                {(day && day === 'THUR' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>Th</Link></span>))}
-                {(day && day === 'FRI' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>F</Link></span>))}
-                {(day && day === 'SAT' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>Sa</Link></span>))}
-                {(day && day === 'SUN' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>Su</Link></span>))}
-                {(day && day === 'ANY' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${chore.user}/${day}/chores`}>Any</Link></span>))}
+              <div className='days-of-week' key={idx}>
+                {(day && day === 'MD' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>M</Link></span>))}
+                {(day && day === 'TUE' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Tu</Link></span>))}
+                {(day && day === 'WED' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>W</Link></span>))}
+                {(day && day === 'THUR' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Th</Link></span>))}
+                {(day && day === 'FRI' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>F</Link></span>))}
+                {(day && day === 'SAT' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Sa</Link></span>))}
+                {(day && day === 'SUN' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Su</Link></span>))}
+                {(day && day === 'ANY' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Any</Link></span>))}
 
               </div>
             ))}

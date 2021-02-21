@@ -16,7 +16,8 @@ const ChoreDashboard = ({ token }) => {
     <>
       {memberChores && (
         <div className='member-dashboard-container'>
-          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover' }} />
+          {/* <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover' }} /> */}
+          {/* above is placeholder for member avatar  */}
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
@@ -26,16 +27,15 @@ const ChoreDashboard = ({ token }) => {
                     <Link className='chore-detail' to={`/choredetail/${chore.pk}`}>{chore.name}</Link>
                   </div>
                   {chore.chore_type.map((day, idx) => (
-                    <div key={idx}>
-                      {(day && day === 'MD' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>M</Link></span>))}
-                      {(day && day === 'TUE' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>Tu</Link></span>))}
-                      {(day && day === 'WED' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>W</Link></span>))}
-                      {(day && day === 'THUR' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>Th</Link></span>))}
-                      {(day && day === 'FRI' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>F</Link></span>))}
-                      {(day && day === 'SAT' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>Sa</Link></span>))}
-                      {(day && day === 'SUN' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>Su</Link></span>))}
-                      {(day && day === 'ANY' && (<span style={{ marginLeft: '5px' }}><Link to={`/member/${username}/${day}/chores`}>Any</Link></span>))}
-
+                    <div className='days-of-week' key={idx}>
+                      {(day && day === 'MD' && (<span><Link to={`/member/${username}/${day}/chores`}>M</Link></span>))}
+                      {(day && day === 'TUE' && (<span><Link to={`/member/${username}/${day}/chores`}>Tu</Link></span>))}
+                      {(day && day === 'WED' && (<span><Link to={`/member/${username}/${day}/chores`}>W</Link></span>))}
+                      {(day && day === 'THUR' && (<span><Link to={`/member/${username}/${day}/chores`}>Th</Link></span>))}
+                      {(day && day === 'FRI' && (<span><Link to={`/member/${username}/${day}/chores`}>F</Link></span>))}
+                      {(day && day === 'SAT' && (<span><Link to={`/member/${username}/${day}/chores`}>Sa</Link></span>))}
+                      {(day && day === 'SUN' && (<span><Link to={`/member/${username}/${day}/chores`}>Su</Link></span>))}
+                      {(day && day === 'ANY' && (<span><Link to={`/member/${username}/${day}/chores`}>Any</Link></span>))}
                     </div>
                   ))}
                 </div>

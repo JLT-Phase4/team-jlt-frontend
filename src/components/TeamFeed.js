@@ -2,7 +2,6 @@ const TeamFeed = ({ team }) => {
   return (
     <>
       {team && (
-
         <div style={{ backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
           <h1>Feed will go here:</h1>
           <ul>

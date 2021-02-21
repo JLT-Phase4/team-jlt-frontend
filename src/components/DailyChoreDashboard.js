@@ -34,8 +34,7 @@ const DailyChoreDashboard = ({ token }) => {
         <div className='member-dashboard-container'>
           <div />
           <img width='150px' src={image} />
-
-          {/* Above is a holder for avatar */}
+          {/* Above div is a holder for avatar */}
           <div className='team-title'>{username}'s {day} chores!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>

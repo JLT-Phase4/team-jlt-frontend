@@ -231,6 +231,10 @@ ul {
   font-size: 25px;
 }
 
+.days-of-week span {
+  margin-left: 5px;
+}
+
 .dashboard-style-1 {
   background-color:#ad1457;
   border-radius: 10px;
