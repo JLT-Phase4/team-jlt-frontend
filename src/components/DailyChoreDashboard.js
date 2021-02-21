@@ -1,52 +1,61 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { getMemberChores } from './../api'
+import image from './../images/days-of-week.png'
 
-const DailyChoreDashboard = ({ members, chores, choreDays }) => {
+const DailyChoreDashboard = ({ token }) => {
   const { username } = useParams()
   const { day } = useParams()
-  const [member, setMember] = useState()
-  const [memberChores, setMemberChores] = useState()
-  useEffect(updateTeam, [username])
-  useEffect(updateChores, [username, day])
+
+  const [memberChores, setMemberChores] = useState([])
+  const [dailyChores, setDailyChores] = useState([])
+
+  useEffect(updateChores, [token, username])
+  useEffect(updateDailyChores, [memberChores, day])
 
   function updateChores () {
-    let newChores = []
-    for (const chore of chores) {
-      for (const newDay in chore.days) {
-        if (chore.username === username && chore.days[newDay].day === day && chore.days[newDay].status === true) {
-          newChores = newChores.concat(chore)
-        }
-      }
-    }
-    setMemberChores(newChores)
+    getMemberChores(token, username).then(chores => setMemberChores(chores))
   }
 
-  function updateTeam () {
-    for (const candidate of members) {
-      if (candidate.username === username) {
-        setMember(candidate)
+  function updateDailyChores () {
+    let chores = []
+    for (const chore of memberChores) {
+      if (chore.chore_type.includes(day)) {
+        chores = chores.concat(chore)
       }
     }
+    setDailyChores(chores)
   }
   return (
-    <>
-      {(member && memberChores) && (
+    <div className='flex-col-center'>
+
+      {(dailyChores) && (
 
         <div className='member-dashboard-container'>
-          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: `url(${member.avatarUrl})` }} />
-          <div className='team-title'>{username}'s page!</div>
+          <div />
+          <img width='150px' src={image} />
+          {/* Above div is a holder for avatar */}
+          <div className='team-title'>{username}'s {day} chores!</div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
-              <div style={{ backgroundColor: 'white', color: 'black', fontSize: '22px', margin: '4px' }}>{day.toUpperCase()} Chores</div>
-              {memberChores.map((chore, idx) => (
-                <div style={{ fontSize: '25px', fontWeight: '600' }} key={idx}>{chore.chore_name}
+              {dailyChores.map((chore, idx) => (
+                <div key={idx}>
+                  <div className='chore-detail'>{chore.name}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
+          <Link style={{ marginTop: '30px', fontSize: '25px' }} to={`/member/${username}/chores`}><span className='material-icons'>arrow_back</span>All {username}'s chores</Link>
+
         </div>
       )}
-    </>
+      <div className='daily-comment-feed'>Comments on chores for {username} on {day}
+        <div>Don't forget to....</div>
+        <div>Great job on ....</div>
+      </div>
+
+    </div>
   )
 }
 

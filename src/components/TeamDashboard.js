@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import MemberSummary from './MemberSummary'
+import TeamMembersSummary from './TeamMembersSummary'
 import TeamFeed from './TeamFeed'
-import fakeTeamDetail from './../fakeTeamDetail'
 import { getTeam } from './../api'
 
 const TeamDashboard = ({ token }) => {
@@ -17,7 +16,7 @@ const TeamDashboard = ({ token }) => {
   return (
     <div>
       <TeamFeed team={team} />
-      <MemberSummary team={team} displayHeight='50%' />
+      <TeamMembersSummary team={team} displayHeight='50%' />
       <button className='team-dash-button'>Track my chores</button>
       {/* {if captain display button "send notifications"} */}
     </div>

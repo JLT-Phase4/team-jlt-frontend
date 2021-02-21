@@ -133,6 +133,7 @@ a {
   height: 300px;
   color: white;
   border: 3px solid white;
+  border-radius: 10px;
   display: inline;
   width: 30%;
   height: 100vh;
@@ -162,6 +163,13 @@ a {
 
 }
 
+.team-slogan {
+  font-size: 25px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.311);
+  text-align: center;
+
+}
 .team-scoreblock li {
   border: 2px solid white;
   padding: 20px;
@@ -215,4 +223,36 @@ ul {
   .dashboard-scroll-holder {
     width: 1250px;
   }
+}
+
+.chore-detail {
+  color: yellowgreen;
+  margin-right: 10px;
+  font-weight: 600;
+  font-size: 25px;
+}
+.daily-comment-feed {
+  border: solid 2px white;
+    padding: 7px;
+    border-radius: 10px;
+    width: 50%;
+    font-size: 25px;
+    color: yellowgreen;
+}
+.daily-comment-feed div {
+  font-size: 20px;
+  color: white;
+}
+.days-of-week span {
+  margin-left: 5px;
+}
+
+.dashboard-style-1 {
+  background-color:#ad1457;
+  border-radius: 10px;
+}
+
+.dashboard-style-2 {
+  background-color:#e64a19;
+  border-radius: 10px;
 }

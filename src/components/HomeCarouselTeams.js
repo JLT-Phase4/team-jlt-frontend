@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 
-const CarouselMemberSummary = ({ team, displayHeight }) => {
+const HomeCarouselTeams = ({ team, displayHeight }) => {
   return (
     <>
       {team && (
 
         <div className='carousel-team-dashboard-container' style={{ height: `${displayHeight}`, backgroundImage: `url(${team.background_image}` }}>
           <div className='carousel-team-title'>
-            <Link to={`/team/${team.teamPk}`}>We are team {team.name}!</Link>
+            <Link to={`/team/${team.pk}`}>We are team {team.name}!</Link>
           </div>
           <div className='carousel-team-scoreblock'>
             {team.members.map(member => (
@@ -22,4 +22,4 @@ const CarouselMemberSummary = ({ team, displayHeight }) => {
   )
 }
 
-export default CarouselMemberSummary
+export default HomeCarouselTeams
