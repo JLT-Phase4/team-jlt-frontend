@@ -27,7 +27,7 @@ const DailyChoreDashboard = ({ token }) => {
     setDailyChores(chores)
   }
   return (
-    <>
+    <div className='flex-col-center'>
 
       {(dailyChores) && (
 
@@ -50,8 +50,12 @@ const DailyChoreDashboard = ({ token }) => {
 
         </div>
       )}
+      <div className='daily-comment-feed'>Comments on chores for {username} on {day}
+        <div>Don't forget to....</div>
+        <div>Great job on ....</div>
+      </div>
 
-    </>
+    </div>
   )
 }
 

@@ -230,7 +230,18 @@ ul {
   font-weight: 600;
   font-size: 25px;
 }
-
+.daily-comment-feed {
+  border: solid 2px white;
+    padding: 7px;
+    border-radius: 10px;
+    width: 50%;
+    font-size: 25px;
+    color: yellowgreen;
+}
+.daily-comment-feed div {
+  font-size: 20px;
+  color: white;
+}
 .days-of-week span {
   margin-left: 5px;
 }
