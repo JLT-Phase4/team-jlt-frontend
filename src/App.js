@@ -79,6 +79,11 @@ function App () {
           <TeamDashboard token={token} />
         </Route>
 
+        <Route path='/create-team'>
+          <div className='App' />
+          <TeamDashboard token={token} />
+        </Route>
+
         {/* Member Chores List Dashboard */}
         <Route path='/member/:username/chores'>
           <div className='App' />
