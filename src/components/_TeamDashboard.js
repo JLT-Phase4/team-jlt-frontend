@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import MemberSummary from './MemberSummary'
-import TeamFeed from './TeamFeed'
+import TeamFeed from './_TeamFeed'
 
 const _TeamDashboard = ({ teams }) => {
   const { teamPk } = useParams()
