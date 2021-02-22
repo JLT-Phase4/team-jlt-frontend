@@ -15,6 +15,7 @@ import { getTeams } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
+import CreateTeam from './components/CreateTeam'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -41,10 +42,6 @@ function App () {
 
   return (
     <Router>
-      <div className='flex-col-center'>
-        <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link>
-      </div>
-
       <div className='register-and-login'>
         {isLoggedIn
           ? (
@@ -55,6 +52,9 @@ function App () {
               <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link>
             </span>
             )}
+      </div>
+      <div className='flex-col-center'>
+        <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link>
       </div>
 
       <Switch>
@@ -81,7 +81,8 @@ function App () {
 
         <Route path='/create-team'>
           <div className='App' />
-          <TeamDashboard token={token} />
+          {/* <TeamDashboard token={token} /> */}
+          <CreateTeam token={token} />
         </Route>
 
         {/* Member Chores List Dashboard */}
