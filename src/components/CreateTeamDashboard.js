@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import MusicSearch from './MusicSearch'
-import _BackgroundImage from './_BackgroundImage'
+import BackgroundImage from './BackgroundImage'
 
 const CreateTeamDashboard = ({ token }) => {
   const [step, countStep] = useState(1)
@@ -61,7 +61,7 @@ const CreateTeamDashboard = ({ token }) => {
         <div className='animate__animated animate__fadeInLeft' style={{ textAlign: 'center' }}>
           <button onClick={() => handlePreviousStep()}>Previous Step</button>
           <button onClick={() => handleNextStep()}>Next Step</button>
-          <_BackgroundImage token={token} setBackgroundImage={setBackgroundImage} />
+          <BackgroundImage token={token} setBackgroundImage={setBackgroundImage} />
         </div>}
       {(step === 3) &&
         <div className='animate__animated animate__fadeInLeft' style={{ textAlign: 'center' }}>

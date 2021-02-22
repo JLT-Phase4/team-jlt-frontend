@@ -8,7 +8,7 @@ function Login ({ isLoggedIn, setAuth }) {
   const [errors, setErrors] = useState()
 
   if (isLoggedIn) {
-    return <Redirect to='/create-team' />
+    return <Redirect to='/create-team-dashboard' />
   }
 
   // change above if to a conditional
