@@ -90,3 +90,14 @@ export function getChore (token, chorePk) {
     })
     .then(res => res.data)
 }
+
+export function getRecords (token) {
+  return API
+    .get('records/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+    // .then(res => console.log(res.data))
+}

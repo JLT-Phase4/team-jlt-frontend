@@ -8,6 +8,8 @@ import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
 import ChoreDetail from './components/ChoreDetail'
+import ChoreRecordDetail from './components/ChoreRecordDetail'
+
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
@@ -99,7 +101,7 @@ function App () {
         {/* Member Chore Detail Dashboard */}
         <Route path='/choredetail/:chorePk'>
           <div className='App' />
-          <ChoreDetail token={token} />
+          <ChoreRecordDetail token={token} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
