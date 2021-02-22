@@ -344,3 +344,13 @@ ul {
 .images {
   margin: 10px;
 }
+
+.track-thumbnail {
+  border: 2px solid black;
+  border-radius: 6px;
+  margin: 5px;
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+  background-repeat: no-repeat;
+}

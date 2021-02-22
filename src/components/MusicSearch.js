@@ -9,7 +9,9 @@ const MusicSearch = ({ token, setMusicTrack }) => {
   function getTracks (keyword) {
     getMusicSamples(keyword)
       .then(tracks => setTracks(tracks))
-      .then(console.log(tracks))
+    if (tracks) {
+      console.log(tracks[0])
+    }
   }
 
   function startMusicSearch (keyword) {
@@ -23,12 +25,19 @@ const MusicSearch = ({ token, setMusicTrack }) => {
         <label className='track-label' htmlFor='track'>Search Term</label>
         <input type='text' id='track' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
         <button type='submit' className='button-style' onClick={() => startMusicSearch(searchTerm)}>Get Music</button>
-        {/* <div className='flex'>
-          {tracks.map(track => (
-            <div className='track-thumbnail' onClick={() => setMusicTrack(track.urlToMp3)} track={track} key={track} style={{ backgroundImage: `url(${track.coverImg})` }} />
-          ))}
-          <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }} />
-        </div> */}
+        {tracks && (
+          <div className='search-results-container' style={{ border: 'solid 2px' }}>Search Results
+            <div className='flex'>
+              {tracks.map(track => (
+                <div style={{ width: '120px', height: '130px' }} track={track} key={track.trackId}>
+                  <div className='track-thumbnail' onClick={() => setMusicTrack(track.previewUrl)} style={{ backgroundImage: `url(${track.artworkUrl100})` }} />
+                  <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }}>{track.trackName}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
 
@@ -36,12 +45,3 @@ const MusicSearch = ({ token, setMusicTrack }) => {
 }
 
 export default MusicSearch
-
-// track-label is photo-label
-// track-thumbnail is photo-thumbnail
-// need card-detail-all class
-// need create-card-header class
-// need create-card-section class
-// need button-style class
-// need some kind of track_coverImg
-// need some kind of track.urlToMp3
