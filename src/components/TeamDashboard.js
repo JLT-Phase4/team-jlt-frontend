@@ -17,7 +17,7 @@ const TeamDashboard = ({ token }) => {
         <>
           <div className='flex'>
             <div className='team-dashboard-container' style={{ height: '50%', backgroundImage: `url(${team.background_image}` }}>
-              <div className='team-title'>We are team {team.name}!</div>
+              <div className='team-title'>We are {team.name}!</div>
               <div className='team-slogan'>{team.slogan}!
                 <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
               </div>
@@ -55,7 +55,7 @@ const TeamDashboard = ({ token }) => {
               <ul />
             </div>
           </div>
-          </>}
+        </>}
     </div>
   )
 }

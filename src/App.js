@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
 import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
+import CreateTeamDashboard from './components/CreateTeamDashboard'
 
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
@@ -84,6 +85,11 @@ function App () {
         <Route path='/create-team'>
           <div className='App' />
           <TeamDashboard token={token} />
+        </Route>
+
+        <Route path='/create-team-dashboard'>
+          <div className='App' />
+          <CreateTeamDashboard token={token} />
         </Route>
 
         {/* Member Chores List Dashboard */}
