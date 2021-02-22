@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam } from './../api'
+// import useSound from 'use-sound'
+
+// const TeamSongButton = ({ track }) => {
+//   const [play] = useSound(track)
+//   return <button onClick={play}>Team Song</button>
+// }
 
 const TeamDashboard = ({ token, username, today }) => {
   const { teamPk } = useParams()
@@ -22,6 +28,7 @@ const TeamDashboard = ({ token, username, today }) => {
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
+
   return (
     <div style={{ textAlign: 'center' }}>
       {team ? (
@@ -30,6 +37,7 @@ const TeamDashboard = ({ token, username, today }) => {
             <div className='team-dashboard-container' style={{ height: '50%', backgroundImage: `url(${team.background_image}` }}>
               <div className='team-title'>We are {team.name}!</div>
               <div className='team-slogan'>{team.slogan}!
+                {/* <TeamSongButton track={team.theme_song} /> */}
                 <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
               </div>
               <div className='team-scoreblock flex'>

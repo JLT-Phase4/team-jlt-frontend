@@ -114,7 +114,7 @@ function App () {
         {/* Member chore Detail for Day Dashboard */}
         <Route path='/member/:username/:day/chores'>
           <div className='App' />
-          <DailyChoreDashboard token={token} />
+          <DailyChoreDashboard token={token} today={today} />
         </Route>
 
         {/* Member Chore Detail Dashboard */}
