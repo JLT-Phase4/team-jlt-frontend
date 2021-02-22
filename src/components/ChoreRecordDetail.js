@@ -58,6 +58,8 @@ const ChoreDetail = ({ token }) => {
     <div className='flex-col-center'>
       {chore && (
         <div className='member-dashboard-container'>
+          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: 'url("https://images.unsplash.com/photo-1543466835-00a7907e9de1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDQxMTN8MHwxfHNlYXJjaHw2fHxkb2d8ZW58MHx8fA&ixlib=rb-1.2.1&q=80&w=1080")' }} />
+
           <div className='team-title'> {chore.name}</div>
           <div className='flex' style={{ fontSize: '25px', fontWeight: '300' }}>
             <div className='chore-detail'>

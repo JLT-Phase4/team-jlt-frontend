@@ -118,5 +118,5 @@ export function unsplashApi (query) {
 
 export function getMusicSamples (query) {
   return axios.get(`https://itunes.apple.com/search?media=music&term=${encodeURI(query)}`)
-    .then(res => res.data)
+    .then(res => res.data.results)
 }
