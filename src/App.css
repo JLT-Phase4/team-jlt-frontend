@@ -15,7 +15,7 @@ body {
 }
 .banner {
   display: flex;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   font-size: 50px;
   font-weight: 300;
   text-align: center;
@@ -72,6 +72,12 @@ body {
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.header-bar {
+  width: 80px;
+  background-size: contain;
+  background-repeat:no-repeat;
 }
 
 a {

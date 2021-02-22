@@ -2,9 +2,20 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam } from './../api'
 
-const TeamDashboard = ({ token }) => {
+const TeamDashboard = ({ token, username }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
+  const [isMember, setIsMember] = useState(false)
+
+  useEffect(checkMember, [username, team, setIsMember, isMember])
+
+  function checkMember () {
+    if (team) {
+      if (team.members.includes(username)) {
+        setIsMember(true)
+      }
+    }
+  }
 
   useEffect(updateTeam, [token, teamPk])
 
@@ -38,7 +49,7 @@ const TeamDashboard = ({ token }) => {
               </ul>
             </div>
           </div>
-          <button className='team-dash-button'>Track my chores</button>
+          {isMember && <button className='team-dash-button'>Track my chores</button>}
         </>
       )
         : <>
@@ -55,7 +66,7 @@ const TeamDashboard = ({ token }) => {
               <ul />
             </div>
           </div>
-        </>}
+          </>}
     </div>
   )
 }

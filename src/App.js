@@ -18,6 +18,10 @@ import { getTeams } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
+import laundryImage from './images/laundry-basket.png'
+import lawnMowingImage from './images/lawn-mowing.png'
+import walkingDogImage from './images/walking-dog.png'
+import washingDishesImage from './images/washing-dishes.png'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -44,8 +48,16 @@ function App () {
 
   return (
     <Router>
-      <div className='flex-col-center'>
-        <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link>
+      <div style={{ paddingTop: '20px' }} className='flex-col-center'>
+        {/* <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link> */}
+        <div className='flex'>
+          <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+          <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
+          <Link to='/' className='banner'>Chore Wars</Link>
+          <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
+          <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
+
+        </div>
       </div>
 
       <div className='register-and-login'>
@@ -59,7 +71,6 @@ function App () {
             </span>
             )}
       </div>
-
       <Switch>
 
         {/* CAPTAIN REG AND LOGIN */}
@@ -79,7 +90,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} />
+          <TeamDashboard token={token} username={username} />
         </Route>
 
         <Route path='/create-team'>
