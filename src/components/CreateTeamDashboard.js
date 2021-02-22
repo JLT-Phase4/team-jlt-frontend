@@ -3,15 +3,22 @@ import { Redirect } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import MusicSearch from './MusicSearch'
+import { createTeam } from '../api'
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token }) => {
+
+const CreateTeamDashboard = ({ token, username }) => {
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
   const [backgroundImage, setBackgroundImage] = useState('')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('')
+
+  function handleCreateTeam () {
+    createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle)
+    handleDone()
+  }
 
   if (step === 0) {
     return <Redirect to='/' />
@@ -72,7 +79,7 @@ const CreateTeamDashboard = ({ token }) => {
       {(step === 4) &&
         <div className='animate__animated animate__fadeInLeft' style={{ textAlign: 'center' }}>Complete Create Team
           <button onClick={() => handlePreviousStep()}>Previous Step</button>
-          <button onClick={() => handleDone()}>Create Team</button>
+          <button onClick={() => handleCreateTeam()}>Create Team</button>
         </div>}
     </div>
   )

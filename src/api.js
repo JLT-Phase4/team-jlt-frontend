@@ -51,12 +51,21 @@ export function register (username, password) {
     })
 }
 
-export function createTeam (token, team) {
-  return API.post('teams/', team, {
-    headers: {
-      Authorization: `Token ${token}`
-    }
-  })
+export function createTeam (token, teamName, teamSlogan, username, themeSong, backgroundImage, dashboardStyle) {
+  return API
+    .post('team-list/', {
+      name: teamName,
+      slogan: teamSlogan,
+      captain: username,
+      theme_song: themeSong,
+      background_image: backgroundImage,
+      dashboard_style: dashboardStyle
+    },
+    {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
     .then(response => response.data)
 }
 
