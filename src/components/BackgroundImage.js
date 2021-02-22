@@ -3,14 +3,14 @@ import { useState } from 'react'
 import { unsplashApi } from '../api'
 
 const BackgroundImage = ({ token, setBackgroundImage }) => {
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
 
   function getImages (keyword) {
     unsplashApi(keyword)
       .then(images => setImages(images))
     if (images) {
-      console.log(images[0])
+      console.log(images)
     }
   }
 
@@ -30,8 +30,8 @@ const BackgroundImage = ({ token, setBackgroundImage }) => {
             <div className='flex'>
               {images.map(image => (
                 <div style={{ width: '120px', height: '130px' }} image={image} key={image.id}>
-                  <div className='image-thumbnail' onClick={() => setBackgroundImage(image.urls.thumb)} style={{ backgroundImage: `url(${image})` }} />
-                  <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }}>{image.description}</div>
+                  <div className='image-thumbnail' onClick={() => setBackgroundImage(image.urls.small)} style={{ backgroundImage: `url(${image.urls.small})` }} />
+                  <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }} />
                 </div>
               ))}
             </div>
