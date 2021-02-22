@@ -43,15 +43,15 @@ function CreateTeam ({ token, handleDone }) {
           >
             <label htmlFor='team' />
             <input
-                className='team-name-input'
-                type='text'
-                value={team}
-                placeholder='Team Name'
-                onChange={event => {
+              className='team-name-input'
+              type='text'
+              value={team}
+              placeholder='Team Name'
+              onChange={event => {
                 event.preventDefault()
                 setTeam(event.target.value)
               }}
-              />
+            />
             <button type='submit'>Create Team</button>
           </form>
         </div>
@@ -59,10 +59,11 @@ function CreateTeam ({ token, handleDone }) {
           <TeamBackgroundImage imageQuery={imageQuery} setImageQuery={setImageQuery} handleImgSearch={handleImgSearch} setImageDisplay={setImageDisplay} setIsDisplaying={setIsDisplaying} />
         </div>
       </div>
+      <div>{`${image}`}</div>
       <div className='display-images-container'>
         {imageDisplay.map(image => (
-          <div className='images' key={image.id} onClick={() => { setSelectedImage(image.urls.small) }}>
-            <img src={image.urls.small} alt='images' />
+          <div className='images' key={image.id} onClick={() => { setSelectedImage(image.urls.thumb) }}>
+            <img src={image.urls.thumb} alt='images' />
           </div>
         ))}
       </div>
