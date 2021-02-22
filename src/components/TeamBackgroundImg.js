@@ -8,7 +8,7 @@ function TeamBackgroundImage ({ setSelectedImage, imageQuery, setImageQuery, han
           <input
             className='img-search-input'
             type='text'
-            placeholder='search background img'
+            placeholder='search for team image'
             value={imageQuery}
             onChange={event => setImageQuery(event.target.value)}
           />
@@ -26,7 +26,7 @@ function TeamBackgroundImage ({ setSelectedImage, imageQuery, setImageQuery, han
         </form>
       </div>
 
-      <div className='object-value'>Color
+      <div className='object-value'>
         <div className='select-tag' value={setImageDisplay} onChange={event => { setSelectedImage('') }}> </div>
       </div>
     </div>
