@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getMemberChores } from './../api'
 import image from './../images/days-of-week.png'
 
-const DailyChoreDashboard = ({ token }) => {
+const DailyChoreDashboard = ({ token, today }) => {
   const { username } = useParams()
   const { day } = useParams()
 
@@ -35,12 +35,16 @@ const DailyChoreDashboard = ({ token }) => {
           <div />
           <img width='150px' src={image} />
           {/* Above div is a holder for avatar */}
-          <div className='team-title'>{username}'s {day} chores!</div>
+          <div className='team-title'>
+            {username}'s {day} chores!
+            {(today === day) && <span>  It's Today!</span>}
+          </div>
           <div className='flex-sa'>
             <div className='team-scoreblock'>
               {dailyChores.map((chore, idx) => (
                 <div key={idx}>
                   <div className='chore-detail'>{chore.name}
+                    <span className='material-icons'>check_box_outline_blank</span>
                   </div>
                 </div>
               ))}

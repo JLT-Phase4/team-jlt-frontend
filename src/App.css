@@ -4,19 +4,24 @@
   color:white;
 }
 
+
+.animate__animated.animate__fadeInLeft {
+  --animate-duration: 2s;
+}
+
 body {
   background-color: black;
   color: white;
 }
 .banner {
   display: flex;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   font-size: 50px;
   font-weight: 300;
   text-align: center;
 }
 .home-header {
-  margin-top: 80px;
+  margin-top: 40px;
   flex-wrap: wrap;
 }
 .home-button {
@@ -29,9 +34,8 @@ body {
 }
 
 .footer-feed {
-  position: fixed;
-  bottom: 0;
-  /* margin-bottom: 50px; */
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 30px;
 }
 
@@ -68,6 +72,12 @@ body {
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.header-bar {
+  width: 80px;
+  background-size: contain;
+  background-repeat:no-repeat;
 }
 
 a {
@@ -169,6 +179,18 @@ a {
   background-color: rgba(0, 0, 0, 0.311);
   text-align: center;
 }
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 50%;
+  background-size: cover;
+  margin: 4%;
+  border-radius: 25px;
+  padding: 2%;
+  min-height: 40vh;
+}
 /* 
 .team-feed-container {
   height: 300px;
@@ -192,7 +214,7 @@ a {
   min-width: 30%;
   background-size: cover;
   margin: 4%;
-  margin-top: 8%;
+  /* margin-top: 8%; */
   border-radius: 25px;
   padding: 2%;
 }
@@ -204,7 +226,7 @@ a {
   min-width: 50%;
   background-size: cover;
   margin: 4%;
-  margin-top: 8%;
+  /* margin-top: 8%; */
   border-radius: 25px;
   padding: 2%;
   min-height: 40vh;

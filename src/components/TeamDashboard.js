@@ -1,24 +1,43 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam } from './../api'
+// import useSound from 'use-sound'
 
-const TeamDashboard = ({ token }) => {
+// const TeamSongButton = ({ track }) => {
+//   const [play] = useSound(track)
+//   return <button onClick={play}>Team Song</button>
+// }
+
+const TeamDashboard = ({ token, username, today }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
+  const [isMember, setIsMember] = useState(false)
+
+  useEffect(checkMember, [username, team, setIsMember, isMember])
+
+  function checkMember () {
+    if (team) {
+      if (team.members.includes(username)) {
+        setIsMember(true)
+      }
+    }
+  }
 
   useEffect(updateTeam, [token, teamPk])
 
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
+
   return (
     <div style={{ textAlign: 'center' }}>
       {team ? (
         <>
           <div className='flex'>
             <div className='team-dashboard-container' style={{ height: '50%', backgroundImage: `url(${team.background_image}` }}>
-              <div className='team-title'>We are team {team.name}!</div>
+              <div className='team-title'>We are {team.name}!</div>
               <div className='team-slogan'>{team.slogan}!
+                {/* <TeamSongButton track={team.theme_song} /> */}
                 <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
               </div>
               <div className='team-scoreblock flex'>
@@ -38,7 +57,7 @@ const TeamDashboard = ({ token }) => {
               </ul>
             </div>
           </div>
-          <button className='team-dash-button'>Track my chores</button>
+          {isMember && <button className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
         </>
       )
         : <>
@@ -55,7 +74,7 @@ const TeamDashboard = ({ token }) => {
               <ul />
             </div>
           </div>
-          </>}
+        </>}
     </div>
   )
 }

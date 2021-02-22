@@ -100,7 +100,19 @@ export function getChore (token, chorePk) {
     .then(res => res.data)
 }
 
+export function getRecords (token) {
+  return API
+    .get('records/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+    // .then(res => console.log(res.data))
+}
+
 export function unsplashApi (query) {
   return axios.get(`https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}&orientation=landscape`)
     .then(res => res.data)
+
 }
