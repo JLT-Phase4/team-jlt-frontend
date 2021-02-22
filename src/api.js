@@ -51,6 +51,15 @@ export function register (username, password) {
     })
 }
 
+export function createTeam (token, team) {
+  return API.post('teams/', team, {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  })
+    .then(response => response.data)
+}
+
 export function getTeams (token) {
   return API
     .get('teams/', {
@@ -100,4 +109,10 @@ export function getRecords (token) {
     })
     .then(res => res.data)
     // .then(res => console.log(res.data))
+}
+
+export function unsplashApi (query) {
+  return axios.get(`https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}&orientation=landscape`)
+    .then(res => res.data)
+
 }

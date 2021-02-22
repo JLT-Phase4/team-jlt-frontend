@@ -8,8 +8,15 @@ function Login ({ isLoggedIn, setAuth }) {
   const [errors, setErrors] = useState()
 
   if (isLoggedIn) {
-    return <Redirect to='/' />
+    return <Redirect to='/create-team' />
   }
+
+  // change above if to a conditional
+  // if (isLoggedIn) and a team pk exists {
+  //   return <Redirect to='/' />
+  // } else if (isLoggedIn) {
+  //   return <Redirect to='/create-team' />
+  // }
 
   function handleSubmit (event, isLoggedIn) {
     event.preventDefault()

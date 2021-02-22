@@ -22,6 +22,7 @@ import laundryImage from './images/laundry-basket.png'
 import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
+import CreateTeam from './components/CreateTeam'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -50,6 +51,7 @@ function App () {
 
   return (
     <Router>
+
       <div style={{ paddingTop: '20px' }} className='flex-col-center'>
         {/* <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link> */}
         <div className='flex'>
@@ -62,6 +64,7 @@ function App () {
         </div>
       </div>
 
+
       <div className='register-and-login'>
         {isLoggedIn
           ? (
@@ -73,6 +76,8 @@ function App () {
             </span>
             )}
       </div>
+
+
       <Switch>
 
         {/* CAPTAIN REG AND LOGIN */}
@@ -97,7 +102,8 @@ function App () {
 
         <Route path='/create-team'>
           <div className='App' />
-          <TeamDashboard token={token} />
+          {/* <TeamDashboard token={token} /> */}
+          <CreateTeam token={token} />
         </Route>
 
         <Route path='/create-team-dashboard'>
