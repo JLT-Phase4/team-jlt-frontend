@@ -51,20 +51,6 @@ function App () {
 
   return (
     <Router>
-
-      <div style={{ paddingTop: '20px' }} className='flex-col-center'>
-        {/* <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link> */}
-        <div className='flex'>
-          <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-          <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
-          <Link to='/' className='banner'>Chore Wars</Link>
-          <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
-          <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
-
-        </div>
-      </div>
-
-
       <div className='register-and-login'>
         {isLoggedIn
           ? (
@@ -77,6 +63,17 @@ function App () {
             )}
       </div>
 
+      <div style={{ paddingTop: '20px' }} className='flex-col-center'>
+        {/* <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link> */}
+        <div className='flex'>
+          <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+          <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
+          <Link to='/' className='banner'>Chore Wars</Link>
+          <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
+          <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
+
+        </div>
+      </div>
 
       <Switch>
 
