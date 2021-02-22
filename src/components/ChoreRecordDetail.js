@@ -7,6 +7,7 @@ const ChoreDetail = ({ token }) => {
   const [chore, setChore] = useState()
   const [records, setRecords] = useState([])
   const [choreRecords, setChoreRecords] = useState([])
+  const DAYS = ['MD', 'TUE', 'WED', 'THUR', 'FRI', 'SAT', 'SUN']
 
   useEffect(updateChores, [token, chorePk])
   useEffect(updateRecords, [token])
@@ -24,17 +25,29 @@ const ChoreDetail = ({ token }) => {
     let myRecords = []
     if (chore) {
       for (const record of records) {
-        // console.log(typeof (record))
-        // console.log(record.chore)
-        console.log(chore.name)
-        console.log(record)
-        console.log(record.chore)
         const recordChoreName = record.chore
         const recordDate = record.date
+        const convertDate = new Date(recordDate)
+        const dayOfWeek = convertDate.getDay()
+        let dayInText = ''
+        if (dayOfWeek === 0) {
+          dayInText = 'SUN'
+        } else if (dayOfWeek === 1) {
+          dayInText = 'MD'
+        } else if (dayOfWeek === 2) {
+          dayInText = 'TUE'
+        } else if (dayOfWeek === 3) {
+          dayInText = 'WED'
+        } else if (dayOfWeek === 4) {
+          dayInText = 'THUR'
+        } else if (dayOfWeek === 5) {
+          dayInText = 'FRI'
+        } else if (dayOfWeek === 6) {
+          dayInText = 'SAT'
+        }
         const choreName = chore.name
         if (recordChoreName === choreName) {
-          myRecords = myRecords.concat(recordDate)
-          console.log(chore.name)
+          myRecords = myRecords.concat(dayInText)
         }
       }
       setChoreRecords(myRecords)
@@ -42,9 +55,8 @@ const ChoreDetail = ({ token }) => {
   }
 
   return (
-    <>
+    <div className='flex-col-center'>
       {chore && (
-
         <div className='member-dashboard-container'>
           <div className='team-title'> {chore.name}</div>
           <div className='flex' style={{ fontSize: '25px', fontWeight: '300' }}>
@@ -53,32 +65,51 @@ const ChoreDetail = ({ token }) => {
             </div>
             {chore.chore_type.map((day, idx) => (
               <div className='days-of-week' key={idx}>
-                {(day && day === 'MD' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>M</Link></span>))}
-                {(day && day === 'TUE' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Tu</Link></span>))}
-                {(day && day === 'WED' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>W</Link></span>))}
-                {(day && day === 'THUR' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Th</Link></span>))}
-                {(day && day === 'FRI' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>F</Link></span>))}
-                {(day && day === 'SAT' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Sa</Link></span>))}
-                {(day && day === 'SUN' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Su</Link></span>))}
-                {(day && day === 'ANY' && (<span><Link to={`/member/${chore.user}/${day}/chores`}>Any</Link></span>))}
+                {DAYS.map((DAY, idxDAY) => (
+                  <div key={idxDAY}>
+                    {(day && day === DAY) &&
+                      <span>
+                        <Link to={`/member/${chore.user}/${day}/chores`}>{DAY}
+                          <span className='material-icons'>
+                            {(choreRecords.includes(day)) ? 'check_box' : 'check_box_outline_blank'}
+                          </span>
+                        </Link>
+                      </span>}
+                  </div>
+                ))}
+                {(day && day === 'ANY') &&
+                  <span>
+                    <Link to={`/member/${chore.user}/${day}/chores`}>Any
+                      <span className='material-icons'>
+                        {(choreRecords.length > 0) ? 'check_box' : 'check_box_outline_blank'}
+                      </span>
+                    </Link>
+                  </span>}
               </div>
             ))}
 
           </div>
           <Link style={{ marginTop: '30px', fontSize: '25px' }} to={`/member/${chore.user}/chores`}><span className='material-icons'>arrow_back</span>All {chore.user}'s chores</Link>
-
         </div>
-
       )}
-      {choreRecords && (
-        <>
+      {(choreRecords && records && chore) && (
+        <div className='daily-comment-feed'>
           {choreRecords.map((date, idx) => (
             <div key={idx}>{date}</div>
           )
           )}
-        </>
+          <div>{records.map((record, idx) => (
+            <div key={idx}>
+              {(record.chore === chore.name) && (
+                <div><span>{record.comment}</span><span>{record.date}</span></div>
+              )}
+            </div>
+          )
+          )}
+          </div>
+        </div>
       )}
-    </>
+    </div>
   )
 }
 
