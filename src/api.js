@@ -114,5 +114,9 @@ export function getRecords (token) {
 export function unsplashApi (query) {
   return axios.get(`https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}&orientation=landscape`)
     .then(res => res.data)
+}
 
+export function getMusicSamples (query) {
+  return axios.get(`https://itunes.apple.com/search?media=music&term=${encodeURI(query)}`)
+    .then(res => res.data)
 }
