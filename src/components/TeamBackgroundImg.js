@@ -1,5 +1,5 @@
 
-function TeamBackgroundImage ({ setSelectedImage, imageQuery, setImageQuery, handleImgSearch, setImageDisplay, setIsDisplaying }) {
+function TeamBackgroundImage ({ imageQuery, setImageQuery, handleImgSearch, setImageDisplay, setIsDisplaying }) {
   return (
     <div>
       <div>Team Background</div>
@@ -24,10 +24,6 @@ function TeamBackgroundImage ({ setSelectedImage, imageQuery, setImageQuery, han
           >Clear
           </button>
         </form>
-      </div>
-
-      <div className='object-value'>
-        <div className='select-tag' value={setImageDisplay} onChange={event => { setSelectedImage('') }}> </div>
       </div>
     </div>
   )
