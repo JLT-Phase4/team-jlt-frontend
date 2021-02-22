@@ -56,7 +56,6 @@ export function createTeam (token, teamName, teamSlogan, username, themeSong, ba
     .post('team-list/', {
       name: teamName,
       slogan: teamSlogan,
-      captain: username,
       theme_song: themeSong,
       background_image: backgroundImage,
       dashboard_style: dashboardStyle

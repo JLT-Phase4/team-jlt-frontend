@@ -6,14 +6,13 @@ import MusicSearch from './MusicSearch'
 import { createTeam } from '../api'
 import BackgroundImage from './BackgroundImage'
 
-
 const CreateTeamDashboard = ({ token, username }) => {
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
   const [backgroundImage, setBackgroundImage] = useState('')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
-  const [teamDashboardStyle, setTeamDashboardStyle] = useState('')
+  const [teamDashboardStyle, setTeamDashboardStyle] = useState('black')
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle)
