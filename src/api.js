@@ -122,7 +122,7 @@ export function getRecords (token) {
 
 export function unsplashApi (query) {
   return axios.get(`https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}&orientation=landscape`)
-    .then(res => res.data)
+    .then(res => res.data.results)
 }
 
 export function getMusicSamples (query) {
