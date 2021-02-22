@@ -41,6 +41,7 @@ const DailyChoreDashboard = ({ token }) => {
               {dailyChores.map((chore, idx) => (
                 <div key={idx}>
                   <div className='chore-detail'>{chore.name}
+                    <span className='material-icons'>check_box_outline_blank</span>
                   </div>
                 </div>
               ))}

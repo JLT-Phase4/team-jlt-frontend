@@ -25,12 +25,14 @@ import washingDishesImage from './images/washing-dishes.png'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
+const useToday = createPersistedState('today')
 
 function App () {
   const [teams, setTeams] = useState([])
   // const token = '805756d894563ce3f8a0f5c8c4bb5ae8a234ccf8'
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
+  const [today] = useToday('SUN')
 
   function setAuth (username, token) {
     setUsername(username)
@@ -90,7 +92,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} username={username} />
+          <TeamDashboard token={token} username={username} today={today} />
         </Route>
 
         <Route path='/create-team'>

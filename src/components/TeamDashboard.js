@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam } from './../api'
 
-const TeamDashboard = ({ token, username }) => {
+const TeamDashboard = ({ token, username, today }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isMember, setIsMember] = useState(false)
@@ -49,7 +49,7 @@ const TeamDashboard = ({ token, username }) => {
               </ul>
             </div>
           </div>
-          {isMember && <button className='team-dash-button'>Track my chores</button>}
+          {isMember && <button className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
         </>
       )
         : <>
@@ -66,7 +66,7 @@ const TeamDashboard = ({ token, username }) => {
               <ul />
             </div>
           </div>
-          </>}
+        </>}
     </div>
   )
 }
