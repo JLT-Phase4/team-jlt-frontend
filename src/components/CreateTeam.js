@@ -59,7 +59,7 @@ function CreateTeam ({ token, handleDone }) {
           <TeamBackgroundImage imageQuery={imageQuery} setImageQuery={setImageQuery} handleImgSearch={handleImgSearch} setImageDisplay={setImageDisplay} setIsDisplaying={setIsDisplaying} />
         </div>
       </div>
-      <div>{`${image}`}</div>
+      <img src={image} />
       <div className='display-images-container'>
         {imageDisplay.map(image => (
           <div className='images' key={image.id} onClick={() => { setSelectedImage(image.urls.thumb) }}>
