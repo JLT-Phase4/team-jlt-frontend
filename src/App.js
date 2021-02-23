@@ -10,6 +10,7 @@ import ChoreDashboard from './components/ChoreDashboard'
 import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
+import CreateTeamMembers from './components/CreateTeamMembers'
 
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
@@ -117,6 +118,11 @@ function App () {
         <Route path='/choredetail/:chorePk'>
           <div className='App' />
           <ChoreRecordDetail token={token} />
+        </Route>
+
+        <Route path='/create-team-members/:teamPk'>
+          <div className='App' />
+          <CreateTeamMembers token={token} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}

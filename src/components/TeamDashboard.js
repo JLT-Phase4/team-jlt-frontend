@@ -1,12 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam } from './../api'
-// import useSound from 'use-sound'
-
-// const TeamSongButton = ({ track }) => {
-//   const [play] = useSound(track)
-//   return <button onClick={play}>Team Song</button>
-// }
 
 const TeamDashboard = ({ token, username, today }) => {
   const { teamPk } = useParams()
@@ -57,7 +51,9 @@ const TeamDashboard = ({ token, username, today }) => {
               </ul>
             </div>
           </div>
-          {isMember && <button className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
+          {isMember && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
+          {(team.captain === username) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}`}>Add Team Members</Link></button>}
+
         </>
       )
         : <>

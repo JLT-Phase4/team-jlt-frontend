@@ -51,6 +51,33 @@ export function register (username, password) {
     })
 }
 
+export function createUser (username, password) {
+  return API
+    .post('auth/users/', {
+      username: username,
+      password: password
+    })
+    .then(response => response.data)
+    .catch(error => {
+      let errors = []
+      if (error.response) {
+        const data = error.response.data
+        if (data.username) {
+          errors = errors.concat(data.username)
+        }
+        if (data.password) {
+          errors = errors.concat(data.password)
+        }
+      }
+
+      if (errors.length === 0) {
+        errors.push('There was a problem registering.')
+      }
+      const err = new Error(errors[0])
+      throw err
+    })
+}
+
 export function createTeam (token, teamName, teamSlogan, username, themeSong, backgroundImage, dashboardStyle) {
   return API
     .post('team-list/', {
@@ -66,6 +93,20 @@ export function createTeam (token, teamName, teamSlogan, username, themeSong, ba
       }
     })
     .then(response => response.data)
+}
+
+export function addMember (token, username, teamPk) {
+  return API
+    .post(`team/${teamPk}/`, {
+      username: username
+    },
+    {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(response => response.data)
+    .then(console.log(teamPk, username))
 }
 
 export function getTeams (token) {

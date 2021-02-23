@@ -4,9 +4,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import MusicSearch from './MusicSearch'
 import { createTeam } from '../api'
+
 import BackgroundImage from './BackgroundImage'
 
 const CreateTeamDashboard = ({ token, username }) => {
+  const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
   const [backgroundImage, setBackgroundImage] = useState('')
@@ -15,12 +17,15 @@ const CreateTeamDashboard = ({ token, username }) => {
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('black')
 
   function handleCreateTeam () {
-    createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle)
-    handleDone()
+    createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
+    if (team) {
+      countStep(0)
+      return <Redirect to={`/team/${team.pk}`} />
+    }
   }
 
-  if (step === 0) {
-    return <Redirect to='/' />
+  if (step === 0 && team) {
+    return <Redirect to={`/team/${team.pk}`} />
   }
 
   function handleNextStep () {

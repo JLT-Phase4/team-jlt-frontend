@@ -16,7 +16,7 @@ const HomePageScoreCards = ({ teams }) => {
           {(team) && (
             <Link to={`/team/${team.pk}`} className='flex-col'>
               <Card>
-                <Card.Body className={(team.pk === 1) ? 'dashboard-style-1' : 'dashboard-style-2'}>
+                <Card.Body style={{ backgroundColor: `${team.dashboard_style}` }} className='dashboard-style'>
                   <div className='home-scorecard'>{team.name}
                     <div style={outerDivStyle}>
                       <Spring
