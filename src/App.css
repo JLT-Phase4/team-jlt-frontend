@@ -142,8 +142,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  height: 60vh;
+  min-height: 60vh;
   background-size: cover;
 }
 
@@ -234,7 +233,24 @@ a {
   /* margin-top: 8%; */
   border-radius: 25px;
   padding: 2%;
-  min-height: 40vh;
+  /* min-height: 40vh; */
+  /* max-width: 700px; */
+  height: 40vh;
+  width: 90%;
+}
+
+.team-scoreboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 30%;
+  background-size: cover;
+  margin: 4%;
+  /* margin-top: 8%; */
+  border-radius: 25px;
+  padding: 2%;
+  min-height: 20vh;
   max-width: 700px;
 }
 
@@ -273,6 +289,23 @@ a {
   margin: 4%;
   font-weight: bold;
 }
+.home-dash-button {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  font-weight: bold;
+  background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117));
+}
+
+.avatar-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  background-size: cover;
+  background-color:rgb(58, 147, 235);
+  margin: 10px;
+}
 
 /* why isnt this working? */
 @media only screen and (max-width:900px) {
@@ -288,6 +321,9 @@ a {
   }
   .header-bar {
     width: 50px;
+  }
+  .team-dashboard-container {
+    height: 200px;
   }
 }
 
