@@ -129,6 +129,38 @@ export function getTeam (token, teamPk) {
     .then(res => res.data)
 }
 
+export function getMyProfile (token) {
+  return API
+    .get('my-profile/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+export function getUserProfile (token, username) {
+  return API
+    .get(`user/${username}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
+export function updateUserProfile (token, username, avatar) {
+  return API
+    .patch(`/user/${username}/`, {
+      avatar: avatar
+    },
+    {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(response => response.data)
+}
+
 export function getMemberChores (token, username) {
   return API
     .get(`users/${username}/chores`, {

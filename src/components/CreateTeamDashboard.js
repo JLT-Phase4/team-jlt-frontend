@@ -30,9 +30,7 @@ const CreateTeamDashboard = ({ token, username }) => {
   function handlePreviousStep () {
     countStep(step - 1)
   }
-  // const handleDone = () => {
-  //   countStep(0)
-  // }
+
   return (
 
     <div>

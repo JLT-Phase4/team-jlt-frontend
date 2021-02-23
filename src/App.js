@@ -11,7 +11,7 @@ import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
-
+import MyProfile from './components/MyProfile'
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
@@ -123,6 +123,11 @@ function App () {
         <Route path='/create-team-members/:teamPk'>
           <div className='App' />
           <CreateTeamMembers token={token} />
+        </Route>
+
+        <Route path='/my-profile'>
+          <div className='App' />
+          <MyProfile token={token} username={username} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}

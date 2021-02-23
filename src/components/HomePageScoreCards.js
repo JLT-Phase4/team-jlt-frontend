@@ -38,6 +38,9 @@ const HomePageScoreCards = ({ teams }) => {
           )}
         </div>
       ))}
+      <button className='home-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>
+      <button className='home-dash-button'><Link to='/my-profile'>My Profile</Link></button>
+
     </div>
   )
 }

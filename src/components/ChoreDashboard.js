@@ -17,7 +17,7 @@ const ChoreDashboard = ({ token }) => {
     <>
       {memberChores && (
         <div className='member-dashboard-container'>
-          <div style={{ width: '150px', height: '150px', borderRadius: '150px', backgroundSize: 'cover', backgroundImage: 'url("https://images.unsplash.com/photo-1543466835-00a7907e9de1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDQxMTN8MHwxfHNlYXJjaHw2fHxkb2d8ZW58MHx8fA&ixlib=rb-1.2.1&q=80&w=1080")' }} />
+          <div className='avatar-image' />
           {/* above is placeholder for member avatar  */}
           <div className='team-title'>{username}'s page!</div>
           <div className='flex-sa'>
@@ -33,7 +33,7 @@ const ChoreDashboard = ({ token }) => {
                         <div key={idxDAY}>
                           {(day && day === DAY) &&
                             <span>
-                              <Link to={`/member/${chore.user}/${day}/chores`}>{DAY}
+                              <Link to={`/member/${username}/${day}/chores`}>{DAY}
                                 <span className='material-icons'>
                                   check_box_outline_blank
                                 </span>

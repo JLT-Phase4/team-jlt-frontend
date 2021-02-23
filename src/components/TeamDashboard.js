@@ -28,19 +28,19 @@ const TeamDashboard = ({ token, username, today }) => {
       {team ? (
         <>
           <div className='flex-center'>
-            <div className='team-dashboard-container' style={{ height: '50%', backgroundImage: `url(${team.background_image}` }}>
+            <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
               <div className='team-title'>We are {team.name}!</div>
               <div className='team-slogan'>{team.slogan}!
                 {/* <TeamSongButton track={team.theme_song} /> */}
                 <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
               </div>
-              <div className='team-scoreblock flex'>
+              {/* <div className='team-scoreblock flex'>
                 {team.members.map(member => (
                   <ul key={member}>
                     <li><Link to={`/member/${member}/chores`}>{member}</Link></li>
                   </ul>
                 ))}
-              </div>
+              </div> */}
             </div>
             <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
               <h1>Feed will go here:</h1>
@@ -49,6 +49,15 @@ const TeamDashboard = ({ token, username, today }) => {
                 <li>comments</li>
                 <li>emojis?</li>
               </ul>
+            </div>
+            <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
+              <div className='team-scoreblock flex'>
+                {team.members.map(member => (
+                  <ul key={member}>
+                    <li><Link to={`/member/${member}/chores`}>{member}</Link></li>
+                  </ul>
+                ))}
+              </div>
             </div>
             {isMember && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
             {(team.captain === username) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}`}>Add Team Members</Link></button>}
