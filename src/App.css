@@ -20,6 +20,7 @@ body {
   font-weight: 300;
   text-align: center;
 }
+
 .home-header {
   margin-top: 40px;
   flex-wrap: wrap;
@@ -85,10 +86,13 @@ a {
 }
 
 .register-and-login {
-  float:right;
+  /* float:right; */
   /* position:absolute; */
   top:10px;
   right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .log-reg-header {
@@ -126,7 +130,7 @@ a {
 }
 
 .home-scorecard {
-  width: 130px;
+  width: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,6 +221,7 @@ a {
   /* margin-top: 8%; */
   border-radius: 25px;
   padding: 2%;
+  min-width: 345px;
 }
 .team-dashboard-container {
   display: flex;
@@ -230,6 +235,7 @@ a {
   border-radius: 25px;
   padding: 2%;
   min-height: 40vh;
+  max-width: 700px;
 }
 
 .team-title {
@@ -263,15 +269,25 @@ a {
   height: 200px;
   margin-top: 0px;
   /* margin-left: 15%; */
-  margin-bottom: 4%;
+  /* margin-bottom: 4%; */
+  margin: 4%;
   font-weight: bold;
 }
 
 /* why isnt this working? */
 @media only screen and (max-width:900px) {
   .team-dash-button {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+  }
+  .header {
+    flex-wrap:nowrap;    
+  }
+  .banner {
+    font-size: 30px;
+  }
+  .header-bar {
+    width: 50px;
   }
 }
 

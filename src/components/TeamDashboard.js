@@ -27,7 +27,7 @@ const TeamDashboard = ({ token, username, today }) => {
     <div style={{ textAlign: 'center' }}>
       {team ? (
         <>
-          <div className='flex'>
+          <div className='flex-center'>
             <div className='team-dashboard-container' style={{ height: '50%', backgroundImage: `url(${team.background_image}` }}>
               <div className='team-title'>We are {team.name}!</div>
               <div className='team-slogan'>{team.slogan}!
@@ -50,9 +50,10 @@ const TeamDashboard = ({ token, username, today }) => {
                 <li>emojis?</li>
               </ul>
             </div>
+            {isMember && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
+            {(team.captain === username) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}`}>Add Team Members</Link></button>}
+
           </div>
-          {isMember && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/member/${username}/${today}/chores`}>Track my chores</Link></button>}
-          {(team.captain === username) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}`}>Add Team Members</Link></button>}
 
         </>
       )

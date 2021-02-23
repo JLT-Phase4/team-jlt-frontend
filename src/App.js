@@ -65,7 +65,7 @@ function App () {
 
       <div style={{ paddingTop: '20px' }} className='flex-col-center'>
         {/* <Link to='/' className='banner'><span style={{ fontSize: '40px' }} className='material-icons'>storm</span> Chore Wars <span style={{ fontSize: '40px' }} className='material-icons'>storm</span>      </Link> */}
-        <div className='flex'>
+        <div className='flex header'>
           <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
           <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
           <Link to='/' className='banner'>Chore Wars</Link>
