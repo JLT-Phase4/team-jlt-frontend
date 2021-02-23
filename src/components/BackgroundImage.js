@@ -30,7 +30,7 @@ const BackgroundImage = ({ token, setBackgroundImage }) => {
             <div className='flex'>
               {images.map(image => (
                 <div style={{ width: '120px', height: '130px' }} image={image} key={image.id}>
-                  <div className='image-thumbnail' onClick={() => setBackgroundImage(image.urls.small)} style={{ backgroundImage: `url(${image.urls.small})` }} />
+                  <div className='image-thumbnail' onClick={() => setBackgroundImage(image.urls.regular)} style={{ backgroundImage: `url(${image.urls.regular})` }} />
                   <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }} />
                 </div>
               ))}
