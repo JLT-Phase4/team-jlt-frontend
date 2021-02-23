@@ -18,13 +18,9 @@ const CreateTeamDashboard = ({ token, username }) => {
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
-    if (team) {
-      countStep(0)
-      return <Redirect to={`/team/${team.pk}`} />
-    }
   }
 
-  if (step === 0 && team) {
+  if (team) {
     return <Redirect to={`/team/${team.pk}`} />
   }
 
@@ -34,9 +30,9 @@ const CreateTeamDashboard = ({ token, username }) => {
   function handlePreviousStep () {
     countStep(step - 1)
   }
-  const handleDone = () => {
-    countStep(0)
-  }
+  // const handleDone = () => {
+  //   countStep(0)
+  // }
   return (
 
     <div>
