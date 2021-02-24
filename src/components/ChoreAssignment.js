@@ -13,13 +13,13 @@ const names = ['Logan', 'Tracy', 'Jesse']
 
 function ChoreAssignment () {
   return (
-    <div className='drag-and-drop-container'>
+    <div>
       <div>
         {names.map((name) => (
           <div key={name} className='team-member-container'>
             <div className='team-member'>{name}</div>
 
-            <div>
+            <div className='drag-and-drop-container'>
               {data.map((item, itemI) => (
                 <div key={item.assignment_type} className='day-container'>
                   <div className='days'>{item.assignment_type}</div>
