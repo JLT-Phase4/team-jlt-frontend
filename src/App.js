@@ -125,7 +125,7 @@ function App () {
           <CreateTeamMembers token={token} />
         </Route>
 
-        <Route path='/my-profile'>
+        <Route path='/user-profile/:username'>
           <div className='App' />
           <MyProfile token={token} profileUsername={username} />
         </Route>
@@ -134,7 +134,7 @@ function App () {
 
         <Route path='/'>
           <div>
-            <HomePageScoreCards teams={teams} isCaptain={isCaptain} />
+            <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
             <Carousel>
               {teams.map((team, idx) => (
                 <Carousel.Item key={idx} className='carousel-holder'>
