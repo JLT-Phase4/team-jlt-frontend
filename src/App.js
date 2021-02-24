@@ -23,6 +23,7 @@ import laundryImage from './images/laundry-basket.png'
 import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
+import ChoreAssignment from './components/ChoreAssignment'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -120,6 +121,14 @@ function App () {
           <ChoreRecordDetail token={token} />
         </Route>
 
+
+        {/* CHORE ASSIGNMENT PAGE */}
+        <Route path='/chore-assignment/:teamPk'>
+          <div className='App' />
+          <ChoreAssignment token={token} />
+        </Route>
+
+        
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} />
