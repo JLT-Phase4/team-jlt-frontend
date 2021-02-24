@@ -33,7 +33,7 @@ function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
-  const [today] = useToday('SUN')
+  const [today] = useToday('TUE')
   const [isCaptain, setCaptain] = useState(false)
 
   function setAuth (username, token) {
@@ -121,14 +121,12 @@ function App () {
           <ChoreRecordDetail token={token} />
         </Route>
 
-
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreAssignment token={token} />
         </Route>
 
-        
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} />
@@ -136,7 +134,7 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} profileUsername={username} />
+          <UserProfile token={token} today={today} profileUsername={username} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
