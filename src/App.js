@@ -11,7 +11,7 @@ import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
-import MyProfile from './components/MyProfile'
+import UserProfile from './components/UserProfile'
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
@@ -31,10 +31,10 @@ const useToday = createPersistedState('today')
 
 function App () {
   const [teams, setTeams] = useState([])
-  // const token = '805756d894563ce3f8a0f5c8c4bb5ae8a234ccf8'
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
   const [today] = useToday('SUN')
+  const [isCaptain, setCaptain] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -95,12 +95,12 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} username={username} today={today} />
+          <TeamDashboard token={token} profileUsername={username} today={today} />
         </Route>
 
         <Route path='/create-team-dashboard'>
           <div className='App' />
-          <CreateTeamDashboard token={token} username={username} />
+          <CreateTeamDashboard token={token} profileUsername={username} />
         </Route>
 
         {/* Member Chores List Dashboard */}
@@ -121,27 +121,29 @@ function App () {
           <ChoreRecordDetail token={token} />
         </Route>
 
+
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreAssignment token={token} />
         </Route>
 
-        <Route path='/create-team-members/:teamPk'>
+        
+        <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} />
         </Route>
 
-        <Route path='/my-profile'>
+        <Route path='/user-profile/:username'>
           <div className='App' />
-          <MyProfile token={token} username={username} />
+          <UserProfile token={token} profileUsername={username} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
           <div>
-            <HomePageScoreCards teams={teams} />
+            <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
             <Carousel>
               {teams.map((team, idx) => (
                 <Carousel.Item key={idx} className='carousel-holder'>
@@ -158,7 +160,6 @@ function App () {
               ))}
             </Carousel>
             <div className='footer-feed'>Latest Notification Feed</div>
-
           </div>
         </Route>
       </Switch>
