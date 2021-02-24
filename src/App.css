@@ -45,6 +45,10 @@ body {
   flex-wrap: wrap;
 }
 
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
 .flex-sa {
   display: flex;
   justify-content: space-around;
@@ -104,31 +108,43 @@ a {
 .log-reg-header-form {
   padding-left: 20px;
   margin: 20px;
-  width: 30%;
+  /* width: 30%; */
 }
 
 .log-reg-button {
   margin: 20px;
   margin-left: 0px;
   padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117));
+  color: white;
 }
 
 .logout-button {
-  padding: 12px;
+  padding: 6px;
   border-radius: 8px;
+  background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117));
+  color: white;
 }
 
 .log-button {
   padding: 10px;
   border-radius: 8px;
   margin-left: 0px;
+  background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117));
+  color: white;
 }
 
 .reg-button {
   padding: 10px;
   border-radius: 8px;
+  background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117));
+  color: white;
 }
 
+label {
+  padding: 5px;
+}
 .home-scorecard {
   width: 170px;
   display: flex;
@@ -269,6 +285,9 @@ a {
   text-align: center;
 
 }
+.team-scoreblock {
+  padding: 10px;
+}
 .team-scoreblock li {
   border: 2px solid white;
   padding: 20px;
@@ -277,7 +296,7 @@ a {
 
 .team-scoreblock ul {
   padding-left: 0px;
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
 }
 .team-dash-button {
   border-radius: 50%;

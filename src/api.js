@@ -78,7 +78,7 @@ export function createUser (username, password) {
     })
 }
 
-export function createTeam (token, teamName, teamSlogan, username, themeSong, backgroundImage, dashboardStyle) {
+export function createTeam (token, teamName, teamSlogan, themeSong, backgroundImage, dashboardStyle) {
   return API
     .post('team-list/', {
       name: teamName,
@@ -111,7 +111,7 @@ export function addMember (token, username, teamPk) {
 
 export function getTeams (token) {
   return API
-    .get('teams/', {
+    .get('team-list/', {
       headers: {
         Authorization: `Token ${token}`
       }
@@ -163,7 +163,7 @@ export function updateUserProfile (token, username, avatar) {
 
 export function getMemberChores (token, username) {
   return API
-    .get(`users/${username}/chores`, {
+    .get(`users/${username}/assignments`, {
       headers: {
         Authorization: `Token ${token}`
       }

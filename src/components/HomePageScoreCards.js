@@ -8,7 +8,7 @@ const outerDivStyle = {
   background: 'linear-gradient(#3a93eb, #052075)'
 }
 
-const HomePageScoreCards = ({ teams }) => {
+const HomePageScoreCards = ({ teams, isCaptain }) => {
   return (
     <div className='home-header flex-sa'>
       {teams.map((team, idx) => (
@@ -38,8 +38,15 @@ const HomePageScoreCards = ({ teams }) => {
           )}
         </div>
       ))}
-      <button className='home-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>
-      <button className='home-dash-button'><Link to='/my-profile'>My Profile</Link></button>
+      {isCaptain
+        ? <div>
+          <button className='home-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>
+          <button className='home-dash-button'><Link to='/create-team-dashboard'>Manage my Team</Link></button>
+        </div>
+        : <div>
+          <button className='home-dash-button'><Link to='/my-profile'>My Profile</Link></button>
+          <button className='home-dash-button'><Link to='/create-team-dashboard'>View my Team</Link></button>
+                  </div>}
 
     </div>
   )
