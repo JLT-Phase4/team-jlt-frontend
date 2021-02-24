@@ -45,9 +45,10 @@ const UserProfile = ({ token, profileUsername }) => {
                 <div className='flex-col'>
                   <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Completed
                     <div className='flex'>
-                      <Card>
-                        <Card.Body>brush teeth</Card.Body>
-                      </Card>
+                      {userProfile.assignments.length > 0 &&
+                        <Card>
+                          <Card.Body>{userProfile.assignments[0].chore}</Card.Body>
+                        </Card>}
                     </div>
                   </div>
                   <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Chores for Today
