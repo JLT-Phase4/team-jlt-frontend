@@ -35,7 +35,7 @@ function ChoreAssignment () {
     {
       setList(oldList => {
         const newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
-        newList[parameters.itemI].items.splice(parameters.choreI, 0, newList[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
+        newList[parameters.itemI].chores.splice(parameters.choreI, 0, newList[currentItem.itemI].chores.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
         dragItem.current = parameters // now current item has become target item
         return newList
       })
