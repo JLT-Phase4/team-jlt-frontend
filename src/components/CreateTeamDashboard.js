@@ -7,7 +7,7 @@ import { createTeam } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token, username }) => {
+const CreateTeamDashboard = ({ token }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
@@ -17,7 +17,7 @@ const CreateTeamDashboard = ({ token, username }) => {
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('black')
 
   function handleCreateTeam () {
-    createTeam(token, teamName, teamSlogan, username, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
+    createTeam(token, teamName, teamSlogan, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
   }
 
   if (team) {

@@ -11,6 +11,9 @@ function Register ({ isLoggedIn, setAuth }) {
     return <Redirect to='/login' />
   }
 
+  // Add a .then to handleSubmit that will do a post to make user a captain
+  // Need an api for that
+
   function handleSubmit (event) {
     event.preventDefault()
     register(username, password)
