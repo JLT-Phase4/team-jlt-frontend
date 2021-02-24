@@ -429,7 +429,7 @@ ul {
   grid-template-columns: repeat(auto-fill, 300px);
 }
 
-.team-member-container {
+.day-container {
   padding: 5px;
   border-radius: 5px;
   background-color: gray;
@@ -448,6 +448,6 @@ ul {
   margin-bottom: 5px;
 }
 
-.team-member {
+.days {
   text-align: center;
 }
