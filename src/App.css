@@ -432,11 +432,11 @@ ul {
 .team-member-container {
   padding: 5px;
   border-radius: 5px;
-  color: gray;
+  background-color: gray;
 }
 
 .drag-and-drop-chore {
-  min-width: 150px;
+  min-height: 150px;
   background-color: white;
   color: black;
   border-radius: 5px;
@@ -446,4 +446,8 @@ ul {
 
 .drag-and-drop-chore:not(:last-of-type) {
   margin-bottom: 5px;
+}
+
+.team-member {
+  text-align: center;
 }
