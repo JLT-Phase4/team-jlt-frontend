@@ -161,6 +161,15 @@ export function updateUserProfile (token, username, avatar) {
     .then(response => response.data)
 }
 
+export function getChores (token) {
+  return API
+    .get('chore-list/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
 export function getMemberChores (token, username) {
   return API
     .get(`users/${username}/assignments`, {
@@ -169,6 +178,20 @@ export function getMemberChores (token, username) {
       }
     })
     .then(res => res.data)
+}
+
+export function createChore (token, choreName, choreDetail, chorePoints, teamName) {
+  return API
+    .post('chore-list/', {
+      name: choreName,
+      detail: choreDetail,
+      points: chorePoints,
+      team: teamName
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
 }
 
 export function getChore (token, chorePk) {

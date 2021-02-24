@@ -44,7 +44,6 @@ const UserProfile = ({ token, profileUsername, today }) => {
       {userProfile && team && (
         <div style={{ minWidth: '90%' }} className=' member-dashboard-container'>
           <div className='team-title'>{userProfile.username}'s page!</div>
-
           {(!isUpdating)
             ? <div style={{ minWidth: '90%' }}>
               <div className='flex-sa'>
@@ -97,7 +96,7 @@ const UserProfile = ({ token, profileUsername, today }) => {
               ))} */}
               {(profileUsername === username) &&
                 <button onClick={() => setIsUpdating(true)} className='home-dash-button'>Update Profile</button>}
-            </div>
+              </div>
             : <div style={{ minHeight: '60vh', justifyContent: 'center', alignItems: 'center' }} className='flex-col'>
               {/* <div className='team-title'>{userProfile.username} page!</div> */}
               <div>Is on team NAME TEAM</div>
@@ -105,7 +104,7 @@ const UserProfile = ({ token, profileUsername, today }) => {
               <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
               <AvatarImage token={token} setAvatar={setAvatar} />
               <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-            </div>}
+              </div>}
 
         </div>
       )}

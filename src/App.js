@@ -3,11 +3,11 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
+import TeamChoreDashboard from './components/TeamChoreDashboard'
 import HomeCarouselTeams from './components/HomeCarouselTeams'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
-import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
@@ -96,6 +96,11 @@ function App () {
         <Route path='/team/:teamPk'>
           <div className='App' />
           <TeamDashboard token={token} profileUsername={username} today={today} />
+        </Route>
+
+        <Route path='/team-chores/:teamPk'>
+          <div className='App' />
+          <TeamChoreDashboard token={token} />
         </Route>
 
         <Route path='/create-team-dashboard'>
