@@ -28,14 +28,14 @@ function ChoreAssignment () {
     }, 0)
   }
 
-  // this is the item we are dragging over, DROP
+  //   this is the item we are dragging over, DROP
   const handleDragEnter = (event, parameters) => {
     const currentItem = dragItem.current
     if (event.target !== dragBox.current) // if target is not the same as node item started in
     {
       setList(oldList => {
-        let newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
-        newList[parameters.itemI].items.splice(parameters.choreI, 0, newlist[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
+        const newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
+        newList[parameters.itemI].items.splice(parameters.choreI, 0, newList[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
         dragItem.current = parameters // now current item has become target item
         return newList
       })
@@ -60,37 +60,36 @@ function ChoreAssignment () {
 
   return (
     <div>
-      <div>
-        {names.map((name) => (
+      {/* <div> */}
+      {/* {names.map((name) => (
           <div key={name} className='team-member-container'>
-            <div className='team-member'>{name}</div>
+            <div className='team-member'>{name}</div> */}
 
-            <div className='drag-and-drop-container'>
-              {list.map((item, itemI) => (
-                <div
-                  key={item.assignment_type}
-                  className='day-container'
-                //   onDragEnter={dragging && !item.chores.length?(event) => handleDragEnter(event, {itemI, choreI: 0})} // "if your dragging and there are no chore items in columb" fixes empty columb bug
-                >
-                  <div className='days'>{item.assignment_type}</div>
-                  {item.chores.map((chore, choreI) => (
-                    <div
-                      draggable
-                      onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
-                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
-                      key={chore}
-                      className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
-                    >
-                      {chore}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-
+      <div className='drag-and-drop-container'>
+        {list.map((item, itemI) => (
+          <div
+            key={item.assignment_type}
+            className='day-container'
+          >
+            <div className='days'>{item.assignment_type}</div>
+            {item.chores.map((chore, choreI) => (
+              <div
+                draggable
+                onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
+                onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
+                key={chore}
+                className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
+              >
+                {chore}
+              </div>
+            ))}
           </div>
         ))}
       </div>
+
+      {/* </div> */}
+      {/* ))}
+      </div> */}
     </div>
   )
 }
