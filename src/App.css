@@ -448,6 +448,10 @@ ul {
   margin-bottom: 5px;
 }
 
+.current {
+  background-color: black;
+}
+
 .days {
   text-align: center;
 }
