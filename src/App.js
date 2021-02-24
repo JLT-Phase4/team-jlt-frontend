@@ -3,11 +3,11 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
+import TeamChoreDashboard from './components/TeamChoreDashboard'
 import HomeCarouselTeams from './components/HomeCarouselTeams'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
-import ChoreDetail from './components/ChoreDetail'
 import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
@@ -33,7 +33,7 @@ function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
-  const [today] = useToday('SUN')
+  const [today] = useToday('TUE')
   const [isCaptain, setCaptain] = useState(false)
 
   function setAuth (username, token) {
@@ -98,6 +98,11 @@ function App () {
           <TeamDashboard token={token} profileUsername={username} today={today} />
         </Route>
 
+        <Route path='/team-chores/:teamPk'>
+          <div className='App' />
+          <TeamChoreDashboard token={token} />
+        </Route>
+
         <Route path='/create-team-dashboard'>
           <div className='App' />
           <CreateTeamDashboard token={token} profileUsername={username} />
@@ -121,14 +126,12 @@ function App () {
           <ChoreRecordDetail token={token} />
         </Route>
 
-
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreAssignment token={token} />
         </Route>
 
-        
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} />
@@ -136,7 +139,7 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} profileUsername={username} />
+          <UserProfile token={token} today={today} profileUsername={username} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
