@@ -17,6 +17,7 @@ function ChoreAssignment () {
   const dragItem = useRef()
   const dragNode = useRef()
 
+  // item we are dragging(from)DRAG
   const handleDragStart = (event, parameters) => {
     // console.log(parameters)
     dragItem.current = parameters
@@ -27,8 +28,22 @@ function ChoreAssignment () {
     }, 0)
   }
 
+  // this is the item we are dragging over, DROP
+  const handleDragEnter = (event, parameters) => {
+    const currentItem = dragItem.current
+    if (event.target !== dragNode.current) // if target is not the same as node item started in
+    {
+      setList(oldList => {
+        const newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
+        newList(parameters.itemI).items.splice(parameters.choreI, 0, newlist[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
+        dragItem.current = parameters
+        return newList
+      })
+    }
+  }
+
   const handleDragEnd = () => {
-    console.log('its working!')
+    // console.log('its working!')
     setDragging(false)
     dragNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
@@ -56,7 +71,9 @@ function ChoreAssignment () {
                   <div className='days'>{item.assignment_type}</div>
                   {item.chores.map((chore, choreI) => (
                     <div
-                      draggable onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
+                      draggable
+                      onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
+                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
                       key={chore}
                       className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
                     >
