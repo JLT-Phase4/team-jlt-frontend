@@ -15,14 +15,14 @@ function ChoreAssignment () {
   const [list, setList] = useState(data)
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
-  const dragNode = useRef()
+  const dragBox = useRef()
 
   // item we are dragging(from)DRAG
   const handleDragStart = (event, parameters) => {
     // console.log(parameters)
     dragItem.current = parameters
-    dragNode.current = event.target
-    dragNode.current.addEventListener('dragend', handleDragEnd)
+    dragBox.current = event.target
+    dragBox.current.addEventListener('dragend', handleDragEnd)
     setTimeout(() => {
       setDragging(true)
     }, 0)
@@ -31,12 +31,12 @@ function ChoreAssignment () {
   // this is the item we are dragging over, DROP
   const handleDragEnter = (event, parameters) => {
     const currentItem = dragItem.current
-    if (event.target !== dragNode.current) // if target is not the same as node item started in
+    if (event.target !== dragBox.current) // if target is not the same as node item started in
     {
       setList(oldList => {
-        const newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
-        newList(parameters.itemI).items.splice(parameters.choreI, 0, newlist[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
-        dragItem.current = parameters
+        let newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
+        newList[parameters.itemI].items.splice(parameters.choreI, 0, newlist[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
+        dragItem.current = parameters // now current item has become target item
         return newList
       })
     }
@@ -45,9 +45,9 @@ function ChoreAssignment () {
   const handleDragEnd = () => {
     // console.log('its working!')
     setDragging(false)
-    dragNode.current.removeEventListener('dragend', handleDragEnd)
+    dragBox.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
-    dragNode.current = null
+    dragBox.current = null
   }
 
   const getStyles = (parameters) => {
@@ -67,7 +67,11 @@ function ChoreAssignment () {
 
             <div className='drag-and-drop-container'>
               {list.map((item, itemI) => (
-                <div key={item.assignment_type} className='day-container'>
+                <div
+                  key={item.assignment_type}
+                  className='day-container'
+                //   onDragEnter={dragging && !item.chores.length?(event) => handleDragEnter(event, {itemI, choreI: 0})} // "if your dragging and there are no chore items in columb" fixes empty columb bug
+                >
                   <div className='days'>{item.assignment_type}</div>
                   {item.chores.map((chore, choreI) => (
                     <div
