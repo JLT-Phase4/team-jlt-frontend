@@ -33,7 +33,7 @@ function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
-  const [today] = useToday('TUE')
+  const [today] = useToday('TUESDAY')
   const [isCaptain, setCaptain] = useState(false)
 
   function setAuth (username, token) {
