@@ -5,7 +5,7 @@ import { getMyProfile, getTeam, getUserProfile, updateUserProfile, updateAssignm
 import AvatarImage from './AvatarImage'
 
 // Won't pass username once this has avatar on myprofile
-const UserProfile = ({ token, profileUsername, today }) => {
+const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   // const [myProfile, setMyProfile] = useState()
@@ -15,7 +15,6 @@ const UserProfile = ({ token, profileUsername, today }) => {
   const [teamPk, setTeamPk] = useState('')
   const [myChores, setMyChores] = useState()
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'ANY']
-  const todayIndex = 1
   const [showSummary, setShowSummary] = useState(true)
 
   useEffect(updateProfile, [token, username, isUpdating])
@@ -159,15 +158,15 @@ const UserProfile = ({ token, profileUsername, today }) => {
                             </>
                           )}
                         </div>
-                        </div>
+                      </div>
                       : null}
                   </div>
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 

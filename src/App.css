@@ -2,6 +2,7 @@
   text-align: center;
   background-color: black;
   color:white;
+  margin-top: 50px;
 }
 
 
@@ -16,9 +17,12 @@ body {
 .banner {
   display: flex;
   /* margin-top: 50px; */
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 300;
   text-align: center;
+}
+.container {
+  margin-left: 10px;
 }
 
 .home-header {
@@ -86,7 +90,7 @@ body {
 }
 
 .header-bar {
-  width: 80px;
+  width: 40px;
   background-size: contain;
   background-repeat:no-repeat;
 }
@@ -352,10 +356,10 @@ label {
     flex-wrap:nowrap;    
   }
   .banner {
-    font-size: 30px;
+    font-size: 22px;
   }
   .header-bar {
-    width: 50px;
+    width: 25px;
   }
   .team-dashboard-container {
     height: 200px;
