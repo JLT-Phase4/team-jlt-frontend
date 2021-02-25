@@ -224,3 +224,16 @@ export function getMusicSamples (query) {
   return axios.get(`https://itunes.apple.com/search?media=music&term=${encodeURI(query)}`)
     .then(res => res.data.results)
 }
+
+export function updateAssignment (token, assignPk, status) {
+  return API
+    .patch(`assignment-detail/${assignPk}/`, {
+      complete: status
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    }
+    )
+    .then(res => res.data)
+}

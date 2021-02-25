@@ -62,20 +62,13 @@ const TeamChoreDashboard = ({ token }) => {
             <h2 className='log-reg-header'>Chores for <span style={{ color: 'yellowgreen' }}>{team.name}</span></h2>
             <div style={{ marginLeft: '40px' }} className='flex'>
 
-              {/* {team.chores.map((chore, idx) => (
-                <Card key={idx} style={{ margin: '10px' }} className='flex'>
-                  <Card.Body>
-                    {chore.replace(`, Team: ${team.name}`, '')}
-                  </Card.Body>
-                </Card>
-              ))} */}
               {teamChores.map((chore) => (
                 <Card key={chore.pk} style={{ margin: '10px' }} className='flex'>
                   {chore ? <Card.Body onMouseOver={() => toggleDetail(chore.pk)} onMouseLeave={() => toggleDetail(chore.pk)}>{chore.name}</Card.Body> : null}
                   {detailShown[chore.pk]
                     ? <Card.Body style={{ backgroundColor: 'yellowgreen', color: 'black' }}>
                       {chore.detail} [{chore.points}] points
-                    </Card.Body>
+                      </Card.Body>
                     : null}
                 </Card>
               ))}
@@ -91,11 +84,11 @@ const TeamChoreDashboard = ({ token }) => {
                       <button type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                  </Card>}
+                </Card>}
             </div>
 
             <div className='flex'>

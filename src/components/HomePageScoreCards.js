@@ -42,11 +42,11 @@ const HomePageScoreCards = ({ teams, isCaptain, profileUsername }) => {
         ? <div>
           <button className='home-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>
           <button className='home-dash-button'><Link to='/create-team-dashboard'>Manage my Team</Link></button>
-          </div>
+        </div>
         : <div>
           <button className='home-dash-button'><Link to={`/user-profile/${profileUsername}/`}>My Profile</Link></button>
-          <button className='home-dash-button'><Link to='/create-team-dashboard'>View my Team</Link></button>
-          </div>}
+          <button className='home-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>
+        </div>}
 
     </div>
   )

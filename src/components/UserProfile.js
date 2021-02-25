@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
-import { getMyProfile, getTeam, getUserProfile, updateUserProfile } from '../api'
+import { getMyProfile, getTeam, getUserProfile, updateUserProfile, updateAssignment } from '../api'
 import AvatarImage from './AvatarImage'
 
 // Won't pass username once this has avatar on myprofile
@@ -10,14 +10,13 @@ const UserProfile = ({ token, profileUsername, today }) => {
   const [userProfile, setUserProfile] = useState()
   // const [myProfile, setMyProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
-  // const [avatar, setAvatar] = useState('https://images.unsplash.com/photo-1543466835-00a7907e9de1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDQxMTN8MHwxfHNlYXJjaHw2fHxkb2d8ZW58MHx8fA&ixlib=rb-1.2.1&q=80&w=1080')
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
   const [myChores, setMyChores] = useState()
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'ANY']
   const todayIndex = 1
-  const [showSummary, setShowSummary] = useState(false)
+  const [showSummary, setShowSummary] = useState(true)
 
   useEffect(updateProfile, [token, username, isUpdating])
 
@@ -33,10 +32,7 @@ const UserProfile = ({ token, profileUsername, today }) => {
           }
         }
         setMyChores(userChores)
-        console.log(userChores)
       }
-      // console.log(typeof (profile.teams))
-      // console.log(profile.teams[0])
     })
     // getMyProfile(token).then(myProfile => setMyProfile(myProfile))
   }
@@ -44,6 +40,13 @@ const UserProfile = ({ token, profileUsername, today }) => {
   function updateAvatar () {
     updateUserProfile(token, username, avatar).then(profile => setUserProfile(profile))
     setIsUpdating(false)
+  }
+
+  useEffect(handleAvatar, [token, userProfile])
+  function handleAvatar () {
+    if (isUpdating === false && userProfile) {
+      setAvatar(userProfile.avatar)
+    }
   }
 
   useEffect(updateTeam, [token, teamPk])
@@ -57,52 +60,96 @@ const UserProfile = ({ token, profileUsername, today }) => {
     setShowSummary(!showSummary)
   }
 
+  function handleAssignmentUpdate (assignPk, status) {
+    if (assignPk) {
+      updateAssignment(token, assignPk, status).then(updateProfile())
+    }
+  }
+
   return (
     <div style={{ textAlign: 'center' }}>
       {userProfile && team && myChores && (
-        <div style={{ minWidth: '90%' }} className=' member-dashboard-container'>
-          <div className='team-title'>{userProfile.username}'s page!</div>
-          {(!isUpdating)
-            ? <div style={{ minWidth: '90%' }}>
-              <div className='flex-col'>
+        <>
+          <div style={{ marginLeft: '20px', marginTop: '50px' }} className='flex'>
+            <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
+
+            <div style={{ marginTop: '30px' }} className='flex-col team-title'>{userProfile.username}'s page!
+              {(profileUsername === username) &&
+                <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>}
+            </div>
+          </div>
+          <div style={{ minWidth: '90%' }} className=' member-dashboard-container'>
+
+            {(!isUpdating)
+              ? <div style={{ minWidth: '95%' }}>
                 <div className='flex-col'>
-                  <div className='flex-sa'>
-                    <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Remaining Chores for Today, {today}
-                      <div className='flex'>
+                  <div style={{ }} className='flex-col'>
+                    <div style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
+                    <div className='flex-sa'>
+                      <div className='flex-sb' style={{ minWidth: '35%', minHeight: '10vh', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>
                         {userProfile.assignments.length > 0 && (
-                          <>
-                            {userProfile.assignments.map((assignment, idx) => (
-                              <div key={idx}>
-                                {((assignment.assignment_type.includes(today) || assignment.assignment_type.includes('ANY')) && assignment.complete === false) && (
-                                  <Card>
-                                    <Card.Body>{assignment.chore}</Card.Body>
-                                  </Card>)}
-                              </div>))}
-                          </>
+                          <div className='flex-sb'>
+                            <div>Today's Chores
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div key={idx}>
+                                  {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
+                                    <Card onClick={() => handleAssignmentUpdate(assignment.pk, true)}>
+                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>
+                                    </Card>)}
+                                </div>))}
+                            </div>
+                            <div>Weekly Chores
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div key={idx}>
+                                  {(assignment.assignment_type.includes('ANY') && assignment.complete === false) && (
+                                    <Card onClick={() => handleAssignmentUpdate(assignment.pk, true)}>
+                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>
+                                    </Card>
+                                  )}
+                                </div>))}
+                            </div>
+                          </div>
                         )}
                       </div>
-                    </div>
-                    <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/team-chores/${team.pk}/`}>Drag Today's Chores Here to Complete</Link></button>
+                      <div style={{ minWidth: '35%', minHeight: '10vh', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Completed Chores {today}
+                        <div className='flex'>
+                          {userProfile.assignments.length > 0 && (
+                            <>
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div key={idx}>
+                                  {((assignment.assignment_type.includes(today)) && assignment.complete === true) && (
+                                    <Card onClick={() => handleAssignmentUpdate(assignment.pk, false)}>
+                                      <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}<span className='material-icons'>check_box</span></Card.Body>
+                                    </Card>)}
+                                </div>))}
+                            </>
+                          )}
+                        </div>
+                      </div>
 
+                    </div>
                   </div>
-                </div>
-                <div onClick={() => toggleSummary()}>Show/Hide Chore Summary
-                  {showSummary
-                    ? <div className='flex-col' style={{ marginTop: '50px' }}>CHORE SUMMARY
-                      <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>All Chores
+                  <div onClick={() => toggleSummary()} className='flex-col' style={{ marginTop: '50px' }}><div style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Chore Summary</div>
+                    {showSummary
+                      ? <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>
                         <div className='flex'>
                           {userProfile.assignments.length > 0 && (
                             <>
                               {days.map((day, index) => (
-                                <div key={index}><Card style={{ width: '165px' }}><Card.Body>{day}</Card.Body></Card>
+                                <div key={index}>
+                                  <Card style={{ width: '100%' }}>
+                                    <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
+                                      {day}
+                                    </Card.Body>
+                                  </Card>
                                   {userProfile.assignments.map((assignment, idx) => (
                                     <div key={idx}>
                                       <>
                                         {(assignment.assignment_type.includes(day)) && (
                                           <Card>
                                             {(assignment.complete === true)
-                                              ? <Card.Body style={{ width: '165px', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}</Card.Body>
-                                              : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore}</Card.Body>}
+                                              ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}<span className='material-icons'>check_box</span></Card.Body>
+                                              : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>}
                                           </Card>
                                         )}
                                       </>
@@ -112,29 +159,18 @@ const UserProfile = ({ token, profileUsername, today }) => {
                             </>
                           )}
                         </div>
-                      </div>
-                    </div>
-
-                    : null}
+                        </div>
+                      : null}
+                  </div>
                 </div>
-              </div>
-              {/* </div> */}
-              {/* {myProfile.assignments.map((chore, idx) => (
-                <Link key={idx} className='chore-detail' to={`/member/${username}/chores/`}>{chore}</Link>
-              ))} */}
-              {(profileUsername === username) &&
-                <button onClick={() => setIsUpdating(true)} className='home-dash-button'>Update Profile</button>}
-            </div>
-            : <div style={{ minHeight: '60vh', justifyContent: 'center', alignItems: 'center' }} className='flex-col'>
-              {/* <div className='team-title'>{userProfile.username} page!</div> */}
-              <div>Is on team NAME TEAM</div>
+                </div>
+              : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
+                <AvatarImage token={token} setAvatar={setAvatar} />
+                <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
+                </div>}
+          </div>
+        </>
 
-              <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
-              <AvatarImage token={token} setAvatar={setAvatar} />
-              <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-            </div>}
-
-        </div>
       )}
     </div>
 
