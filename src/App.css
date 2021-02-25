@@ -518,7 +518,7 @@ ul {
   border: 2px solid white;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.311);
-  margin:20px;
+  margin: 15px;
 }
 
 .chore-list-container ul {
@@ -535,17 +535,13 @@ ul {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.311);
   margin:20px;
-}
-
-.team-member-container-list:first-of-type {
-  margin-top: 100px;
+  border-radius: 10px;
 }
 
 .days {
   padding: 50px;
   padding-top: 0px;
 }
-
 
 .drop-container {
   margin-top: 20px;
@@ -556,8 +552,12 @@ ul {
   height: 100%;
   grid-template-columns: repeat(auto-fill, 140px);
   border: 2px solid white;
+  border-radius: 10px;
 }
-
+.members {
+  margin:16px;
+  margin-left: 45px;
+}
 .member {
   text-align: center;
 }

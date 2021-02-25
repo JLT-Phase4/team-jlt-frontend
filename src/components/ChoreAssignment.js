@@ -32,27 +32,30 @@ function ChoreAssignment ({ token }) {
                 ))}
               </div>
             </div>
-            <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Members</span>
-              <div>
-                {team.members.map(member => (
-                  <div className='team-member-container-list flex-row' key={member.username}>
-                    <div className='member'>
-                      {capitalizeUsername(member.username)}<br />
-                      <img src={member.avatar} style={{ maxHeight: '80px', maxWidth: '80px', borderRadius: '50px' }} />
-                    </div>
+            <div>
+              <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
+              <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
+                <div>
+                  {team.members.map(member => (
+                    <div className='team-member-container-list flex-row' key={member.username}>
+                      <div className='member'>
+                        {capitalizeUsername(member.username)}<br />
+                        <img src={member.avatar} style={{ maxHeight: '80px', maxWidth: '80px', borderRadius: '50px' }} />
+                      </div>
 
-                    <div className='flex-row'>
-                      {Days.map(day => (
-                        <div key={day}>
-                          <div className='days'>
-                            {day}
-                            <div className='drop-container' placeholder='drop' />
+                      <div className='flex-row'>
+                        {Days.map(day => (
+                          <div key={day}>
+                            <div className='days'>
+                              {day}
+                              <div className='drop-container' placeholder='drop' />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
