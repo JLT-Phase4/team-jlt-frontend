@@ -70,7 +70,7 @@ function ChoreAssignment () {
                 <div
                   key={item.assignment_type}
                   className='day-container'
-                  onDragEnter={dragging && !item.chores.length?(event) => handleDragEnter(event, {itemI, choreI: 0})}
+                  onDragEnter={dragging && !item.chores.length ? (event) => handleDragEnter(event, { itemI, choreI: 0 }): false}
                 >
                   <div className='days'>{item.assignment_type}</div>
                   {item.chores.map((chore, choreI) => (
