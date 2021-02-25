@@ -66,8 +66,10 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                 </div>
               </div>
               {isMember && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/member/${profileUsername}/${today}/chores`}>Track my chores</Link></button>}
-              {(team.captain === profileUsername) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
-              {(team.captain === profileUsername) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/team-chores/${team.pk}/`}>Team Chore Dashboard</Link></button>}
+              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>
+              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/team-chores/${team.pk}/`}>Team Chore Dashboard</Link></button>
+              {/* {(team.captain === profileUsername) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
+              {(team.captain === profileUsername) && <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/team-chores/${team.pk}/`}>Team Chore Dashboard</Link></button>} */}
 
             </div>
           </>
@@ -86,7 +88,7 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
               <ul />
             </div>
           </div>
-          </>}
+        </>}
     </div>
   )
 }

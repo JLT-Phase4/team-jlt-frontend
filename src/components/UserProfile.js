@@ -14,6 +14,10 @@ const UserProfile = ({ token, profileUsername, today }) => {
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
+  const [myChores, setMyChores] = useState()
+  const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'ANY']
+  const todayIndex = 1
+  const [showSummary, setShowSummary] = useState(false)
 
   useEffect(updateProfile, [token, username, isUpdating])
 
@@ -21,6 +25,16 @@ const UserProfile = ({ token, profileUsername, today }) => {
     getUserProfile(token, username).then(profile => {
       setUserProfile(profile)
       setTeamPk(profile.teams[0])
+      const userChores = []
+      if (profile) {
+        for (const chore of profile.assignments) {
+          if (!userChores.includes(chore)) {
+            userChores.push(chore)
+          }
+        }
+        setMyChores(userChores)
+        console.log(userChores)
+      }
       // console.log(typeof (profile.teams))
       // console.log(profile.teams[0])
     })
@@ -39,64 +53,78 @@ const UserProfile = ({ token, profileUsername, today }) => {
     }
   }
 
+  function toggleSummary () {
+    setShowSummary(!showSummary)
+  }
+
   return (
     <div style={{ textAlign: 'center' }}>
-      {userProfile && team && (
+      {userProfile && team && myChores && (
         <div style={{ minWidth: '90%' }} className=' member-dashboard-container'>
           <div className='team-title'>{userProfile.username}'s page!</div>
           {(!isUpdating)
             ? <div style={{ minWidth: '90%' }}>
-              <div className='flex-sa'>
-                <div>
-                  <div>Is on team {team.name}</div>
+              <div className='flex-col'>
+                <div className='flex-col'>
+                  <div className='flex-sa'>
+                    <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Remaining Chores for Today, {today}
+                      <div className='flex'>
+                        {userProfile.assignments.length > 0 && (
+                          <>
+                            {userProfile.assignments.map((assignment, idx) => (
+                              <div key={idx}>
+                                {((assignment.assignment_type.includes(today) || assignment.assignment_type.includes('ANY')) && assignment.complete === false) && (
+                                  <Card>
+                                    <Card.Body>{assignment.chore}</Card.Body>
+                                  </Card>)}
+                              </div>))}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/team-chores/${team.pk}/`}>Drag Today's Chores Here to Complete</Link></button>
 
-                  <div className='avatar-image' style={{ backgroundImage: `url(${userProfile.avatar})` }} />
-                  <div className='flex'>TeamMates:
-                    {team.members.map((member, idx) => (
-                      <div style={{ paddingLeft: '5px', paddingRight: '5px' }} key={idx}>{member}</div>
-                    ))}
                   </div>
                 </div>
-                <div className='flex-col'>
-                  <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Chores for Today
-                    <div className='flex'>
-                      {userProfile.assignments.length > 0 && (
-                        <>
-                          {userProfile.assignments.map((assignment, idx) => (
-                            <div key={idx}>
-                              {(assignment.assignment_type.includes(today)) && (
-                                <Card>
-                                  <Card.Body>{assignment.chore}</Card.Body>
-                                </Card>)}
-                            </div>))}
-                        </>
-                      )}
+                <div onClick={() => toggleSummary()}>Show/Hide Chore Summary
+                  {showSummary
+                    ? <div className='flex-col' style={{ marginTop: '50px' }}>CHORE SUMMARY
+                      <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>All Chores
+                        <div className='flex'>
+                          {userProfile.assignments.length > 0 && (
+                            <>
+                              {days.map((day, index) => (
+                                <div key={index}><Card style={{ width: '165px' }}><Card.Body>{day}</Card.Body></Card>
+                                  {userProfile.assignments.map((assignment, idx) => (
+                                    <div key={idx}>
+                                      <>
+                                        {(assignment.assignment_type.includes(day)) && (
+                                          <Card>
+                                            {(assignment.complete === true)
+                                              ? <Card.Body style={{ width: '165px', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}</Card.Body>
+                                              : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore}</Card.Body>}
+                                          </Card>
+                                        )}
+                                      </>
+                                    </div>))}
+                                </div>
+                              ))}
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div style={{ minWidth: '50%', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>All Chores
-                    <div className='flex'>
-                      {userProfile.assignments.length > 0 && (
-                        <>
-                          {userProfile.assignments.map((assignment, idx) => (
-                            <div key={idx}>
-                              <Card>
-                                <Card.Body>{assignment.chore}</Card.Body>
-                                {/* This will need to be rewritten when model changes. */}
-                                <Card.Body>{assignment.assignment_type.join()}</Card.Body>
-                              </Card>
-                            </div>))}
-                        </>
-                      )}
-                    </div>
-                  </div>
+
+                    : null}
                 </div>
               </div>
+              {/* </div> */}
               {/* {myProfile.assignments.map((chore, idx) => (
                 <Link key={idx} className='chore-detail' to={`/member/${username}/chores/`}>{chore}</Link>
               ))} */}
               {(profileUsername === username) &&
                 <button onClick={() => setIsUpdating(true)} className='home-dash-button'>Update Profile</button>}
-              </div>
+            </div>
             : <div style={{ minHeight: '60vh', justifyContent: 'center', alignItems: 'center' }} className='flex-col'>
               {/* <div className='team-title'>{userProfile.username} page!</div> */}
               <div>Is on team NAME TEAM</div>
@@ -104,11 +132,12 @@ const UserProfile = ({ token, profileUsername, today }) => {
               <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
               <AvatarImage token={token} setAvatar={setAvatar} />
               <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-              </div>}
+            </div>}
 
         </div>
       )}
     </div>
+
   )
 }
 
