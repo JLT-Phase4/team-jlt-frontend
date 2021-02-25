@@ -11,10 +11,10 @@ const CreateTeamDashboard = ({ token }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
-  const [backgroundImage, setBackgroundImage] = useState('')
+  const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1537440499989-de5f6b6854de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHwxMHx8a2lkc3xlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
-  const [teamDashboardStyle, setTeamDashboardStyle] = useState('black')
+  const [teamDashboardStyle, setTeamDashboardStyle] = useState('gold')
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
