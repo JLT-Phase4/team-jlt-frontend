@@ -121,14 +121,12 @@ function App () {
           <ChoreRecordDetail token={token} />
         </Route>
 
-
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreAssignment token={token} />
         </Route>
 
-        
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} />

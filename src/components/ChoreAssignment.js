@@ -28,7 +28,7 @@ function ChoreAssignment () {
     }, 0)
   }
 
-  //   this is the item we are dragging over, DROP
+  //   this is the item we are dragging over, DROP, "The dragenter event is fired when a dragged element or text selection enters a valid drop target".
   const handleDragEnter = (event, parameters) => {
     const currentItem = dragItem.current
     if (event.target !== dragBox.current) // if target is not the same as node item started in
@@ -60,36 +60,37 @@ function ChoreAssignment () {
 
   return (
     <div>
-      {/* <div> */}
-      {/* {names.map((name) => (
+      <div>
+        {names.map((name) => (
           <div key={name} className='team-member-container'>
-            <div className='team-member'>{name}</div> */}
+            <div className='team-member'>{name}</div>
 
-      <div className='drag-and-drop-container'>
-        {list.map((item, itemI) => (
-          <div
-            key={item.assignment_type}
-            className='day-container'
-          >
-            <div className='days'>{item.assignment_type}</div>
-            {item.chores.map((chore, choreI) => (
-              <div
-                draggable
-                onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
-                onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
-                key={chore}
-                className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
-              >
-                {chore}
-              </div>
-            ))}
+            <div className='drag-and-drop-container'>
+              {list.map((item, itemI) => (
+                <div
+                  key={item.assignment_type}
+                  className='day-container'
+                  onDragEnter={dragging && !item.chores.length?(event) => handleDragEnter(event, {itemI, choreI: 0})}
+                >
+                  <div className='days'>{item.assignment_type}</div>
+                  {item.chores.map((chore, choreI) => (
+                    <div
+                      draggable
+                      onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
+                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
+                      key={chore}
+                      className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
+                    >
+                      {chore}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
           </div>
         ))}
       </div>
-
-      {/* </div> */}
-      {/* ))}
-      </div> */}
     </div>
   )
 }
