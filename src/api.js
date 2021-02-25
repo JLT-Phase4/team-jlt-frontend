@@ -237,3 +237,17 @@ export function updateAssignment (token, assignPk, status) {
     )
     .then(res => res.data)
 }
+
+export function postAssigment (token, username, assignmentType) {
+  return API
+    .post('assignment-list/', {
+      username: username,
+      assignment_type: assignmentType
+
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
