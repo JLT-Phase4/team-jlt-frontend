@@ -50,8 +50,8 @@ const CreateTeamMembers = ({ token }) => {
   }
 
   return (
-    <div className='page-container'>
-      <h2 className='log-reg-header'>Add New Team Member to <span style={{ color: 'yellowgreen' }}>{teamName}</span></h2>
+    <div style={{ marginTop: '100px' }} className='page-container'>
+      <h2>Add New Team Member to <span style={{ color: 'yellowgreen' }}>{teamName}</span></h2>
       <div className='log-reg-header'>Please write down their username and password for later.</div>
 
       <div className='flex-sa'>
@@ -89,8 +89,8 @@ const CreateTeamMembers = ({ token }) => {
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-scoreblock flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Current Team Members</span>
             <div className='flex'>
               {team.members.map(member => (
-                <ul key={member}>
-                  <li>{member}</li>
+                <ul key={member.username}>
+                  <li>{member.username}</li>
                 </ul>
               ))}
             </div>
