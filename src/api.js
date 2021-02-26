@@ -237,3 +237,13 @@ export function updateAssignment (token, assignPk, status) {
     )
     .then(res => res.data)
 }
+
+export function getPoints (token, username) {
+  return API
+    .get(`point-count/${username}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}

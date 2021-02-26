@@ -31,7 +31,7 @@ const TeamChoreDashboard = ({ token }) => {
     getChores(token).then(chores => setChores(chores))
   }
 
-  useEffect(updateTeamChores, [chores, team, setChores])
+  useEffect(updateTeamChores, [chores, team, setTeamChores, setIsCreating])
   function updateTeamChores () {
     let newChores = []
     if (chores && team) {
@@ -44,10 +44,11 @@ const TeamChoreDashboard = ({ token }) => {
     }
   }
 
-  function handleCreate (e) {
-    e.preventDefault()
+  useEffect(handleCreate, [chores, team, setIsCreating])
+  function handleCreate () {
+    // e.preventDefault()
     if (team) {
-      createChore(token, choreName, choreDetail, chorePoints, team.name).then(updateTeam())
+      createChore(token, choreName, choreDetail, chorePoints, team.name).then(chore => updateTeamChores())
     }
     setIsCreating(false)
   }
@@ -55,7 +56,7 @@ const TeamChoreDashboard = ({ token }) => {
   return (
     <div>
 
-      {(team && team.chores.length > 0 && teamChores) && (
+      {(team && teamChores) && (
 
         <div>
           <div className='flex-col'>
@@ -76,7 +77,7 @@ const TeamChoreDashboard = ({ token }) => {
               {isCreating
                 ? <Card style={{ margin: '10px' }}>
                   <Card.Body>
-                    <form onSubmit={(event) => handleCreate(event)}>
+                    <form onSubmit={() => handleCreate()}>
                       <label className='chore-detail' htmlFor='chore-title'>Chore Title</label>
                       <input type='text' id='chore-title' required value={choreName} onClick={event => setChoreName('')} onChange={evt => setChoreName(evt.target.value)} />
                       <label className='chore-detail' htmlFor='chore-detail'>Chore Detail</label>
@@ -98,7 +99,7 @@ const TeamChoreDashboard = ({ token }) => {
                   <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
                 </div>
               </div>
-              <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
+              <div className='team-scoreboard-container-dash' style={{ border: `3px solid ${team.dashboard_style}` }}>
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                   {team.members.map(member => (
                     <ul className='flex' key={member.username}>
