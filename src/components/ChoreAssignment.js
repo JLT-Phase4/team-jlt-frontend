@@ -25,7 +25,10 @@ function ChoreAssignment ({ token }) {
     console.log('drag is starting baby!', params)
     dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
     dropNode.current = event.target
+    console.log(event.target.innerText)
     dropNode.current.addEventListener('dragend', handleDragEnd)
+    event.dataTransfer.setData('text/plain', event.target.innerText)
+    console.log(event.dataTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
   }
 
@@ -52,9 +55,16 @@ function ChoreAssignment ({ token }) {
   }
   function handleDrop (event) {
     event.preventDefault()
-    console.log('handleDrop is firing')
+    // console.log(event)
+    // const oldData = event.target.childNodes[0].data
+    // console.log(oldData)
+    // console.log('handleDrop is firing')
+    // console.log(event.dataTransfer)
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    event.target.appendChild(document.getElementById(data))
+    // console.log(data)
+    const newData = document.createElement('p')
+    newData.innerText = data
+    event.target.appendChild(newData)
   }
 
   return (
@@ -91,13 +101,13 @@ function ChoreAssignment ({ token }) {
                         {Days.map(day => ( // does days need to be an object?
                           <div key={day}>
                             <div
-                              className='days'
+                              className='days drop-container'
                               id={day}
                               onDrop={handleDrop}
                               onDragOver={handleDragOver}
                             >
                               {day}
-                              <div className='drop-container'>DropZone </div>
+
                             </div>
                           </div>
                         ))}
