@@ -23,6 +23,7 @@ body {
 }
 .container {
   margin-left: 10px;
+  max-width: 100%;
 }
 
 .home-header {
@@ -292,15 +293,46 @@ label {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* min-width: 30%; */
+  min-width: 50%;
   background-size: cover;
   margin: 4%;
   /* margin-top: 8%; */
   border-radius: 25px;
   padding: 2%;
   min-height: 20vh;
-  max-width: 400px;
+  /* max-width: 400px; */
 }
+
+.team-scoreboard-container-dash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 40%;
+  background-size: cover;
+  margin: 4%;
+  /* margin-top: 8%; */
+  border-radius: 25px;
+  padding: 2%;
+  min-height: 20vh;
+  /* max-width: 400px; */
+}
+
+.team-scoreboard-container-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  min-width: 340px;
+  background-size: cover;
+  margin: 4%;
+  /* margin-top: 8%; */
+  border-radius: 25px;
+  padding: 2%;
+  min-height: 20vh;
+  /* max-width: 400px; */
+}
+
 
 .team-title {
   font-size: 30px;

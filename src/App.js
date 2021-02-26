@@ -41,8 +41,8 @@ function App () {
   const [isCaptain, setCaptain] = useState(false)
   const [today, setToday] = useState('SUNDAY')
   const [todayIndex, setTodayIndex] = useState(0)
-  const myTeam = '2'
-  const myTeamName = 'Chore Wars!'
+  const myTeam = '6'
+  const myTeamName = 'Explicit Team Name!'
   const captain = true
 
   function setAuth (username, token) {
@@ -52,7 +52,7 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updateTeams, [token])
+  useEffect(updateTeams, [token, teams])
 
   function updateTeams () {
     getTeams(token)
@@ -119,6 +119,37 @@ function App () {
                 <MDBNavItem>
                   <MDBNavLink to={`/team-chores/${myTeam}`}>Chore Dashboard</MDBNavLink>
                 </MDBNavItem>}
+              <MDBNavItem>
+                <DropdownButton
+                  className='time-dropdown'
+                  alignRight
+                  title='Select Day of Week'
+                  id='current-day'
+                  onSelect={(e) => handleTime(e)}
+                >
+                  <Dropdown.Item eventKey='MONDAY'>Monday</Dropdown.Item>
+                  <Dropdown.Item eventKey='TUESDAY'>Tuesday</Dropdown.Item>
+                  <Dropdown.Item eventKey='WEDNESDAY'>Wednesday</Dropdown.Item>
+                  <Dropdown.Item eventKey='THURSDAY'>Thursday</Dropdown.Item>
+                  <Dropdown.Item eventKey='FRIDAY'>Friday</Dropdown.Item>
+                  <Dropdown.Item eventKey='SATURDAY'>Saturday</Dropdown.Item>
+                  <Dropdown.Item eventKey='SUNDAY'>Sunday</Dropdown.Item>
+                </DropdownButton>
+              </MDBNavItem>
+              <MDBNavItem>
+
+                <div className='register-and-login'>
+                  {isLoggedIn
+                    ? (
+                      <span>Hello, {username} <button className='logout-button' onClick={() => setToken(null)}>Log out</button></span>
+                      )
+                    : (
+                      <span>
+                        <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link>
+                      </span>
+                      )}
+                </div>
+              </MDBNavItem>
 
             </MDBNavbarNav>
           </MDBCollapse>
