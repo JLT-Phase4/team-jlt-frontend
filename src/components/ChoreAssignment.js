@@ -29,20 +29,33 @@ function ChoreAssignment ({ token }) {
     setDragging(true) // hey react! just letting u know we are dragging now
   }
 
-  function handleDragEnter (event, params) {
-    console.log('enter drag', params)
-    const currentItem = dragItem.current
-    if (event.target !== dropNode.current) {
-      console.log('cool, this is not where I started dragging from, so I can drop here')
-    }
-  }
+  // function handleDragEnter (event, params) {
+  //   console.log('enter drag', params)
+  //   const currentItem = dragItem.current
+  //   if (event.target !== dropNode.current) {
+  //     console.log('cool, this is not where I started dragging from, so I can drop here')
+  //   }
+  // }
 
   function handleDragEnd () {
-    console.log('this is where my chore will drop')
+    console.log('drag ends when I release my mouse')
     setDragging(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
+  }
+
+  function handleDragOver (event) {
+    event.preventDefault()
+    console.log('handleDragOver is firing')
+    event.dataTransfer.dropEffect = 'copy' // make a copy instead of moving chore
+  }
+  function handleDrop (event) {
+    event.preventDefault()
+    console.log('handleDrop is firing')
+    // Get the id of the target and add the moved element to the target's DOM
+    const data = event.dataTransfer.getData('text/plain')
+    event.target.appendChild(document.getElementById(data))
   }
 
   return (
@@ -57,7 +70,7 @@ function ChoreAssignment ({ token }) {
                     <li
                       draggable
                       onDragStart={(event) => { handleDragStart(event, { chore }) }}
-                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
+                      // onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
                     >{chore}
                     </li>
                   </ul>
@@ -76,11 +89,15 @@ function ChoreAssignment ({ token }) {
                       </div>
 
                       <div className='flex-row'>
-                        {Days.map(day => (
+                        {Days.map(day => ( // does days need to be an object?
                           <div key={day}>
-                            <div className='days'>
+                            <div
+                              className='days'
+                              id='target'
+                              onDrop={handleDrop}
+                              onDragOver={handleDragOver}
+                            >
                               {day}
-                              <div className='drop-container' placeholder='drop' />
                             </div>
                           </div>
                         ))}
