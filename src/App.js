@@ -17,7 +17,7 @@ import UserProfile from './components/UserProfile'
 import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
-import { getTeams } from './api'
+import { getTeams, getUserProfile } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -31,21 +31,24 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
-// const useToday = createPersistedState('today')
+// const useMyTeam = createPersistedState('myTeam')
+// const useMyTeamName = createPersistedState('myTeamName')
 
 function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
+  // const [token, setToken] = useState()
   const [username, setUsername] = useUsername()
-  // const today = 'TUESDAY'
+  // const [username, setUsername] = useState()
   const [isCaptain, setCaptain] = useState(false)
   const [today, setToday] = useState('SUNDAY')
   const [todayIndex, setTodayIndex] = useState(0)
+  // const [myTeam, setMyTeam] = useMyTeam()
   const [myTeam, setMyTeam] = useState()
+  // const [myTeamName, setMyTeamName] = useMyTeamName()
   const [myTeamName, setMyTeamName] = useState()
-  // const myTeam = '6'
-  // const myTeamName = 'Explicit Team Name!'
-  const captain = true
+  const [userProfile, setUserProfile] = useState()
+  const [isCaptainStatus, setCaptainStatus] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -54,24 +57,51 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updateTeams, [token, teams])
+  useEffect(updateTeams, [token, username, setUsername, setToken])
 
   function updateTeams () {
     getTeams(token)
       .then(teams => setTeams(teams))
     if (teams) {
       for (const team of teams) {
+        console.log(username, team.captain)
         if (username === team.captain) {
           setCaptain(true)
+          setMyTeam(team.pk)
+          setMyTeamName(team.name)
+          console.log('I am captain of:')
+          console.log(team.pk)
+          console.log(team.name)
         }
+        // else {
+        //   setMyTeam()
+        //   setMyTeamName()
+        // }
         for (const member of team.members) {
           if (username === member.username) {
+            console.log('setting team to: ', team.pk)
             setMyTeam(team.pk)
             setMyTeamName(team.name)
           }
+          // else {
+          //   setMyTeam()
+          //   setMyTeamName()
+          // }
         }
       }
     }
+  }
+
+  useEffect(updateProfile, [token, username])
+
+  function updateProfile () {
+    getUserProfile(token, username).then(profile => {
+      setUserProfile(profile)
+      if (profile.user_type === 1) {
+        setCaptainStatus(true)
+        console.log('I have captain status')
+      }
+    })
   }
 
   function handleTime (e) {
@@ -106,7 +136,7 @@ function App () {
             <div className='flex header'>
               <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
               <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
-              <Link to='/' className='banner'>Chore Wars</Link>
+              <MDBNavLink to='/' className='banner'>Chore Wars</MDBNavLink>
               <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
               <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
             </div>
@@ -120,12 +150,14 @@ function App () {
               <MDBNavItem>
                 <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
               </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink to='/create-team-dashboard'>Create a Team</MDBNavLink>
-              </MDBNavItem>
+              {isCaptainStatus === false &&
+                <MDBNavItem>
+                  <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
+                </MDBNavItem>}
+              {isCaptainStatus === true && isCaptain === false &&
+                <MDBNavItem>
+                  <MDBNavLink to='/create-team-dashboard'>Create a Team</MDBNavLink>
+                </MDBNavItem>}
               {isCaptain === true &&
                 <MDBNavItem>
                   <MDBNavLink to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Team Members</MDBNavLink>
@@ -152,22 +184,6 @@ function App () {
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavItem>
-              {/* <DropdownButton
-                  className='time-dropdown'
-                  alignRight
-                  title='Select Day of Week'
-                  id='current-day'
-                  onSelect={(e) => handleTime(e)}
-                >
-                  <Dropdown.Item eventKey='MONDAY'>Monday</Dropdown.Item>
-                  <Dropdown.Item eventKey='TUESDAY'>Tuesday</Dropdown.Item>
-                  <Dropdown.Item eventKey='WEDNESDAY'>Wednesday</Dropdown.Item>
-                  <Dropdown.Item eventKey='THURSDAY'>Thursday</Dropdown.Item>
-                  <Dropdown.Item eventKey='FRIDAY'>Friday</Dropdown.Item>
-                  <Dropdown.Item eventKey='SATURDAY'>Saturday</Dropdown.Item>
-                  <Dropdown.Item eventKey='SUNDAY'>Sunday</Dropdown.Item>
-                </DropdownButton> */}
-
               <MDBNavItem>
 
                 <div className='register-and-login'>
@@ -187,44 +203,6 @@ function App () {
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
-
-      {/* <div className='register-and-login'>
-        {isLoggedIn
-          ? (
-            <span>Hello, {username} <button className='logout-button' onClick={() => setToken(null)}>Log out</button></span>
-            )
-          : (
-            <span>
-              <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link>
-            </span>
-            )}
-      </div>
-
-      <div style={{ paddingTop: '20px' }} className='flex-col-center'>
-        <div className='flex header'>
-          <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-          <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
-          <Link to='/' className='banner'>Chore Wars</Link>
-          <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
-          <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
-        </div>
-        <div>Time Toggle</div>
-        <DropdownButton
-          className='time-dropdown'
-          alignRight
-          title='Select Day of Week'
-          id='current-day'
-          onSelect={(e) => handleTime(e)}
-        >
-          <Dropdown.Item eventKey='MONDAY'>Monday</Dropdown.Item>
-          <Dropdown.Item eventKey='TUESDAY'>Tuesday</Dropdown.Item>
-          <Dropdown.Item eventKey='WEDNESDAY'>Wednesday</Dropdown.Item>
-          <Dropdown.Item eventKey='THURSDAY'>Thursday</Dropdown.Item>
-          <Dropdown.Item eventKey='FRIDAY'>Friday</Dropdown.Item>
-          <Dropdown.Item eventKey='SATURDAY'>Saturday</Dropdown.Item>
-          <Dropdown.Item eventKey='SUNDAY'>Sunday</Dropdown.Item>
-        </DropdownButton>
-      </div> */}
 
       <Switch>
 
@@ -250,18 +228,21 @@ function App () {
 
         <Route path='/team-chores/:teamPk'>
           <div className='App' />
-          <TeamChoreDashboard token={token} />
+          <TeamChoreDashboard token={token} teams={teams} myTeam={myTeam} myTeamName={myTeamName} />
         </Route>
 
         <Route path='/create-team-dashboard'>
           <div className='App' />
-          <CreateTeamDashboard token={token} profileUsername={username} />
+          <CreateTeamDashboard token={token} profileUsername={username} setTeams={setTeams} />
         </Route>
 
         {/* Member Chores List Dashboard */}
         <Route path='/member/:username/chores'>
           <div className='App' />
-          <ChoreDashboard token={token} />
+          {teams && (
+            <ChoreDashboard token={token} />
+
+          )}
         </Route>
 
         {/* Member chore Detail for Day Dashboard */}
@@ -284,7 +265,7 @@ function App () {
 
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
-          <CreateTeamMembers token={token} myTeam={myTeam} myTeamName={myTeamName} />
+          <CreateTeamMembers token={token} />
         </Route>
 
         <Route path='/user-profile/:username'>
@@ -296,27 +277,30 @@ function App () {
 
         <Route path='/'>
           <div className='App' />
+          {teams && (
 
-          <div>
-            <Carousel>
-              {teams.map((team, idx) => (
-                <Carousel.Item key={idx} className='carousel-holder'>
-                  {team && (
-                    <div className='flex-col'>
-                      <Card>
-                        <Card.Body>
-                          <HomeCarouselTeams team={team} displayHeight='50vh' />
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  )}
-                </Carousel.Item>
-              ))}
-            </Carousel>
-            <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
+            <div>
+              <Carousel>
+                {teams.map((team, idx) => (
+                  <Carousel.Item key={idx} className='carousel-holder'>
+                    {team && (
+                      <div className='flex-col'>
+                        <Card>
+                          <Card.Body>
+                            <HomeCarouselTeams team={team} displayHeight='50vh' />
+                          </Card.Body>
+                        </Card>
+                      </div>
+                    )}
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+              <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
 
-            <div className='footer-feed'>Latest Notification Feed</div>
-          </div>
+              <div className='footer-feed'>Latest Notification Feed</div>
+            </div>
+          )}
+
         </Route>
       </Switch>
     </Router>
