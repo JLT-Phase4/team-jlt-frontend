@@ -55,11 +55,16 @@ function ChoreAssignment ({ token }) {
   }
   function handleDrop (event) {
     event.preventDefault()
+    console.log(event)
+    const oldData = event.target.childNodes[0].data
+    console.log(oldData)
     console.log('handleDrop is firing')
     console.log(event.dataTransfer)
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
     console.log(data)
-    event.target.innerText = data
+    const newData = document.createElement('p')
+    newData.innerText = data
+    event.target.appendChild(newData)
   }
 
   return (
@@ -102,7 +107,7 @@ function ChoreAssignment ({ token }) {
                               onDragOver={handleDragOver}
                             >
                               {day}
-                              {/* <div className='drop-container'>DropZone </div> */}
+
                             </div>
                           </div>
                         ))}
