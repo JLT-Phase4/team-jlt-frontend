@@ -238,6 +238,21 @@ export function updateAssignment (token, assignPk, status) {
     .then(res => res.data)
 }
 
+
+export function postAssigment (token, username, assignmentType) {
+  return API
+    .post('assignment-list/', {
+      user: username,
+      assignment_type: assignmentType
+
+    }, {
+          headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
 export function getPoints (token, username) {
   return API
     .get(`point-count/${username}/`, {

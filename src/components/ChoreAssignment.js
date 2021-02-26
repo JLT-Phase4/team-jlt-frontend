@@ -1,95 +1,99 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { getTeam } from '../api'
+import { useParams } from 'react-router-dom'
 
-const data = [
-  { assignment_type: 'MON', chores: ['groom mustache', 'call girlfriend', 'be stoic'] },
-  { assignment_type: 'TUE', chores: ['create skynet', 'encourage Jesse'] },
-  { assignment_type: 'WED', chores: ['create skynet', 'encourage Jesse'] },
-  { assignment_type: 'THUR', chores: ['reinvent wheel', 'brush teeth'] },
-  { assignment_type: 'FRI', chores: ['end skynet'] },
-  { assignment_type: 'SAT', chores: ['wash car'] },
-  { assignment_type: 'SUN', chores: ['make dollars'] }
-]
-const names = ['Logan', 'Tracy', 'Jesse']
-
-function ChoreAssignment () {
-  const [list, setList] = useState(data)
+function ChoreAssignment ({ token }) {
+  const [team, setTeam] = useState()
+  const [assignment, setAssignment] = useState([])
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
-  const dragBox = useRef()
+  const dropNode = useRef()
+  const { teamPk } = useParams()
+  const Days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday', 'Sunday']
 
-  // item we are dragging(from)DRAG
-  const handleDragStart = (event, parameters) => {
-    // console.log(parameters)
-    dragItem.current = parameters
-    dragBox.current = event.target
-    dragBox.current.addEventListener('dragend', handleDragEnd)
-    setTimeout(() => {
-      setDragging(true)
-    }, 0)
+  useEffect(getChores, [token, teamPk])
+
+  function getChores () {
+    getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  //   this is the item we are dragging over, DROP
-  const handleDragEnter = (event, parameters) => {
+  function capitalizeUsername (username) {
+    return username.charAt(0).toUpperCase() + username.slice(1)
+  }
+
+  function handleDragStart (event, params) {
+    console.log('drag is starting baby!', params)
+    dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    dropNode.current = event.target
+    dropNode.current.addEventListener('dragend', handleDragEnd)
+    setDragging(true) // hey react! just letting u know we are dragging now
+  }
+
+  function handleDragEnter (event, params) {
+    console.log('enter drag', params)
     const currentItem = dragItem.current
-    if (event.target !== dragBox.current) // if target is not the same as node item started in
-    {
-      setList(oldList => {
-        const newList = JSON.parse(JSON.stringify(oldList)) // original list needs to change to new list.  Break apart items in old list.  Replace item with current item.
-        newList[parameters.itemI].items.splice(parameters.choreI, 0, newList[currentItem.itemI].items.splice(currentItem.choreI, 1)[0]) // flip places of cards.  so convuluted.  Ah!
-        dragItem.current = parameters // now current item has become target item
-        return newList
-      })
+    if (event.target !== dropNode.current) {
+      console.log('cool, this is not where I started dragging from, so I can drop here')
     }
   }
 
-  const handleDragEnd = () => {
-    // console.log('its working!')
+  function handleDragEnd () {
+    console.log('this is where my chore will drop')
     setDragging(false)
-    dragBox.current.removeEventListener('dragend', handleDragEnd)
+    dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
-    dragBox.current = null
-  }
-
-  const getStyles = (parameters) => {
-    const currentItem = dragItem.current
-    if (currentItem.itemI === parameters.itemI && currentItem.choreI === parameters.choreI) {
-      return 'current drag-and-drop-chore'
-    }
-    return 'drag-and-drop-chore'
+    dropNode.current = null
   }
 
   return (
     <div>
-      {/* <div> */}
-      {/* {names.map((name) => (
-          <div key={name} className='team-member-container'>
-            <div className='team-member'>{name}</div> */}
-
-      <div className='drag-and-drop-container'>
-        {list.map((item, itemI) => (
-          <div
-            key={item.assignment_type}
-            className='day-container'
-          >
-            <div className='days'>{item.assignment_type}</div>
-            {item.chores.map((chore, choreI) => (
-              <div
-                draggable
-                onDragStart={(event) => { handleDragStart(event, { itemI, choreI }) }}
-                onDragEnter={dragging ? (event) => { handleDragEnter(event, { itemI, choreI }) } : null}
-                key={chore}
-                className={dragging ? getStyles({ itemI, choreI }) : 'drag-and-drop-chore'}
-              >
-                {chore}
+      <div>
+        {team && (
+          <div>
+            <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+              <div className='flex'>
+                {team.chores.map(chore => (
+                  <ul key={chore}>
+                    <li
+                      draggable
+                      onDragStart={(event) => { handleDragStart(event, { chore }) }}
+                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
+                    >{chore}
+                    </li>
+                  </ul>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
-      </div>
+            </div>
+            <div>
+              <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
+              <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
+                <div>
+                  {team.members.map(member => (
+                    <div className='team-member-container-list flex-row' key={member.username}>
+                      <div className='member'>
+                        {capitalizeUsername(member.username)}<br />
+                        <img src={member.avatar} style={{ maxWidth: '100%', borderRadius: '50px' }} />
+                      </div>
 
-      {/* </div> */}
-      {/* ))}
-      </div> */}
+                      <div className='flex-row'>
+                        {Days.map(day => (
+                          <div key={day}>
+                            <div className='days'>
+                              {day}
+                              <div className='drop-container' placeholder='drop' />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
     </div>
   )
 }

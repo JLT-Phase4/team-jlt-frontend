@@ -81,6 +81,17 @@ body {
   align-items: center;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .App-header {
   background-color: #282c34;
   display: flex;
@@ -491,16 +502,16 @@ ul {
   background-repeat: no-repeat;
 }
 
-.drag-and-drop-container {
+/* .drag-and-drop-container {
   padding: 20px;
   display: grid;
   gap: 5px;
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(auto-fill, 140px);
-}
+} */
 
-.day-container {
+/* .day-container {
   padding: 5px;
   border-radius: 5px;
   background-color: gray;
@@ -530,4 +541,57 @@ ul {
 .team-member-container {
   padding: 40px;
  
+} */
+
+.chore-list-container {
+  padding: 10px;
+  padding-top: 80px;
 }
+.chore-list-container li {
+  border: 2px solid white;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.311);
+  margin: 15px;
+}
+
+.chore-list-container ul {
+  padding-left: 0px;
+  /* margin-bottom: 5%; */
+}
+
+.team-member-container {
+  padding: 10px;
+}
+
+.team-member-container-list {
+  border: 2px solid white;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.311);
+  margin:20px;
+  border-radius: 10px;
+}
+
+.days {
+  padding: 50px;
+  padding-top: 0px;
+}
+
+.drop-container {
+  margin-top: 20px;
+  padding: 50px;
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, 40px);
+  border: 2px solid white;
+}
+.members {
+  margin:16px;
+  margin-left: 45px;
+  margin-bottom: 0px;
+}
+.member {
+  text-align: center;
+}
+
