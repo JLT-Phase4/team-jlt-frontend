@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getTeam } from '../api'
 import { useParams } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
   const [team, setTeam] = useState()
-
+  const [assignment, setAssignment] = useState([])
+  const [dragging, setDragging] = useState(false)
+  const dragItem = useRef()
+  const dragBox = useRef()
   const { teamPk } = useParams()
   const Days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday', 'Sunday']
 
@@ -18,6 +21,11 @@ function ChoreAssignment ({ token }) {
     return username.charAt(0).toUpperCase() + username.slice(1)
   }
 
+  function handleDragStart (event, params) {
+    console.log('drag is starting baby!', params)
+    dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+  }
+
   return (
     <div>
       <div>
@@ -27,7 +35,11 @@ function ChoreAssignment ({ token }) {
               <div className='flex'>
                 {team.chores.map(chore => (
                   <ul key={chore}>
-                    <li draggable>{chore}</li>
+                    <li
+                      draggable
+                      onDragStart={(event) => { handleDragStart(event, { chore }) }}
+                    >{chore}
+                    </li>
                   </ul>
                 ))}
               </div>

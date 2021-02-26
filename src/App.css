@@ -513,6 +513,7 @@ ul {
 
 .chore-list-container {
   padding: 10px;
+  padding-top: 80px;
 }
 .chore-list-container li {
   border: 2px solid white;
@@ -550,13 +551,13 @@ ul {
   gap: 5px;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(auto-fill, 140px);
+  grid-template-columns: repeat(auto-fill, 40px);
   border: 2px solid white;
-  border-radius: 10px;
 }
 .members {
   margin:16px;
   margin-left: 45px;
+  margin-bottom: 0px;
 }
 .member {
   text-align: center;
