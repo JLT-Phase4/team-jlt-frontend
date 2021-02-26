@@ -40,9 +40,9 @@ function ChoreAssignment ({ token }) {
   function handleDragEnd () {
     console.log('this is where my chore will drop')
     setDragging(false)
+    dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
-    dropNode.current.removeEventListener('dragend', handleDragEnd)
   }
 
   return (
@@ -57,7 +57,7 @@ function ChoreAssignment ({ token }) {
                     <li
                       draggable
                       onDragStart={(event) => { handleDragStart(event, { chore }) }}
-                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { day }) } : null}
+                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
                     >{chore}
                     </li>
                   </ul>
@@ -72,7 +72,7 @@ function ChoreAssignment ({ token }) {
                     <div className='team-member-container-list flex-row' key={member.username}>
                       <div className='member'>
                         {capitalizeUsername(member.username)}<br />
-                        <img src={member.avatar} style={{ maxHeight: '80px', maxWidth: '80px', borderRadius: '50px' }} />
+                        <img src={member.avatar} style={{ maxWidth: '100%', borderRadius: '50px' }} />
                       </div>
 
                       <div className='flex-row'>
