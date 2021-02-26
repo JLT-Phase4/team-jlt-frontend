@@ -7,7 +7,7 @@ function ChoreAssignment ({ token }) {
   const [assignment, setAssignment] = useState([])
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
-  const dragBox = useRef()
+  const dropNode = useRef()
   const { teamPk } = useParams()
   const Days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday', 'Sunday']
 
@@ -24,6 +24,25 @@ function ChoreAssignment ({ token }) {
   function handleDragStart (event, params) {
     console.log('drag is starting baby!', params)
     dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    dropNode.current = event.target
+    dropNode.current.addEventListener('dragend', handleDragEnd)
+    setDragging(true) // hey react! just letting u know we are dragging now
+  }
+
+  function handleDragEnter (event, params) {
+    console.log('enter drag', params)
+    const currentItem = dragItem.current
+    if (event.target !== dropNode.current) {
+      console.log('cool, this is not where I started dragging from, so I can drop here')
+    }
+  }
+
+  function handleDragEnd () {
+    console.log('this is where my chore will drop')
+    setDragging(false)
+    dragItem.current = null
+    dropNode.current = null
+    dropNode.current.removeEventListener('dragend', handleDragEnd)
   }
 
   return (
@@ -38,6 +57,7 @@ function ChoreAssignment ({ token }) {
                     <li
                       draggable
                       onDragStart={(event) => { handleDragStart(event, { chore }) }}
+                      onDragEnter={dragging ? (event) => { handleDragEnter(event, { day }) } : null}
                     >{chore}
                     </li>
                   </ul>
