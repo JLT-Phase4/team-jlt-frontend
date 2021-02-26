@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom'
-import { getMyProfile, getTeam, getUserProfile, updateUserProfile, updateAssignment } from '../api'
+import { useParams } from 'react-router-dom'
+import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints } from '../api'
 import AvatarImage from './AvatarImage'
 
-// Won't pass username once this has avatar on myprofile
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
-  // const [myProfile, setMyProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
@@ -16,6 +14,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [myChores, setMyChores] = useState()
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'ANY']
   const [showSummary, setShowSummary] = useState(true)
+  const [points, setPoints] = useState(0)
 
   useEffect(updateProfile, [token, username, isUpdating])
 
@@ -33,9 +32,12 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
         setMyChores(userChores)
       }
     })
-    // getMyProfile(token).then(myProfile => setMyProfile(myProfile))
   }
 
+  useEffect(updatePoints, [token, username, handleAssignmentUpdate])
+  function updatePoints () {
+    getPoints(token, username).then(points => setPoints(points))
+  }
   function updateAvatar () {
     updateUserProfile(token, username, avatar).then(profile => setUserProfile(profile))
     setIsUpdating(false)
@@ -67,14 +69,13 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      {userProfile && team && myChores && (
+      {userProfile && team && myChores && points && (
         <>
-          <div style={{ marginLeft: '20px', marginTop: '50px' }} className='flex'>
+          <div style={{ marginLeft: '20px', marginTop: '100px' }} className='flex'>
             <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
-
             <div style={{ marginTop: '30px' }} className='flex-col team-title'>{userProfile.username}'s page!
-              {(profileUsername === username) &&
-                <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>}
+              {/* {(profileUsername === username) && */}
+              <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>
             </div>
           </div>
           <div style={{ minWidth: '90%' }} className=' member-dashboard-container'>
@@ -93,7 +94,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                                 <div key={idx}>
                                   {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
                                     <Card onClick={() => handleAssignmentUpdate(assignment.pk, true)}>
-                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>
+                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>
                                     </Card>)}
                                 </div>))}
                             </div>
@@ -102,7 +103,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                                 <div key={idx}>
                                   {(assignment.assignment_type.includes('ANY') && assignment.complete === false) && (
                                     <Card onClick={() => handleAssignmentUpdate(assignment.pk, true)}>
-                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>
+                                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>
                                     </Card>
                                   )}
                                 </div>))}
@@ -111,14 +112,14 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                         )}
                       </div>
                       <div style={{ minWidth: '35%', minHeight: '10vh', border: 'solid 2px', borderRadius: '10px', margin: '10px' }}>Completed Chores {today}
-                        <div className='flex'>
+                        <div className='flex'>{points.chore__points__sum}
                           {userProfile.assignments.length > 0 && (
                             <>
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div key={idx}>
                                   {((assignment.assignment_type.includes(today)) && assignment.complete === true) && (
                                     <Card onClick={() => handleAssignmentUpdate(assignment.pk, false)}>
-                                      <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}<span className='material-icons'>check_box</span></Card.Body>
+                                      <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
                                     </Card>)}
                                 </div>))}
                             </>
@@ -147,8 +148,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                                         {(assignment.assignment_type.includes(day)) && (
                                           <Card>
                                             {(assignment.complete === true)
-                                              ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore}<span className='material-icons'>check_box</span></Card.Body>
-                                              : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore}</Card.Body>}
+                                              ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
+                                              : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
                                           </Card>
                                         )}
                                       </>
