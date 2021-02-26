@@ -4,7 +4,7 @@ import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
 import { Spring } from 'react-spring/renderprops'
 
-const TeamChoreDashboard = ({ token }) => {
+const TeamChoreDashboard = ({ token, myTeam, myTeamName }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isCreating, setIsCreating] = useState(false)
@@ -44,13 +44,12 @@ const TeamChoreDashboard = ({ token }) => {
     }
   }
 
-  useEffect(handleCreate, [chores, team, setIsCreating])
+  useEffect(handleCreate, [chores, team])
   function handleCreate () {
     // e.preventDefault()
     if (team) {
-      createChore(token, choreName, choreDetail, chorePoints, team.name).then(chore => updateTeamChores())
+      createChore(token, choreName, choreDetail, chorePoints, team.name).then(chore => updateTeamChores()).then(setIsCreating(false))
     }
-    setIsCreating(false)
   }
 
   return (
@@ -69,7 +68,7 @@ const TeamChoreDashboard = ({ token }) => {
                   {detailShown[chore.pk]
                     ? <Card.Body style={{ backgroundColor: 'yellowgreen', color: 'black' }}>
                       {chore.detail} [{chore.points}] points
-                      </Card.Body>
+                    </Card.Body>
                     : null}
                 </Card>
               ))}
@@ -85,11 +84,11 @@ const TeamChoreDashboard = ({ token }) => {
                       <button type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                  </Card>
+                </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  </Card>}
             </div>
 
             <div className='flex'>
@@ -121,6 +120,7 @@ const TeamChoreDashboard = ({ token }) => {
                 </div>
               </div>
               <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/assign-chores/${team.pk}`}>Assign Chores</Link></button>
+              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Members</Link></button>
 
             </div>
           </div>
