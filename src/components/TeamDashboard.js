@@ -50,6 +50,7 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                     {team.members.map(member => (
                       <ul className='flex' key={member.username}>
                         <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
+
                         <div style={{ backgroundColor: '#0e0e0eba', width: '50px', height: '20px', padding: '10px' }}>
                           <Spring
                             reset

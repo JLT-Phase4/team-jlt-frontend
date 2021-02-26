@@ -1,7 +1,7 @@
 
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
 import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
@@ -41,8 +41,10 @@ function App () {
   const [isCaptain, setCaptain] = useState(false)
   const [today, setToday] = useState('SUNDAY')
   const [todayIndex, setTodayIndex] = useState(0)
-  const myTeam = '6'
-  const myTeamName = 'Explicit Team Name!'
+  const [myTeam, setMyTeam] = useState()
+  const [myTeamName, setMyTeamName] = useState()
+  // const myTeam = '6'
+  // const myTeamName = 'Explicit Team Name!'
   const captain = true
 
   function setAuth (username, token) {
@@ -57,27 +59,40 @@ function App () {
   function updateTeams () {
     getTeams(token)
       .then(teams => setTeams(teams))
+    if (teams) {
+      for (const team of teams) {
+        if (username === team.captain) {
+          setCaptain(true)
+        }
+        for (const member of team.members) {
+          if (username === member.username) {
+            setMyTeam(team.pk)
+            setMyTeamName(team.name)
+          }
+        }
+      }
+    }
   }
 
   function handleTime (e) {
-    setToday(e)
+    setToday(e.target.value)
     console.log(e)
-    if (e === 'MONDAY') {
+    if (e.target.value === 'MONDAY') {
       setTodayIndex(0)
       console.log("It's Monday")
-    } else if (e === 'TUESDAY') {
+    } else if (e.target.value === 'TUESDAY') {
       setTodayIndex(1)
       console.log("It's Tuesday")
-    } else if (e === 'WEDNESDAY') {
+    } else if (e.target.value === 'WEDNESDAY') {
       setTodayIndex(2)
       console.log("It's Wednesday")
-    } else if (e === 'THURSDAY') {
+    } else if (e.target.value === 'THURSDAY') {
       setTodayIndex(3)
-    } else if (e === 'FRIDAY') {
+    } else if (e.target.value === 'FRIDAY') {
       setTodayIndex(4)
-    } else if (e === 'SATURDAY') {
+    } else if (e.target.value === 'SATURDAY') {
       setTodayIndex(5)
-    } else if (e === 'SUNDAY') {
+    } else if (e.target.value === 'SUNDAY') {
       setTodayIndex(6)
     }
   }
@@ -111,16 +126,33 @@ function App () {
               <MDBNavItem>
                 <MDBNavLink to='/create-team-dashboard'>Create a Team</MDBNavLink>
               </MDBNavItem>
-              {captain === true &&
+              {isCaptain === true &&
                 <MDBNavItem>
                   <MDBNavLink to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Team Members</MDBNavLink>
                 </MDBNavItem>}
-              {captain === true &&
+              {isCaptain === true &&
                 <MDBNavItem>
                   <MDBNavLink to={`/team-chores/${myTeam}`}>Chore Dashboard</MDBNavLink>
                 </MDBNavItem>}
               <MDBNavItem>
-                <DropdownButton
+
+                <MDBDropdown>
+                  <MDBDropdownToggle nav caret>
+                    <div className='d-none d-md-inline'>Select Day</div>
+                  </MDBDropdownToggle>
+                  <MDBDropdownMenu right>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
+                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
+
+                  </MDBDropdownMenu>
+                </MDBDropdown>
+              </MDBNavItem>
+              {/* <DropdownButton
                   className='time-dropdown'
                   alignRight
                   title='Select Day of Week'
@@ -134,8 +166,8 @@ function App () {
                   <Dropdown.Item eventKey='FRIDAY'>Friday</Dropdown.Item>
                   <Dropdown.Item eventKey='SATURDAY'>Saturday</Dropdown.Item>
                   <Dropdown.Item eventKey='SUNDAY'>Sunday</Dropdown.Item>
-                </DropdownButton>
-              </MDBNavItem>
+                </DropdownButton> */}
+
               <MDBNavItem>
 
                 <div className='register-and-login'>
@@ -252,7 +284,7 @@ function App () {
 
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
-          <CreateTeamMembers token={token} />
+          <CreateTeamMembers token={token} myTeam={myTeam} myTeamName={myTeamName} />
         </Route>
 
         <Route path='/user-profile/:username'>
