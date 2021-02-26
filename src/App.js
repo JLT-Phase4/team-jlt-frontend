@@ -57,39 +57,42 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updateTeams, [token, username, setUsername, setToken])
+  useEffect(updateTeams, [token, username])
 
   function updateTeams () {
     getTeams(token)
-      .then(teams => setTeams(teams))
-    if (teams) {
-      for (const team of teams) {
-        console.log(username, team.captain)
-        if (username === team.captain) {
-          setCaptain(true)
-          setMyTeam(team.pk)
-          setMyTeamName(team.name)
-          console.log('I am captain of:')
-          console.log(team.pk)
-          console.log(team.name)
-        }
-        // else {
-        //   setMyTeam()
-        //   setMyTeamName()
-        // }
-        for (const member of team.members) {
-          if (username === member.username) {
-            console.log('setting team to: ', team.pk)
-            setMyTeam(team.pk)
-            setMyTeamName(team.name)
+      .then(teams => {
+        setTeams(teams)
+        if (teams) {
+          for (const team of teams) {
+            console.log(username, team.captain)
+            if (username === team.captain) {
+              setCaptain(true)
+              setMyTeam(team.pk)
+              setMyTeamName(team.name)
+              console.log('I am captain of:')
+              console.log(team.pk)
+              console.log(team.name)
+            }
+            // else {
+            //   setMyTeam()
+            //   setMyTeamName()
+            // }
+            for (const member of team.members) {
+              if (username === member.username) {
+                console.log('setting team to: ', team.pk)
+                setMyTeam(team.pk)
+                setMyTeamName(team.name)
+              }
+              // else {
+              //   setMyTeam()
+              //   setMyTeamName()
+              // }
+            }
           }
-          // else {
-          //   setMyTeam()
-          //   setMyTeamName()
-          // }
         }
       }
-    }
+      )
   }
 
   useEffect(updateProfile, [token, username])
@@ -278,7 +281,6 @@ function App () {
         <Route path='/'>
           <div className='App' />
           {teams && (
-
             <div>
               <Carousel>
                 {teams.map((team, idx) => (
