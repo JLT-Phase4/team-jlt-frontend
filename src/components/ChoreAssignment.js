@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getTeam } from '../api'
+import { getTeam, postAssigment } from '../api'
 import { useParams } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
@@ -9,7 +9,7 @@ function ChoreAssignment ({ token }) {
   const dragItem = useRef()
   const dropNode = useRef()
   const { teamPk } = useParams()
-  const Days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday', 'Sunday']
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   useEffect(getChores, [token, teamPk])
 
@@ -17,8 +17,18 @@ function ChoreAssignment ({ token }) {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
+  // function handleAssignChores (event, username, assignmentType) {
+  //   event.preventDefault()
+  //   postAssigment(token, username, assignmentType)
+  //     .then((assignment) => setAssignment(assignment))
+  // }
+
   function capitalizeUsername (username) {
     return username.charAt(0).toUpperCase() + username.slice(1)
+  }
+
+  function dayToUppercase (day) {
+    return day.toUpperCase()
   }
 
   function handleDragStart (event, params) {
@@ -62,7 +72,7 @@ function ChoreAssignment ({ token }) {
     // console.log(event.dataTransfer)
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
     // console.log(data)
-    const newData = document.createElement('p')
+    const newData = document.createElement('div')
     newData.innerText = data
     event.target.appendChild(newData)
   }
@@ -98,15 +108,16 @@ function ChoreAssignment ({ token }) {
                       </div>
 
                       <div className='flex-row'>
-                        {Days.map(day => ( // does days need to be an object?
+                        {days.map(day => ( // does days need to be an object?
                           <div key={day}>
                             <div
-                              className='days drop-container'
+                              className='drop-container'
                               id={day}
                               onDrop={handleDrop}
                               onDragOver={handleDragOver}
                             >
                               {day}
+                              <div draggable className='appended-chores'>Chore</div>
 
                             </div>
                           </div>
@@ -116,6 +127,14 @@ function ChoreAssignment ({ token }) {
                   ))}
                 </div>
               </div>
+            </div>
+            <div>
+              <button
+                className='assign-chores-button'
+                // onClick={(event) => handleAssignChores(event, { username }, {dayToUppercase({day})}}
+              >
+                Assign Chores
+              </button>
             </div>
           </div>
         )}

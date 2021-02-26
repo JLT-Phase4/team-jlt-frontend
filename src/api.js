@@ -238,7 +238,6 @@ export function updateAssignment (token, assignPk, status) {
     .then(res => res.data)
 }
 
-
 export function postAssigment (token, username, assignmentType) {
   return API
     .post('assignment-list/', {
@@ -246,7 +245,7 @@ export function postAssigment (token, username, assignmentType) {
       assignment_type: assignmentType
 
     }, {
-          headers: {
+      headers: {
         Authorization: `Token ${token}`
       }
     })
