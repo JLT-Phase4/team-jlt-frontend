@@ -3,11 +3,11 @@ import { Redirect } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import MusicSearch from './MusicSearch'
-import { createTeam } from '../api'
+import { createTeam, getTeams } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token }) => {
+const CreateTeamDashboard = ({ token, setTeams }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
@@ -18,6 +18,7 @@ const CreateTeamDashboard = ({ token }) => {
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
+      .then(getTeams(token).then(teams => setTeams(teams)))
   }
 
   if (team) {

@@ -4,34 +4,35 @@ import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
 import { Spring } from 'react-spring/renderprops'
 
-const TeamChoreDashboard = ({ token, myTeam, myTeamName }) => {
+const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isCreating, setIsCreating] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
   const [choreName, setChoreName] = useState('')
   const [choreDetail, setChoreDetail] = useState('')
-  const [chorePoints, setChorePoints] = useState(3)
+  const [chorePoints, setChorePoints] = useState(1)
   const [chores, setChores] = useState([])
   const [teamChores, setTeamChores] = useState([])
   const [detailShown, setDetailShown] = useState({})
-
+  // console.log(myTeam, myTeamName)
   const toggleDetail = (id) => {
     setDetailShown(prev => !prev[id] ? { ...prev, [id]: true } : { ...prev, [id]: false })
   }
 
-  useEffect(updateTeam, [token, teamPk, setIsCreating])
+  useEffect(updateTeam, [token, teamPk, myTeam, setIsCreating])
 
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  useEffect(updateChores, [token, setTeamChores])
+  useEffect(updateChores, [token, teamPk, isAdding, teamChores, setIsAdding, setIsCreating])
 
   function updateChores () {
     getChores(token).then(chores => setChores(chores))
   }
 
-  useEffect(updateTeamChores, [chores, team, setTeamChores, setIsCreating])
+  useEffect(updateTeamChores, [token, teamPk, chores, isAdding, setIsAdding, setIsCreating])
   function updateTeamChores () {
     let newChores = []
     if (chores && team) {
@@ -44,11 +45,14 @@ const TeamChoreDashboard = ({ token, myTeam, myTeamName }) => {
     }
   }
 
-  useEffect(handleCreate, [chores, team])
-  function handleCreate () {
-    // e.preventDefault()
+  // useEffect(handleCreate, [chores, team])
+  function handleCreate (e) {
+    e.preventDefault()
     if (team) {
-      createChore(token, choreName, choreDetail, chorePoints, team.name).then(chore => updateTeamChores()).then(setIsCreating(false))
+      createChore(token, choreName, choreDetail, chorePoints, team.name).then(chore => updateTeamChores()).then(
+        setIsCreating(false),
+        setIsAdding(true)
+      )
     }
   }
 
@@ -76,12 +80,14 @@ const TeamChoreDashboard = ({ token, myTeam, myTeamName }) => {
               {isCreating
                 ? <Card style={{ margin: '10px' }}>
                   <Card.Body>
-                    <form onSubmit={() => handleCreate()}>
+                    <form onSubmit={(e) => handleCreate(e)}>
                       <label className='chore-detail' htmlFor='chore-title'>Chore Title</label>
                       <input type='text' id='chore-title' required value={choreName} onClick={event => setChoreName('')} onChange={evt => setChoreName(evt.target.value)} />
                       <label className='chore-detail' htmlFor='chore-detail'>Chore Detail</label>
                       <input type='textarea' id='chore-detail' required value={choreDetail} onClick={event => setChoreDetail('')} onChange={evt => setChoreDetail(evt.target.value)} />
-                      <button type='submit'>Complete</button>
+                      <label className='point-detail' htmlFor='point-detail'>Chore Point Value</label>
+                      <input type='number' id='point-value' required value={chorePoints} onChange={event => setChorePoints(event.target.value)} />
+                      <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
                 </Card>
