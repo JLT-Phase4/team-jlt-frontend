@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
 import { Spring } from 'react-spring/renderprops'
+import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
 
 const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   const { teamPk } = useParams()
@@ -65,8 +66,17 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
           <div className='flex-col'>
             <h2 className='log-reg-header'>Chores for <span style={{ color: 'yellowgreen' }}>{team.name}</span></h2>
             <div style={{ marginLeft: '40px' }} className='flex'>
-              {teamChores.length > 0 &&
+              {/* {teamChores.length > 0 &&
                 <div>
+                  {teamChores.map((chore) => (
+                    <MDBPopover key={chore.pk} size='lg' color='danger' btnChildren='Click to toggle popover'>
+                      <MDBPopoverHeader>{chore.name}</MDBPopoverHeader>
+                      <MDBPopoverBody>{chore.points}</MDBPopoverBody>
+                    </MDBPopover>
+
+                  ))} */}
+              {teamChores.length > 0 &&
+                <div className='flex'>
                   {teamChores.map((chore) => (
                     <Card key={chore.pk} style={{ margin: '10px' }} className='flex'>
                       {chore ? <Card.Body onMouseOver={() => toggleDetail(chore.pk)} onMouseLeave={() => toggleDetail(chore.pk)}>{chore.name}</Card.Body> : null}
@@ -92,11 +102,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                  </Card>}
+                </Card>}
             </div>
 
             <div className='flex'>
