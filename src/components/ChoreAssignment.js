@@ -75,6 +75,7 @@ function ChoreAssignment ({ token }) {
     newData.innerText = data
     event.target.appendChild(newData)
     console.log(newData)
+
     // setAssignment(assignment)
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
   }
@@ -104,7 +105,7 @@ function ChoreAssignment ({ token }) {
                 <div>
                   {team.members.map(member => (
                     <div className='team-member-container-list flex-row' key={member.username}>
-                      <div className='member'>
+                      <div className={member.username}>
                         {capitalizeUsername(member.username)}<br />
                         <img src={member.avatar} style={{ maxWidth: '100%', borderRadius: '50px' }} />
                       </div>
