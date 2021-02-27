@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { getChores, getTeam, postAssigment } from './../api'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
   const [team, setTeam] = useState()
@@ -11,22 +11,16 @@ function ChoreAssignment ({ token }) {
   const dropNode = useRef()
   const { teamPk } = useParams()
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-  const [assignChore, setAssignChore] = useState('')
-  const [assignDay, setAssignDay] = useState('')
-  const [assignMember, setAssignMember] = useState('')
-  const [assignmentPost, setAssignmentPost] = useState([])
-  const [assignmentPosts, setAssignmentPosts] = useState({})
 
-  useEffect(updateTeam, [token, teamPk])
-  function updateTeam () {
-    getTeam(token, teamPk).then(team => setTeam(team))
-  }
+  // useEffect(updateTeam, [token, teamPk])
+  // function updateTeam () {
+  //   getTeam(token, teamPk).then(team => setTeam(team))
+  // }
 
-  useEffect(updateChores, [token])
+  useEffect(updateChores, [token, teamPk])
   function updateChores () {
     getTeam(token, teamPk).then(team => {
       setTeam(team)
-
       getChores(token).then(chores => {
         let newChores = []
         for (const chore of chores) {
@@ -34,7 +28,6 @@ function ChoreAssignment ({ token }) {
             newChores = newChores.concat(chore)
           }
         }
-        console.log(newChores)
         setChores(newChores)
       })
     }
@@ -140,11 +133,10 @@ function ChoreAssignment ({ token }) {
                 <div>
                   {team.members.map(member => (
                     <div className='team-member-container-list flex-row' key={member.username}>
-                      <div className={member.username}>
+                      <Link to={`/user-profile/${member.username}/`} className={member.username}>
                         {capitalizeUsername(member.username)}<br />
                         <div style={{ backgroundImage: `url(${member.avatar}`, width: '120px', height: '120px', backgroundSize: 'cover', borderRadius: '150px' }} />
-                      </div>
-
+                      </Link>
                       <div className='flex-row'>
                         {days.map(day => ( // does days need to be an object?
                           <div style={{ textAlign: 'center' }} key={day}>{day}
@@ -155,7 +147,6 @@ function ChoreAssignment ({ token }) {
                               onDragOver={handleDragOver}
                             >
                               {/* <div draggable className='appended-chores'>Chore</div> */}
-
                             </div>
                           </div>
                         ))}

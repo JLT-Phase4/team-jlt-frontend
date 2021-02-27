@@ -37,7 +37,7 @@ function App () {
   const [username, setUsername] = useUsername()
   // const [username, setUsername] = useState()
   const [isCaptain, setCaptain] = useState(false)
-  const [today, setToday] = useState('SUNDAY')
+  const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
   // const [myTeam, setMyTeam] = useMyTeam()
   const [myTeam, setMyTeam] = useState()

@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints } from '../api'
 import AvatarImage from './AvatarImage'
 import { Spring } from 'react-spring/renderprops'
+import { MDBProgress } from 'mdbreact'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
@@ -88,8 +89,13 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                 <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>
               </div>
               <div className='flex-col user-profile-mini-container'>Score Summary
-                <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${5 * myPossiblePoints}px`, height: '20px', padding: '10px' }} />
-                <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${5 * points.chore__points__sum}px`, height: '20px', padding: '10px' }} />
+                <>
+                  {(points.chore_points_sum !== null) && points.chore_points_sum !== '' &&
+                    <MDBProgress value={100 * parseInt(points.chore__points__sum) / myPossiblePoints} className='my-2' />}
+                  {/* <MDBProgress value={parseInt(myPossiblePoints)} className='my-2' /> */}
+                </>
+                {/* <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${10 * myPossiblePoints}px`, height: '20px', padding: '10px' }} />
+                <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${10 * points.chore__points__sum}px`, height: '20px', padding: '10px' }} /> */}
               </div>
               <div className='flex-col user-profile-mini-container'>Member of {team.name}
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
@@ -191,15 +197,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                             ))}
                           </div>
                         )}
-                        </div>
+                      </div>
                       : null}
                   </div>
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </>
 
