@@ -10,6 +10,11 @@ function ChoreAssignment ({ token }) {
   const dropNode = useRef()
   const { teamPk } = useParams()
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  const [assignChore, setAssignChore] = useState('')
+  const [assignDay, setAssignDay] = useState('')
+  const [assignMember, setAssignMember] = useState('')
+  const [assignmentPost, setAssignmentPost] = useState([])
+  const [assignmentPosts, setAssignmentPosts] = useState({})
 
   useEffect(getChores, [token, teamPk])
 
@@ -17,9 +22,9 @@ function ChoreAssignment ({ token }) {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  function handleAssignChores (event, chore, username, assignmentType) {
-    event.preventDefault()
-    postAssigment(token, chore, username, assignmentType)
+  function handleAssignChores () {
+    const dayUpper = dayToUppercase(assignDay)
+    postAssigment(token, assignChore, assignMember, dayUpper)
       .then((assignment) => setAssignment(assignment))
   }
 
@@ -75,9 +80,19 @@ function ChoreAssignment ({ token }) {
     newData.innerText = data
     event.target.appendChild(newData)
     console.log(newData)
-
+    const day = newData.parentElement.id
+    const member = newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className
+    console.log(newData.parentElement.id)
+    console.log(newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className)
+    setAssignmentPost([newData.innerText, day, member])
+    setAssignChore(newData.innerText)
+    setAssignDay(day)
+    setAssignMember(member)
+    // setAssignmentPosts(assignmentPosts.concat(assignmentPost))
     // setAssignment(assignment)
+
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
+    handleAssignChores()
   }
 
   return (
@@ -107,7 +122,7 @@ function ChoreAssignment ({ token }) {
                     <div className='team-member-container-list flex-row' key={member.username}>
                       <div className={member.username}>
                         {capitalizeUsername(member.username)}<br />
-                        <img src={member.avatar} style={{ maxWidth: '100%', borderRadius: '50px' }} />
+                        <div style={{ backgroundImage: `url(${member.avatar}`, width: '150px', height: '150px', backgroundSize: 'cover', borderRadius: '150px' }} />
                       </div>
 
                       <div className='flex-row'>

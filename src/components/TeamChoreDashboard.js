@@ -83,7 +83,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       {detailShown[chore.pk]
                         ? <Card.Body style={{ backgroundColor: 'yellowgreen', color: 'black' }}>
                           {chore.detail} [{chore.points}] points
-                          </Card.Body>
+                        </Card.Body>
                         : null}
                     </Card>
                   ))}
@@ -102,11 +102,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                  </Card>
+                </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  </Card>}
             </div>
 
             <div className='flex'>
@@ -137,7 +137,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                   ))}
                 </div>
               </div>
-              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/assign-chores/${team.pk}`}>Assign Chores</Link></button>
+              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/chore-assignment/${team.pk}`}>Assign Chores</Link></button>
               <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Members</Link></button>
               <button style={{ color: 'white', border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notification</button>
 

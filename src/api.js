@@ -261,13 +261,13 @@ export function updateAssignment (token, assignPk, status) {
     .then(res => res.data)
 }
 
-
 export function postAssigment (token, chore, username, assignmentType) {
   return API
     .post('assignment-list/', {
       user: username,
       assignment_type: assignmentType,
-      chore: chore
+      chore: chore,
+      comment: ' '
 
     }, {
       headers: {
