@@ -119,6 +119,29 @@ export function getTeams (token) {
     .then(res => res.data)
 }
 
+export function getPods (token) {
+  return API
+    .get('pods/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+    // .then(data => data[0])
+}
+
+export function updatePod (token, teamName, podPk) {
+  return API
+    .post(`/pod-list/${podPk}/`, {
+      name: teamName
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
 export function getTeam (token, teamPk) {
   return API
     .get(`team-detail/${teamPk}`, {
@@ -237,6 +260,7 @@ export function updateAssignment (token, assignPk, status) {
     )
     .then(res => res.data)
 }
+
 
 export function postAssigment (token, chore, username, assignmentType) {
   return API

@@ -22,7 +22,6 @@ const CreateTeamMembers = ({ token }) => {
   useEffect(updateMembers, [newUser, newMember, isAdding])
   function updateMembers () {
     if (newUser && isAdding) {
-      // const addMember = newMembers.push(newUser.username)
       setNewMember(newUser.username)
       setIsAdding(false)
     }
@@ -37,16 +36,9 @@ const CreateTeamMembers = ({ token }) => {
       .then(response =>
         addMember(token, username, teamPk))
       .then(response => setIsAdding(true))
-
       .catch(error => {
         setErrors(error.message)
       })
-    // if (newUser) {
-    //   console.log(newUser.username)
-    // }
-    // if (newUser) {
-    //   addMember(token, newUser.username, teamPk)
-    // }
   }
 
   return (

@@ -24,7 +24,7 @@ const MusicSearch = ({ token, setMusicTrack }) => {
         <div className='create-card-header'>Search for Tracks</div>
         <label className='track-label' htmlFor='track'>Search Term</label>
         <input type='text' id='track' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
-        <button type='submit' className='button-style' onClick={() => startMusicSearch(searchTerm)}>Get Music</button>
+        <button type='submit' className='log-reg-button' onClick={() => startMusicSearch(searchTerm)}>Get Music</button>
         {tracks && (
           <div className='search-results-container' style={{ border: 'solid 2px' }}>Search Results
             <div className='flex'>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getMemberChores } from './../api'
+import { getMemberChores } from '../api'
 import image from './../images/days-of-week.png'
 
 const DailyChoreDashboard = ({ token, today }) => {
@@ -28,9 +28,7 @@ const DailyChoreDashboard = ({ token, today }) => {
   }
   return (
     <div className='flex-col-center'>
-
       {(dailyChores) && (
-
         <div className='member-dashboard-container'>
           <div />
           <img width='150px' src={image} />

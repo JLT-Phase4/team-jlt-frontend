@@ -10,14 +10,12 @@ import HomeCarouselTeams from './components/HomeCarouselTeams'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
-import ChoreRecordDetail from './components/ChoreRecordDetail'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
-import DailyChoreDashboard from './components/DailyChoreDashboard'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
-import { getTeams, getUserProfile } from './api'
+import { getTeams, getPods, getUserProfile } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -26,8 +24,6 @@ import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
 import ChoreAssignment from './components/ChoreAssignment'
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -45,10 +41,12 @@ function App () {
   const [todayIndex, setTodayIndex] = useState(0)
   // const [myTeam, setMyTeam] = useMyTeam()
   const [myTeam, setMyTeam] = useState()
+  const [myPod, setMyPod] = useState()
   // const [myTeamName, setMyTeamName] = useMyTeamName()
   const [myTeamName, setMyTeamName] = useState()
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
+  const [isCreatingTeam, setIsCreatingTeam] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -57,43 +55,74 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updateTeams, [token, username])
+  // useEffect(updateTeams, [token, username, isCreatingTeam, setIsCreatingTeam])
 
-  function updateTeams () {
-    getTeams(token)
-      .then(teams => {
-        setTeams(teams)
-        if (teams) {
-          for (const team of teams) {
-            console.log(username, team.captain)
-            if (username === team.captain) {
-              setCaptain(true)
-              setMyTeam(team.pk)
-              setMyTeamName(team.name)
-              console.log('I am captain of:')
-              console.log(team.pk)
-              console.log(team.name)
-            }
-            // else {
-            //   setMyTeam()
-            //   setMyTeamName()
-            // }
-            for (const member of team.members) {
-              if (username === member.username) {
-                console.log('setting team to: ', team.pk)
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam])
+  function updatePods () {
+    getPods(token)
+      .then(pods => {
+        // setTeams(pod.teams)
+        for (const pod of pods) {
+          if (pod.teams) {
+            for (const team of pod.teams) {
+              console.log(username, team.captain)
+              if (username === team.captain) {
+                setCaptain(true)
                 setMyTeam(team.pk)
                 setMyTeamName(team.name)
+                setTeams(pod.teams)
+                setMyPod(pod.pk)
+                console.log('I am captain of:')
+                console.log(team.pk)
+                console.log(team.name)
               }
-              // else {
-              //   setMyTeam()
-              //   setMyTeamName()
+              for (const member of team.members) {
+                if (username === member.username) {
+                  console.log('setting team to: ', team.pk)
+                  setMyTeam(team.pk)
+                  setMyTeamName(team.name)
+                  setTeams(pod.teams)
+                  setMyPod(pod.pk)
+                }
+              }
+              // if (team.pk === myTeam) {
+              //   setTeams(pod.teams)
+              // } else {
+              //   console.log('You are not in this pod')
               // }
             }
           }
         }
-      }
-      )
+      })
   }
+  // function updateTeams () {
+  //   console.log('creating a new team?')
+  //   getTeams(token)
+  //     .then(teams => {
+  //       setTeams(teams)
+  //       if (teams) {
+  //         for (const team of teams) {
+  //           console.log(username, team.captain)
+  //           if (username === team.captain) {
+  //             setCaptain(true)
+  //             setMyTeam(team.pk)
+  //             setMyTeamName(team.name)
+  //             console.log('I am captain of:')
+  //             console.log(team.pk)
+  //             console.log(team.name)
+  //           }
+  //           for (const member of team.members) {
+  //             if (username === member.username) {
+  //               console.log('setting team to: ', team.pk)
+  //               setMyTeam(team.pk)
+  //               setMyTeamName(team.name)
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //     )
+  // }
 
   useEffect(updateProfile, [token, username])
 
@@ -135,7 +164,6 @@ function App () {
       <MDBNavbar color='black' fixed='top' dark expand='md'>
         <MDBContainer>
           <MDBNavbarBrand href='/'>
-            {/* <strong>Navbar</strong> */}
             <div className='flex header'>
               <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
               <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
@@ -150,17 +178,18 @@ function App () {
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
               </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
-              </MDBNavItem>
-              {isCaptainStatus === false &&
+              {isCaptain === false && teams &&
+                <MDBNavItem>
+                  <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
+                </MDBNavItem>}
+              {isCaptain === false &&
                 <MDBNavItem>
                   <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
                 </MDBNavItem>}
-              {isCaptainStatus === true && isCaptain === false &&
-                <MDBNavItem>
-                  <MDBNavLink to='/create-team-dashboard'>Create a Team</MDBNavLink>
-                </MDBNavItem>}
+              {/* {isCaptainStatus === true && isCaptain === false && */}
+              {/* <MDBNavItem>
+                <MDBNavLink onClick={() => setIsCreatingTeam(true)} to='/create-team-dashboard'>Create a Team</MDBNavLink>
+              </MDBNavItem> */}
               {isCaptain === true &&
                 <MDBNavItem>
                   <MDBNavLink to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Team Members</MDBNavLink>
@@ -236,7 +265,7 @@ function App () {
 
         <Route path='/create-team-dashboard'>
           <div className='App' />
-          <CreateTeamDashboard token={token} profileUsername={username} setTeams={setTeams} />
+          <CreateTeamDashboard token={token} profileUsername={username} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
         </Route>
 
         {/* Member Chores List Dashboard */}
@@ -244,21 +273,14 @@ function App () {
           <div className='App' />
           {teams && (
             <ChoreDashboard token={token} />
-
           )}
         </Route>
 
-        {/* Member chore Detail for Day Dashboard */}
-        <Route path='/member/:username/:day/chores'>
-          <div className='App' />
-          <DailyChoreDashboard token={token} today={today} todayIndex={todayIndex} />
-        </Route>
-
         {/* Member Chore Detail Dashboard */}
-        <Route path='/choredetail/:chorePk'>
+        {/* <Route path='/choredetail/:chorePk'>
           <div className='App' />
           <ChoreRecordDetail token={token} />
-        </Route>
+        </Route> */}
 
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
@@ -279,27 +301,33 @@ function App () {
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
-          <div className='App' />
-          {teams && (
+          {token && (
             <div>
-              <Carousel>
-                {teams.map((team, idx) => (
-                  <Carousel.Item key={idx} className='carousel-holder'>
-                    {team && (
-                      <div className='flex-col'>
-                        <Card>
-                          <Card.Body>
-                            <HomeCarouselTeams team={team} displayHeight='50vh' />
-                          </Card.Body>
-                        </Card>
-                      </div>
-                    )}
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-              <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
+              <div className='App' />
+              {teams && myPod
+                ? (
+                  <div>
+                    <Carousel>
+                      {teams.map((team, idx) => (
+                        <Carousel.Item key={idx} className='carousel-holder'>
+                          {team && (
+                            <div className='flex-col'>
+                              <Card>
+                                <Card.Body>
+                                  <HomeCarouselTeams team={team} displayHeight='50vh' />
+                                </Card.Body>
+                              </Card>
+                            </div>
+                          )}
+                        </Carousel.Item>
+                      ))}
+                    </Carousel>
+                    <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
 
-              <div className='footer-feed'>Latest Notification Feed</div>
+                    <div className='footer-feed'>Latest Notification Feed</div>
+                  </div>
+                  )
+                : <button onClick={() => setIsCreatingTeam(true)} style={{ border: '3px solid purple', backgroundColor: 'purple' }} className='team-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>}
             </div>
           )}
 

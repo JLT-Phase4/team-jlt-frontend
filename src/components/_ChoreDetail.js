@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getChore } from './../api'
+import { getChore } from '../api'
 
 const ChoreDetail = ({ token }) => {
   const { chorePk } = useParams()

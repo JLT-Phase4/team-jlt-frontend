@@ -24,7 +24,7 @@ const BackgroundImage = ({ token, setBackgroundImage }) => {
         <div className='create-card-header'>Search Images</div>
         <label className='image-label' htmlFor='image'>Search Term</label>
         <input type='text' id='image' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
-        <button type='submit' className='button-style' onClick={() => startImageSearch(searchTerm)}>Get Image</button>
+        <button type='submit' className='log-reg-button' onClick={() => startImageSearch(searchTerm)}>Get Image</button>
         {images && (
           <div className='search-results-container' style={{ border: 'solid 2px' }}>Search Results
             <div className='flex'>
