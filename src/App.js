@@ -178,17 +178,18 @@ function App () {
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
               </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
-              </MDBNavItem>
-              {isCaptainStatus === false &&
+              {isCaptain === false && teams &&
+                <MDBNavItem>
+                  <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
+                </MDBNavItem>}
+              {isCaptain === false &&
                 <MDBNavItem>
                   <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
                 </MDBNavItem>}
               {/* {isCaptainStatus === true && isCaptain === false && */}
-              <MDBNavItem>
+              {/* <MDBNavItem>
                 <MDBNavLink onClick={() => setIsCreatingTeam(true)} to='/create-team-dashboard'>Create a Team</MDBNavLink>
-              </MDBNavItem>
+              </MDBNavItem> */}
               {isCaptain === true &&
                 <MDBNavItem>
                   <MDBNavLink to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Team Members</MDBNavLink>
