@@ -91,7 +91,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
               <div className='flex-col user-profile-mini-container'>Score Summary
                 <>
                   {(points.chore_points_sum !== null) && points.chore_points_sum !== '' &&
-                    <MDBProgress value={100 * parseInt(points.chore__points__sum) / myPossiblePoints} className='my-2' />}
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}`, marginTop: '30px' }} marginTop='30px' height='30px' value={100 * parseInt(points.chore__points__sum) / myPossiblePoints}>{(100 * parseInt(points.chore__points__sum) / myPossiblePoints).toFixed(1)}%</MDBProgress>}
                   {/* <MDBProgress value={parseInt(myPossiblePoints)} className='my-2' /> */}
                 </>
                 {/* <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${10 * myPossiblePoints}px`, height: '20px', padding: '10px' }} />
