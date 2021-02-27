@@ -567,7 +567,7 @@ ul {
   grid-template-columns: repeat(auto-fill, 40px);
   border: 2px solid white;
 }
-
+/* 
 .drop-container * {
   margin-top: 20px;
   padding: 10px;
@@ -575,7 +575,7 @@ ul {
   flex-wrap: nonwrap;
   grid-template-columns: repeat(auto-fill, 40px);
   border: 2px solid white;
-}
+} */
 .members {
   margin:16px;
   margin-left: 45px;

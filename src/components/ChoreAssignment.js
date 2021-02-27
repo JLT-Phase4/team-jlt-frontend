@@ -17,7 +17,7 @@ function ChoreAssignment ({ token }) {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  // function handleAssignChores (event, username, assignmentType) {
+  // function handleAssignChores (event, chore, username, assignmentType) {
   //   event.preventDefault()
   //   postAssigment(token, username, assignmentType)
   //     .then((assignment) => setAssignment(assignment))
@@ -42,13 +42,13 @@ function ChoreAssignment ({ token }) {
     setDragging(true) // hey react! just letting u know we are dragging now
   }
 
-  // function handleDragEnter (event, params) {
-  //   console.log('enter drag', params)
-  //   const currentItem = dragItem.current
-  //   if (event.target !== dropNode.current) {
-  //     console.log('cool, this is not where I started dragging from, so I can drop here')
-  //   }
-  // }
+  function handleDragEnter (event, params) {
+    console.log('enter drag', params)
+    const currentItem = dragItem.current
+    if (event.target !== dropNode.current) {
+      console.log('cool, this is not where I started dragging from, so I can drop here')
+    }
+  }
 
   function handleDragEnd () {
     console.log('drag ends when I release my mouse')
@@ -65,16 +65,11 @@ function ChoreAssignment ({ token }) {
   }
   function handleDrop (event) {
     event.preventDefault()
-    // console.log(event)
-    // const oldData = event.target.childNodes[0].data
-    // console.log(oldData)
-    // console.log('handleDrop is firing')
-    // console.log(event.dataTransfer)
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    // console.log(data)
     const newData = document.createElement('div')
     newData.innerText = data
     event.target.appendChild(newData)
+    newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
   }
 
   return (
@@ -117,7 +112,7 @@ function ChoreAssignment ({ token }) {
                               onDragOver={handleDragOver}
                             >
                               {day}
-                              <div draggable className='appended-chores'>Chore</div>
+                              {/* <div draggable className='appended-chores'>Chore</div> */}
 
                             </div>
                           </div>
@@ -131,7 +126,7 @@ function ChoreAssignment ({ token }) {
             <div>
               <button
                 className='assign-chores-button'
-                // onClick={(event) => handleAssignChores(event, { username }, {dayToUppercase({day})}}
+                // onClick={(event) => handleAssignChores(event, {chore}, { username }, {dayToUppercase({id})}}
               >
                 Assign Chores
               </button>
