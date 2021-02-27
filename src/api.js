@@ -266,7 +266,7 @@ export function postAssigment (token, chore, username, assignmentType) {
   return API
     .post('assignment-list/', {
       user: username,
-      chore: chore,
+      chore: parseInt(chore),
       assignment_type: assignmentType,
       comment: 'a'
 

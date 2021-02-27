@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
-import { getTeam, postAssigment } from './../api'
+import { getChores, getTeam, postAssigment } from './../api'
 import { useParams } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
   const [team, setTeam] = useState()
-  const [assignment, setAssignment] = useState([])
+  const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
+  const [assignment, setAssignment] = useState()
   const dragItem = useRef()
   const dropNode = useRef()
   const { teamPk } = useParams()
@@ -16,10 +17,28 @@ function ChoreAssignment ({ token }) {
   const [assignmentPost, setAssignmentPost] = useState([])
   const [assignmentPosts, setAssignmentPosts] = useState({})
 
-  useEffect(getChores, [token, teamPk])
-
-  function getChores () {
+  useEffect(updateTeam, [token, teamPk])
+  function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
+  }
+
+  useEffect(updateChores, [token])
+  function updateChores () {
+    getTeam(token, teamPk).then(team => {
+      setTeam(team)
+
+      getChores(token).then(chores => {
+        let newChores = []
+        for (const chore of chores) {
+          if (chore.team === team.name) {
+            newChores = newChores.concat(chore)
+          }
+        }
+        console.log(newChores)
+        setChores(newChores)
+      })
+    }
+    )
   }
 
   function handleAssignChores (chore, member, day) {
@@ -38,13 +57,14 @@ function ChoreAssignment ({ token }) {
     return day.toUpperCase()
   }
 
-  function handleDragStart (event, params) {
-    console.log('drag is starting baby!', params)
-    dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+  function handleDragStart (event, { chore }) {
+    console.log('drag is starting baby!', chore, chore.name, chore.pk)
+    dragItem.current = chore.pk // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
     dropNode.current = event.target
     console.log(event.target.innerText)
     dropNode.current.addEventListener('dragend', handleDragEnd)
-    event.dataTransfer.setData('text/plain', event.target.innerText)
+    // event.dataTransfer.setData('text/plain', event.target.innerText)
+    event.dataTransfer.setData('text/plain', chore.pk) // this all works for the post now -- just need to get chore.name to be what is shown
     console.log(event.dataTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
     window.scroll({
@@ -75,6 +95,12 @@ function ChoreAssignment ({ token }) {
     console.log('handleDragOver is firing')
     event.dataTransfer.dropEffect = 'copy' // make a copy instead of moving chore
   }
+  // function handleDrop (dayId, memberId) {
+  //   return function (event) {
+  //     func(event, dayId, memberId)
+  //   }
+  // }
+
   function handleDrop (event) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
@@ -82,35 +108,27 @@ function ChoreAssignment ({ token }) {
     newData.innerText = data
     event.target.appendChild(newData)
     console.log(newData)
-    const day = newData.parentElement.id
-    const member = newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className
     console.log(newData.parentElement.id)
+    const dayId = newData.parentElement.id
     console.log(newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className)
-    setAssignmentPost([newData.innerText, day, member])
-    setAssignChore(newData.innerText)
-    setAssignDay(day)
-    setAssignMember(member)
-    // setAssignmentPosts(assignmentPosts.concat(assignmentPost))
-    // setAssignment(assignment)
-
+    const memberId = newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
-    handleAssignChores(newData.innerText, member, day)
+    handleAssignChores(newData.innerText, memberId, dayId)
   }
 
   return (
     <div>
       <div>
-        {team && (
+        {team && chores && (
           <div>
             <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
               <div className='flex'>
-                {team.chores.map(chore => (
-                  <ul key={chore}>
+                {chores.map(chore => (
+                  <ul key={chore.pk}>
                     <li
                       draggable
                       onDragStart={(event) => { handleDragStart(event, { chore }) }}
-                      // onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
-                    >{chore}
+                    >{chore.name}
                     </li>
                   </ul>
                 ))}
