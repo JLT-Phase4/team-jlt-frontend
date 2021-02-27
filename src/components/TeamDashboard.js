@@ -47,24 +47,29 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                 </div>
                 <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-                    {team.members.map(member => (
-                      <ul className='flex' key={member.username}>
-                        <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
+                    {team.members.length > 0 ? (
+                      <div>
+                        {team.members.map(member => (
+                          <ul className='flex' key={member.username}>
+                            <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
 
-                        <div style={{ backgroundColor: '#0e0e0eba', width: '50px', height: '20px', padding: '10px' }}>
-                          <Spring
-                            reset
-                            config={{ duration: 3000 }}
-                            from={{ backgroundColor: '#00ff00', height: '20px', width: '0px', padding: '10px', marginTop: '10px' }}
-                            to={{ backgroundColor: '#00ff00', height: '20px', width: '50px', padding: '10px', marginTop: '10px' }}
-                          >
-                            {props => (
-                              <div style={props} />
-                            )}
-                          </Spring>
-                        </div>
-                      </ul>
-                    ))}
+                            <div style={{ backgroundColor: '#0e0e0eba', width: '50px', height: '20px', padding: '10px' }}>
+                              <Spring
+                                reset
+                                config={{ duration: 3000 }}
+                                from={{ backgroundColor: '#00ff00', height: '20px', width: '0px', padding: '10px', marginTop: '10px' }}
+                                to={{ backgroundColor: '#00ff00', height: '20px', width: '50px', padding: '10px', marginTop: '10px' }}
+                              >
+                                {props => (
+                                  <div style={props} />
+                                )}
+                              </Spring>
+                            </div>
+                          </ul>
+                        ))}
+                      </div>
+                    )
+                      : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
                   </div>
                 </div>
               </div>

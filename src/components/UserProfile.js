@@ -81,7 +81,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
       {userProfile && team && myChores && points && (
         <>
           <div className='flex-col-center'>
-            <div style={{ maxWidth: '1100px', marginTop: '100px' }} className='flex'>
+            <div style={{ maxWidth: '1250px', marginTop: '100px' }} className='flex'>
               <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
               <div style={{ marginTop: '30px' }} className='flex-col team-title'>{userProfile.username}'s page!
                 {/* {(profileUsername === username) && */}
@@ -191,15 +191,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                             ))}
                           </div>
                         )}
-                      </div>
+                        </div>
                       : null}
                   </div>
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 

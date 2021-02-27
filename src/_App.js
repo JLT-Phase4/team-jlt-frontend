@@ -11,7 +11,7 @@ import fakeTeams from './fakeTeams'
 import fakeMembers from './fakeMembers'
 import MemberDashboard from './components/_MemberDashboard'
 import ChoreDashboard from './components/ChoreDashboard'
-import DailyChoreDashboard from './components/DailyChoreDashboard'
+import DailyChoreDashboard from './components/_DailyChoreDashboard'
 import { useState } from 'react'
 import fakeMemberChores from './fakeMemberChores'
 // import HomeScoreCards from './components/HomeScoreCards'
@@ -94,7 +94,7 @@ function _App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                </div>
+                  </div>
                 // :                <HomeScoreCards teams={teams} />
                 : <>
                   {teams.map((team, idx) => (
@@ -112,7 +112,7 @@ function _App () {
                       )}
                     </div>
                   ))}
-                  </>}
+                </>}
             </div>
             {teams.length > 0 && (
               <Carousel>
