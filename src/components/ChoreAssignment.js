@@ -17,11 +17,11 @@ function ChoreAssignment ({ token }) {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  // function handleAssignChores (event, chore, username, assignmentType) {
-  //   event.preventDefault()
-  //   postAssigment(token, username, assignmentType)
-  //     .then((assignment) => setAssignment(assignment))
-  // }
+  function handleAssignChores (event, chore, username, assignmentType) {
+    event.preventDefault()
+    postAssigment(token, chore, username, assignmentType)
+      .then((assignment) => setAssignment(assignment))
+  }
 
   function capitalizeUsername (username) {
     return username.charAt(0).toUpperCase() + username.slice(1)
@@ -40,6 +40,11 @@ function ChoreAssignment ({ token }) {
     event.dataTransfer.setData('text/plain', event.target.innerText)
     console.log(event.dataTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
+    window.scroll({
+      top: 1000,
+      left: 1000,
+      behavior: 'smooth'
+    })
   }
 
   function handleDragEnter (event, params) {
@@ -69,6 +74,8 @@ function ChoreAssignment ({ token }) {
     const newData = document.createElement('div')
     newData.innerText = data
     event.target.appendChild(newData)
+    console.log(newData)
+    // setAssignment(assignment)
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
   }
 
