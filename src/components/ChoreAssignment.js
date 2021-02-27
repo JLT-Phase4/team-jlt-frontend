@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getTeam, postAssigment } from '../api'
+import { getTeam, postAssigment } from './../api'
 import { useParams } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
@@ -22,9 +22,11 @@ function ChoreAssignment ({ token }) {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  function handleAssignChores () {
-    const dayUpper = dayToUppercase(assignDay)
-    postAssigment(token, assignChore, assignMember, dayUpper)
+  function handleAssignChores (chore, member, day) {
+    // event.preventDefault()
+    const dayUpper = dayToUppercase(day)
+    console.log(chore, dayUpper, member)
+    postAssigment(token, chore, member, dayUpper)
       .then((assignment) => setAssignment(assignment))
   }
 
@@ -92,7 +94,7 @@ function ChoreAssignment ({ token }) {
     // setAssignment(assignment)
 
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
-    handleAssignChores()
+    handleAssignChores(newData.innerText, member, day)
   }
 
   return (
@@ -122,19 +124,18 @@ function ChoreAssignment ({ token }) {
                     <div className='team-member-container-list flex-row' key={member.username}>
                       <div className={member.username}>
                         {capitalizeUsername(member.username)}<br />
-                        <div style={{ backgroundImage: `url(${member.avatar}`, width: '150px', height: '150px', backgroundSize: 'cover', borderRadius: '150px' }} />
+                        <div style={{ backgroundImage: `url(${member.avatar}`, width: '120px', height: '120px', backgroundSize: 'cover', borderRadius: '150px' }} />
                       </div>
 
                       <div className='flex-row'>
                         {days.map(day => ( // does days need to be an object?
-                          <div key={day}>
+                          <div style={{ textAlign: 'center' }} key={day}>{day}
                             <div
                               className='drop-container'
                               id={day}
                               onDrop={handleDrop}
                               onDragOver={handleDragOver}
                             >
-                              {day}
                               {/* <div draggable className='appended-chores'>Chore</div> */}
 
                             </div>
