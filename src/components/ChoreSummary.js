@@ -15,6 +15,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const { teamPk } = useParams()
   // const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+  days.sort()
 
   const [userProfiles, setUserProfiles] = useState([])
 
@@ -61,8 +62,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
     )
   }
 
-  function handleDragStart (event, { assignment }) {
-    // console.log('drag is starting baby!', chore, chore.name, chore.pk)
+  function handleDragStart (event, { assignment, day, member }) {
+    console.log('drag is starting baby!', assignment.pk, assignment.chore.name, day, member.username)
     dragItem.current = assignment // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
     // console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
@@ -91,13 +92,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
     event.dataTransfer.dropEffect = 'move' // make a copy instead of moving chore
   }
 
-  function handleAssignChores (chore, member, day) {
-    // event.preventDefault()
-    // const dayUpper = dayToUppercase(day)
-    console.log(chore, day, member)
-    postAssigment(token, chore, member, day)
-      .then((assignment) => setAssignment(assignment))
-  }
   function handleAssignmentUpdate (assignPk, status, member, day) {
     if (assignPk) {
       console.log(assignPk, status, day, member)
@@ -111,15 +105,15 @@ function ChoreSummary ({ token, today, todayIndex }) {
   function handleDrop (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    console.log('this is the day param', day)
+    console.log('this is the day param', day, member.username)
     const newData = document.createElement('div')
     newData.className = 'chore-card'
     const assignmentArray = data.split('???')
     newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
+    console.log('this is the drop zone where assignpk just landed', assignmentPk)
     event.target.appendChild(newData)
-    newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
-    // handleAssignChores(chorePk, member.username, day)
+    newData.setAttribute('draggable', true)
     setIsUpdating(true)
     handleAssignmentUpdate(assignmentPk, false, member.username, day)
     // here we would write a patch function that would update the assignemntpk to new member and/or day
@@ -132,8 +126,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
-              {userProfiles.map((member, idx) => (
-                <div key={idx} className='flex'>
+              {userProfiles.map((member) => (
+                <div key={member.pk} className='flex'>
                   <div style={{ minWidth: '950px' }} className='team-member-container-list flex-row'>
                     <Link to={`/user-profile/${member.username}/`} className={member.username}>
                       {member.username}<br />
@@ -158,7 +152,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
                                 {(assignment.assignment_type.includes(day)) && (
                                   <Card
                                     draggable
-                                    onDragStart={(event) => { handleDragStart(event, { assignment }) }}
+                                    onDragStart={(event) => { handleDragStart(event, { assignment, day, member }) }}
+
                                   >
                                     {(assignment.complete === true)
                                       ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>

@@ -253,7 +253,7 @@ export function updateAssignment (token, assignPk, status, profileUsername, day)
     .patch(`assignment-detail/${assignPk}/`, {
       complete: status,
       user: profileUsername,
-      assignmnet_type: day
+      assignment_type: day
     }, {
       headers: {
         Authorization: `Token ${token}`
