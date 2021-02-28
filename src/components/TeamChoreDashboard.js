@@ -13,40 +13,30 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   const [choreName, setChoreName] = useState('')
   const [choreDetail, setChoreDetail] = useState('')
   const [chorePoints, setChorePoints] = useState(1)
-  const [chores, setChores] = useState([])
   const [teamChores, setTeamChores] = useState([])
   const [detailShown, setDetailShown] = useState({})
-  // console.log(myTeam, myTeamName)
   const toggleDetail = (id) => {
     setDetailShown(prev => !prev[id] ? { ...prev, [id]: true } : { ...prev, [id]: false })
   }
 
-  useEffect(updateTeam, [token, teamPk, myTeam, setIsCreating])
+  useEffect(updateTeamChores, [token, teamPk, isAdding, setIsAdding, setIsCreating])
 
-  function updateTeam () {
-    getTeam(token, teamPk).then(team => setTeam(team))
-  }
-
-  useEffect(updateChores, [token, teamPk, isAdding, teamChores, setIsAdding, setIsCreating])
-
-  function updateChores () {
-    getChores(token).then(chores => setChores(chores))
-  }
-
-  useEffect(updateTeamChores, [token, teamPk, chores, isAdding, setIsAdding, setIsCreating])
   function updateTeamChores () {
-    let newChores = []
-    if (chores && team) {
-      for (const chore of chores) {
-        if (chore.team === team.name) {
-          newChores = newChores.concat(chore)
+    getTeam(token, teamPk).then(team => {
+      setTeam(team)
+      getChores(token).then(chores => {
+        let newChores = []
+        for (const chore of chores) {
+          if (chore.team === team.name) {
+            newChores = newChores.concat(chore)
+          }
         }
-      }
-      setTeamChores(newChores)
+        setTeamChores(newChores)
+      })
     }
+    )
   }
 
-  // useEffect(handleCreate, [chores, team])
   function handleCreate (e) {
     e.preventDefault()
     if (team) {
@@ -66,16 +56,16 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
           <div className='flex-col'>
             <h2 className='log-reg-header'>Chores for <span style={{ color: 'yellowgreen' }}>{team.name}</span></h2>
             <div style={{ marginLeft: '40px' }} className='flex'>
-              {/* {teamChores.length > 0 &&
+              {teamChores.length > 0 &&
                 <div>
                   {teamChores.map((chore) => (
-                    <MDBPopover key={chore.pk} size='lg' color='danger' btnChildren='Click to toggle popover'>
-                      <MDBPopoverHeader>{chore.name}</MDBPopoverHeader>
+                    <MDBPopover style={{ color: 'white' }} key={chore.pk} size='lg' color='black' dismiss btnChildren={chore.name}>
+                      <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
                       <MDBPopoverBody>{chore.points}</MDBPopoverBody>
                     </MDBPopover>
 
-                  ))} */}
-              {teamChores.length > 0 &&
+                  ))}
+                  {/* {teamChores.length > 0 &&
                 <div className='flex'>
                   {teamChores.map((chore) => (
                     <Card key={chore.pk} style={{ margin: '10px' }} className='flex'>
@@ -86,7 +76,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                           </Card.Body>
                         : null}
                     </Card>
-                  ))}
+                  ))} */}
                 </div>}
 
               {isCreating
@@ -102,11 +92,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                  </Card>
+                </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  </Card>}
             </div>
 
             <div className='flex'>
@@ -137,7 +127,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                   ))}
                 </div>
               </div>
-              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/assign-chores/${team.pk}`}>Assign Chores</Link></button>
+              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/chore-assignment/${team.pk}`}>Assign Chores</Link></button>
               <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Members</Link></button>
               <button style={{ color: 'white', border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notification</button>
 

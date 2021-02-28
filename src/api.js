@@ -261,15 +261,26 @@ export function updateAssignment (token, assignPk, status) {
     .then(res => res.data)
 }
 
-
 export function postAssigment (token, chore, username, assignmentType) {
+  console.log(chore, assignmentType, username)
   return API
     .post('assignment-list/', {
       user: username,
+      chore: parseInt(chore),
       assignment_type: assignmentType,
-      chore: chore
+      comment: 'a'
 
     }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
+export function getAssignments (token) {
+  return API
+    .get('assignment-list/', {
       headers: {
         Authorization: `Token ${token}`
       }

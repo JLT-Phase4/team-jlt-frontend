@@ -1,7 +1,7 @@
 
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import TeamList from './components/TeamList'
+import TeamList from './components/Welcome'
 import TeamDashboard from './components/TeamDashboard'
 // import _CarouselMemberSummary from './components/_CarouselMemberSummary'
 import CarouselMemberSummary from './components/HomeCarouselTeams'
@@ -94,7 +94,7 @@ function _App () {
                       {team.name} in Pod: {team.pod}
                     </div>
                   ))}
-                  </div>
+                </div>
                 // :                <HomeScoreCards teams={teams} />
                 : <>
                   {teams.map((team, idx) => (
@@ -112,7 +112,7 @@ function _App () {
                       )}
                     </div>
                   ))}
-                </>}
+                  </>}
             </div>
             {teams.length > 0 && (
               <Carousel>

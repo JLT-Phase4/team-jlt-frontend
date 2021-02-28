@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { register } from '../api'
+import Welcome from './Welcome'
 
 function Register ({ isLoggedIn, setAuth }) {
   const [username, setUsername] = useState('')
@@ -30,6 +31,7 @@ function Register ({ isLoggedIn, setAuth }) {
   return (
     <div className='page-container'>
       <h2 className='log-reg-header'>Register or <Link to='/login'>Login</Link></h2>
+      <Welcome />
       <form className='log-reg-header-form' onSubmit={handleSubmit}>
         {errors && (
           <div className='errors'>{errors}</div>

@@ -1,25 +1,66 @@
 import { useState, useEffect, useRef } from 'react'
-import { getTeam, postAssigment } from '../api'
-import { useParams } from 'react-router-dom'
+import { getChores, getTeam, postAssigment, getAssignments, getUserProfile } from './../api'
+import { useParams, Link } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
   const [team, setTeam] = useState()
-  const [assignment, setAssignment] = useState([])
+  const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
+  const [assignment, setAssignment] = useState()
+  const [assignments, setAssignments] = useState()
   const dragItem = useRef()
   const dropNode = useRef()
   const { teamPk } = useParams()
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  const [userProfiles, setUserProfiles] = useState([])
 
-  useEffect(getChores, [token, teamPk])
-
-  function getChores () {
-    getTeam(token, teamPk).then(team => setTeam(team))
+  useEffect(updateProfiles, [token, team])
+  function updateProfiles () {
+    // loop over ever member of team -- get userprofile and create --- member.profile//
+    // make an array of user profiles and map over them // concat to userProfiles
+    console.log('update profiles use effect happening')
+    if (team) {
+      let allUserProfiles = []
+      for (const member of team.members) {
+        getUserProfile(token, member.username).then(profile => {
+          console.log(profile)
+          allUserProfiles = allUserProfiles.concat(profile)
+          console.log(allUserProfiles)
+          setUserProfiles(allUserProfiles)
+        }
+        )
+      }
+    }
   }
 
-  function handleAssignChores (event, chore, username, assignmentType) {
-    event.preventDefault()
-    postAssigment(token, chore, username, assignmentType)
+  useEffect(updateChores, [token, teamPk])
+  function updateChores () {
+    getTeam(token, teamPk).then(team => {
+      setTeam(team)
+      getChores(token).then(chores => {
+        let newChores = []
+        for (const chore of chores) {
+          if (chore.team === team.name) {
+            newChores = newChores.concat(chore)
+          }
+        }
+        setChores(newChores)
+      })
+    }
+    )
+  }
+
+  // useEffect(updateAssignments, [token])
+  // function updateAssignments () {
+  //   getAssignments(token).then(assignments => setAssignments(assignments)
+  //   )
+  // }
+
+  function handleAssignChores (chore, member, day) {
+    // event.preventDefault()
+    const dayUpper = dayToUppercase(day)
+    console.log(chore, dayUpper, member)
+    postAssigment(token, chore, member, dayUpper)
       .then((assignment) => setAssignment(assignment))
   }
 
@@ -31,14 +72,14 @@ function ChoreAssignment ({ token }) {
     return day.toUpperCase()
   }
 
-  function handleDragStart (event, params) {
-    console.log('drag is starting baby!', params)
-    dragItem.current = params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+  function handleDragStart (event, { chore }) {
+    console.log('drag is starting baby!', chore, chore.name, chore.pk)
+    dragItem.current = chore // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
-    console.log(event.target.innerText)
     dropNode.current.addEventListener('dragend', handleDragEnd)
-    event.dataTransfer.setData('text/plain', event.target.innerText)
-    console.log(event.dataTransfer)
+    const choreTransfer = chore.name + '???' + chore.pk
+    event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
     window.scroll({
       top: 1000,
@@ -68,32 +109,33 @@ function ChoreAssignment ({ token }) {
     console.log('handleDragOver is firing')
     event.dataTransfer.dropEffect = 'copy' // make a copy instead of moving chore
   }
-  function handleDrop (event) {
+
+  function handleDrop (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
+    console.log('this is the day param', day)
     const newData = document.createElement('div')
-    newData.innerText = data
+    const choreArray = data.split('???')
+    newData.innerText = choreArray[0]
+    const chorePk = choreArray[1]
     event.target.appendChild(newData)
-    console.log(newData)
-
-    // setAssignment(assignment)
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
+    handleAssignChores(chorePk, member.username, day)
   }
 
   return (
     <div>
       <div>
-        {team && (
+        {userProfiles && chores && (
           <div>
             <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
               <div className='flex'>
-                {team.chores.map(chore => (
-                  <ul key={chore}>
+                {chores.map(chore => (
+                  <ul key={chore.pk}>
                     <li
                       draggable
                       onDragStart={(event) => { handleDragStart(event, { chore }) }}
-                      // onDragEnter={dragging ? (event) => { handleDragEnter(event, { chore }) } : null}
-                    >{chore}
+                    >{chore.name}
                     </li>
                   </ul>
                 ))}
@@ -103,25 +145,23 @@ function ChoreAssignment ({ token }) {
               <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
               <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
                 <div>
-                  {team.members.map(member => (
+                  {userProfiles.map(member => (
                     <div className='team-member-container-list flex-row' key={member.username}>
-                      <div className={member.username}>
+                      <Link to={`/user-profile/${member.username}/`} className={member.username}>
                         {capitalizeUsername(member.username)}<br />
-                        <img src={member.avatar} style={{ maxWidth: '100%', borderRadius: '50px' }} />
-                      </div>
-
+                        <div style={{ backgroundImage: `url(${member.avatar}`, width: '120px', height: '120px', backgroundSize: 'cover', borderRadius: '150px' }} />
+                      </Link>
                       <div className='flex-row'>
                         {days.map(day => ( // does days need to be an object?
-                          <div key={day}>
+                          <div style={{ textAlign: 'center' }} key={day}>{day}
                             <div
                               className='drop-container'
                               id={day}
-                              onDrop={handleDrop}
+                              // onDrop={handleDrop({ day, member })}
+                              onDrop={(event) => { handleDrop(event, { day, member }) }}
                               onDragOver={handleDragOver}
                             >
-                              {day}
                               {/* <div draggable className='appended-chores'>Chore</div> */}
-
                             </div>
                           </div>
                         ))}
