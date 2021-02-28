@@ -248,10 +248,12 @@ export function getMusicSamples (query) {
     .then(res => res.data.results)
 }
 
-export function updateAssignment (token, assignPk, status) {
+export function updateAssignment (token, assignPk, status, profileUsername, day) {
   return API
     .patch(`assignment-detail/${assignPk}/`, {
-      complete: status
+      complete: status,
+      user: profileUsername,
+      assignmnet_type: day
     }, {
       headers: {
         Authorization: `Token ${token}`
