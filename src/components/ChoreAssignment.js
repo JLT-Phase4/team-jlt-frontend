@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getChores, getTeam, postAssigment } from './../api'
+import { getChores, getTeam, postAssigment, getAssignments, getUserProfile } from './../api'
 import { useParams, Link } from 'react-router-dom'
 
 function ChoreAssignment ({ token }) {
@@ -7,15 +7,31 @@ function ChoreAssignment ({ token }) {
   const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
   const [assignment, setAssignment] = useState()
+  const [assignments, setAssignments] = useState()
   const dragItem = useRef()
   const dropNode = useRef()
   const { teamPk } = useParams()
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  const [userProfiles, setUserProfiles] = useState([])
 
-  // useEffect(updateTeam, [token, teamPk])
-  // function updateTeam () {
-  //   getTeam(token, teamPk).then(team => setTeam(team))
-  // }
+  useEffect(updateProfiles, [token, team])
+  function updateProfiles () {
+    // loop over ever member of team -- get userprofile and create --- member.profile//
+    // make an array of user profiles and map over them // concat to userProfiles
+    console.log('update profiles use effect happening')
+    if (team) {
+      let allUserProfiles = []
+      for (const member of team.members) {
+        getUserProfile(token, member.username).then(profile => {
+          console.log(profile)
+          allUserProfiles = allUserProfiles.concat(profile)
+          console.log(allUserProfiles)
+          setUserProfiles(allUserProfiles)
+        }
+        )
+      }
+    }
+  }
 
   useEffect(updateChores, [token, teamPk])
   function updateChores () {
@@ -33,6 +49,12 @@ function ChoreAssignment ({ token }) {
     }
     )
   }
+
+  // useEffect(updateAssignments, [token])
+  // function updateAssignments () {
+  //   getAssignments(token).then(assignments => setAssignments(assignments)
+  //   )
+  // }
 
   function handleAssignChores (chore, member, day) {
     // event.preventDefault()
@@ -52,13 +74,12 @@ function ChoreAssignment ({ token }) {
 
   function handleDragStart (event, { chore }) {
     console.log('drag is starting baby!', chore, chore.name, chore.pk)
-    dragItem.current = chore.pk // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    dragItem.current = chore // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
-    console.log(event.target.innerText)
     dropNode.current.addEventListener('dragend', handleDragEnd)
-    // event.dataTransfer.setData('text/plain', event.target.innerText)
-    event.dataTransfer.setData('text/plain', chore.pk) // this all works for the post now -- just need to get chore.name to be what is shown
-    console.log(event.dataTransfer)
+    const choreTransfer = chore.name + '???' + chore.pk
+    event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
     window.scroll({
       top: 1000,
@@ -88,31 +109,24 @@ function ChoreAssignment ({ token }) {
     console.log('handleDragOver is firing')
     event.dataTransfer.dropEffect = 'copy' // make a copy instead of moving chore
   }
-  // function handleDrop (dayId, memberId) {
-  //   return function (event) {
-  //     func(event, dayId, memberId)
-  //   }
-  // }
 
-  function handleDrop (event) {
+  function handleDrop (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
+    console.log('this is the day param', day)
     const newData = document.createElement('div')
-    newData.innerText = data
+    const choreArray = data.split('???')
+    newData.innerText = choreArray[0]
+    const chorePk = choreArray[1]
     event.target.appendChild(newData)
-    console.log(newData)
-    console.log(newData.parentElement.id)
-    const dayId = newData.parentElement.id
-    console.log(newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className)
-    const memberId = newData.parentElement.parentElement.parentElement.parentElement.firstElementChild.className
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
-    handleAssignChores(newData.innerText, memberId, dayId)
+    handleAssignChores(chorePk, member.username, day)
   }
 
   return (
     <div>
       <div>
-        {team && chores && (
+        {userProfiles && chores && (
           <div>
             <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
               <div className='flex'>
@@ -131,7 +145,7 @@ function ChoreAssignment ({ token }) {
               <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
               <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
                 <div>
-                  {team.members.map(member => (
+                  {userProfiles.map(member => (
                     <div className='team-member-container-list flex-row' key={member.username}>
                       <Link to={`/user-profile/${member.username}/`} className={member.username}>
                         {capitalizeUsername(member.username)}<br />
@@ -143,7 +157,8 @@ function ChoreAssignment ({ token }) {
                             <div
                               className='drop-container'
                               id={day}
-                              onDrop={handleDrop}
+                              // onDrop={handleDrop({ day, member })}
+                              onDrop={(event) => { handleDrop(event, { day, member }) }}
                               onDragOver={handleDragOver}
                             >
                               {/* <div draggable className='appended-chores'>Chore</div> */}

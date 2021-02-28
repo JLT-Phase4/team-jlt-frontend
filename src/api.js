@@ -278,6 +278,16 @@ export function postAssigment (token, chore, username, assignmentType) {
     .then(res => res.data)
 }
 
+export function getAssignments (token) {
+  return API
+    .get('assignment-list/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
 export function getPoints (token, username) {
   return API
     .get(`point-count/${username}/`, {

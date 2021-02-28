@@ -13,29 +13,29 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
-  const [myChores, setMyChores] = useState()
+  const [myAssignments, setMyAssignments] = useState()
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const [showSummary, setShowSummary] = useState(true)
   const [points, setPoints] = useState(0)
   const [myPossiblePoints, setMyPossiblePoints] = useState()
 
-  useEffect(updateProfile, [token, username, isUpdating])
+  useEffect(updateProfile, [token, username, isUpdating, points])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
       setUserProfile(profile)
       setTeamPk(profile.teams[0])
-      const userChores = []
+      const userAssignments = []
       if (profile) {
-        for (const chore of profile.assignments) {
-          if (!userChores.includes(chore)) {
-            userChores.push(chore)
+        for (const assignment of profile.assignments) {
+          if (!userAssignments.includes(assignment)) {
+            userAssignments.push(assignment)
           }
         }
-        setMyChores(userChores)
+        setMyAssignments(userAssignments)
         let possiblePoints = 0
-        for (const chore of userChores) {
-          possiblePoints += chore.chore.points
+        for (const assignment of userAssignments) {
+          possiblePoints += assignment.chore.points
         }
         setMyPossiblePoints(possiblePoints)
       }
@@ -43,7 +43,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   }
 
   // useEffect(updatePoints, [token, username])
-  useEffect(updatePoints, [token, username, setMyChores, myChores])
+  useEffect(updatePoints, [token, username, setMyAssignments, myAssignments])
   function updatePoints () {
     getPoints(token, username).then(points => setPoints(points))
   }
@@ -79,7 +79,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      {userProfile && team && myChores && points && (
+      {userProfile && team && myAssignments && points && (
         <>
           <div className='flex-col-center'>
             <div style={{ maxWidth: '1250px', marginTop: '100px' }} className='flex'>
@@ -171,41 +171,41 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                       </div>
                     </div>
                   </div>
-                  <div onClick={() => toggleSummary()} className='flex-col-center' style={{ marginTop: '50px' }}><div style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Chore Summary</div>
-                    {showSummary
-                      ? <div className='flex user-profile-sum-container'>
-                        {userProfile.assignments.length > 0 && (
-                          <div className='flex'>
-                            {days.map((day, index) => (
-                              <div key={index}>
-                                <Card style={{ width: '100%' }}>
-                                  <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
-                                    {day}
-                                  </Card.Body>
-                                </Card>
-                                {userProfile.assignments.map((assignment, idx) => (
-                                  <div key={idx}>
-                                    {(assignment.assignment_type.includes(day)) && (
-                                      <Card>
-                                        {(assignment.complete === true)
-                                          ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
-                                          : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
-                                      </Card>
-                                    )}
-                                  </div>))}
-                              </div>
-                            ))}
-                          </div>
-                        )}
+
+                  {showSummary && userProfile.assignments.length > 0
+                    ? <div onClick={() => toggleSummary()} className='flex-col-center' style={{ marginTop: '50px' }}>
+                      <div style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Chore Summary</div>
+                      <div className='flex user-profile-sum-container'>
+                        <div className='flex'>
+                          {days.map((day, index) => (
+                            <div key={index}>
+                              <Card style={{ width: '100%' }}>
+                                <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
+                                  {day}
+                                </Card.Body>
+                              </Card>
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div key={idx}>
+                                  {(assignment.assignment_type.includes(day)) && (
+                                    <Card>
+                                      {(assignment.complete === true)
+                                        ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
+                                        : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
+                                    </Card>
+                                  )}
+                                </div>))}
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      : null}
-                  </div>
+                    </div>
+                    : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 

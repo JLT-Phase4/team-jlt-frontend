@@ -3,7 +3,6 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
-import TeamList from './components/TeamList'
 import TeamDashboard from './components/TeamDashboard'
 import TeamChoreDashboard from './components/TeamChoreDashboard'
 import HomeCarouselTeams from './components/HomeCarouselTeams'
@@ -15,7 +14,7 @@ import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
-import { getTeams, getPods, getUserProfile } from './api'
+import { getTeams, getPods, getUserProfile, getAssignments, updateAssignment } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -47,6 +46,7 @@ function App () {
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
+  const [assignments, setAssignments] = useState()
 
   function setAuth (username, token) {
     setUsername(username)
@@ -125,6 +125,22 @@ function App () {
   // }
 
   useEffect(updateProfile, [token, username])
+  const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
+    { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
+
+  useEffect(updateAssignments, [token, today])
+  function updateAssignments () {
+    getAssignments(token).then(assignments => {
+      setAssignments(assignments)
+      for (const day of dayDict) {
+        for (const assignment of assignments) {
+          if (assignment.assignment_type === day.day && todayIndex < day.index) {
+            updateAssignment(token, assignment.pk, false).then(updateProfile())
+          }
+        }
+      }
+    })
+  }
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -138,16 +154,12 @@ function App () {
 
   function handleTime (e) {
     setToday(e.target.value)
-    console.log(e)
     if (e.target.value === 'MONDAY') {
       setTodayIndex(0)
-      console.log("It's Monday")
     } else if (e.target.value === 'TUESDAY') {
       setTodayIndex(1)
-      console.log("It's Tuesday")
     } else if (e.target.value === 'WEDNESDAY') {
       setTodayIndex(2)
-      console.log("It's Wednesday")
     } else if (e.target.value === 'THURSDAY') {
       setTodayIndex(3)
     } else if (e.target.value === 'FRIDAY') {
@@ -246,11 +258,6 @@ function App () {
           <Register isLoggedIn={isLoggedIn} setAuth={setAuth} />
         </Route>
 
-        <Route path='/teams'>
-          <div className='App' />
-          <TeamList />
-        </Route>
-
         {/* TEAM DASHBOARD */}
 
         <Route path='/team/:teamPk'>
@@ -301,7 +308,7 @@ function App () {
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
-          {token && (
+          {token && assignments && (
             <div>
               <div className='App' />
               {teams && myPod
@@ -325,6 +332,9 @@ function App () {
                     <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
 
                     <div className='footer-feed'>Latest Notification Feed</div>
+                    {assignments.map((assignment, idx) => (
+                      <div key={idx}>{assignment.assignment_type}</div>
+                    ))}
                   </div>
                   )
                 : <button onClick={() => setIsCreatingTeam(true)} style={{ border: '3px solid purple', backgroundColor: 'purple' }} className='team-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>}
