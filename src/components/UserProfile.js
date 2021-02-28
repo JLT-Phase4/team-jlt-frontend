@@ -19,7 +19,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [points, setPoints] = useState(0)
   const [myPossiblePoints, setMyPossiblePoints] = useState()
 
-  useEffect(updateProfile, [token, username, isUpdating, points])
+  useEffect(updateProfile, [token, username, isUpdating, setPoints])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -90,14 +90,13 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
               </div>
               <div className='flex-col user-profile-mini-container'>Score Summary
                 <>
-                  {(points.chore_points_sum !== null) && points.chore_points_sum !== '' &&
+                  {(points.chore__points__sum !== null) && points.chore__points__sum !== '' &&
                     <MDBProgress style={{ backgroundColor: `${team.dashboard_style}`, marginTop: '30px' }} marginTop='30px' height='30px' value={100 * parseInt(points.chore__points__sum) / myPossiblePoints}>{(100 * parseInt(points.chore__points__sum) / myPossiblePoints).toFixed(1)}%</MDBProgress>}
-                  {/* <MDBProgress value={parseInt(myPossiblePoints)} className='my-2' /> */}
                 </>
                 {/* <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${10 * myPossiblePoints}px`, height: '20px', padding: '10px' }} />
                 <div style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'yellowgreen', width: `${10 * points.chore__points__sum}px`, height: '20px', padding: '10px' }} /> */}
               </div>
-              <div className='flex-col user-profile-mini-container'>Member of {team.name}
+              <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}> Member of {team.name}</Link>
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                   {team.members.map(member => (
                     <div key={member.username}> {member.username !== username && (

@@ -134,13 +134,13 @@ function App () {
   function updateAssignments () {
     getAssignments(token).then(assignments => {
       setAssignments(assignments)
-      for (const day of dayDict) {
-        for (const assignment of assignments) {
-          if (assignment.assignment_type === day.day && todayIndex < day.index) {
-            updateAssignment(token, assignment.pk, false).then(updateProfile())
-          }
-        }
-      }
+      // for (const day of dayDict) {
+      //   for (const assignment of assignments) {
+      //     if (assignment.assignment_type === day.day && todayIndex < day.index) {
+      //       updateAssignment(token, assignment.pk, false).then(updateProfile())
+      //     }
+      //   }
+      // }
     })
   }
 
