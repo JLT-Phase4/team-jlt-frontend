@@ -71,9 +71,9 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   }
 
   // useEffect(handleAssignmentUpdate)
-  function handleAssignmentUpdate (assignPk, status) {
+  function handleAssignmentUpdate (assignPk, status, profileUsername, day) {
     if (assignPk) {
-      updateAssignment(token, assignPk, status).then(updateProfile())
+      updateAssignment(token, assignPk, status, profileUsername, day).then(updateProfile())
     }
   }
 
@@ -138,7 +138,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div key={idx}>
                                   {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
-                                    <Card onClick={() => handleAssignmentUpdate(assignment.pk, true)}>
+                                    <Card onClick={() => handleAssignmentUpdate(assignment.pk, true, username, today)}>
                                       <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>
                                     </Card>)}
                                 </div>))}
@@ -162,7 +162,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                             {userProfile.assignments.map((assignment, idx) => (
                               <div key={idx}>
                                 {((assignment.assignment_type.includes(today)) && assignment.complete === true) && (
-                                  <Card onClick={() => handleAssignmentUpdate(assignment.pk, false)}>
+                                  <Card onClick={() => handleAssignmentUpdate(assignment.pk, false, username, today)}>
                                     <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
                                   </Card>)}
                               </div>))}
