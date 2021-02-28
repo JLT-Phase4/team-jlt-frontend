@@ -9,6 +9,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const [dragging, setDragging] = useState(false)
   const [assignment, setAssignment] = useState()
   const [assignments, setAssignments] = useState()
+  const [isUpdating, setIsUpdating] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
   const { teamPk } = useParams()
@@ -17,7 +18,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
 
   const [userProfiles, setUserProfiles] = useState([])
 
-  useEffect(updateProfiles, [token, team])
+  useEffect(updateProfiles, [token, team, isUpdating])
   function updateProfiles () {
     // loop over ever member of team -- get userprofile and create --- member.profile//
     // make an array of user profiles and map over them // concat to userProfiles
@@ -26,21 +27,15 @@ function ChoreSummary ({ token, today, todayIndex }) {
       let allUserProfiles = []
       for (const member of team.members) {
         getUserProfile(token, member.username).then(profile => {
-          console.log(profile)
           allUserProfiles = allUserProfiles.concat(profile)
-          // console.log(allUserProfiles)
-          setUserProfiles(allUserProfiles)
           for (const profile of allUserProfiles) {
             let possiblePoints = 0
             console.log('type of assignments', typeof (profile.assignments))
             for (const assignment of profile.assignments) {
               possiblePoints += assignment.chore.points
             }
-            console.log(possiblePoints)
-            console.log('type of profile', typeof (profile))
             profile.possiblePoints = possiblePoints
-            // profile = Object.assign({ possiblePoints: possiblePoints })
-            console.log(allUserProfiles)
+            console.log('I am updating profiles')
           }
           setUserProfiles(allUserProfiles)
         }
@@ -103,9 +98,13 @@ function ChoreSummary ({ token, today, todayIndex }) {
     postAssigment(token, chore, member, day)
       .then((assignment) => setAssignment(assignment))
   }
-  function handleAssignmentUpdate (assignPk, day, member) {
+  function handleAssignmentUpdate (assignPk, status, member, day) {
     if (assignPk) {
-      updateAssignment(token, assignPk, false, member.username, day).then(updateProfiles())
+      console.log(assignPk, status, day, member)
+      updateAssignment(token, assignPk, status, member, day).then(data => {
+        setIsUpdating(false)
+        console.log('here is the output from patch', data)
+      }) // .then(updateProfiles())
     }
   }
 
@@ -121,7 +120,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
     event.target.appendChild(newData)
     newData.setAttribute('draggable', true, 'onDragStart', '{(event) => { handleDragStart(event, { chore }) }},', 'onDragEnter', '{dragging ? (event) => { handleDragEnter(event, { chore }) } : null}')
     // handleAssignChores(chorePk, member.username, day)
-    handleAssignmentUpdate(assignmentPk, false, member, day)
+    setIsUpdating(true)
+    handleAssignmentUpdate(assignmentPk, false, member.username, day)
     // here we would write a patch function that would update the assignemntpk to new member and/or day
   }
 
@@ -132,8 +132,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Team Members</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
-              {userProfiles.map((member) => (
-                <div key={member.username} className='flex'>
+              {userProfiles.map((member, idx) => (
+                <div key={idx} className='flex'>
                   <div style={{ minWidth: '950px' }} className='team-member-container-list flex-row'>
                     <Link to={`/user-profile/${member.username}/`} className={member.username}>
                       {member.username}<br />
