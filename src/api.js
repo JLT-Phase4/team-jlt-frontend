@@ -299,3 +299,13 @@ export function getPoints (token, username) {
     })
     .then(res => res.data)
 }
+
+export function getPointsByDay (token, username, day) {
+  return API
+    .get(`point-count/${day}/${username}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
