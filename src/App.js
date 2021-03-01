@@ -8,10 +8,8 @@ import TeamChoreDashboard from './components/TeamChoreDashboard'
 import HomeCarouselTeams from './components/HomeCarouselTeams'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
-import ChoreDashboard from './components/ChoreDashboard'
+// import ChoreDashboard from './components/ChoreDashboard'
 import ChoreSummary from './components/ChoreSummary'
-import ChoreSummaryAlt from './components/ChoreSummaryAlt'
-import ChoreList from './components/ChoreList'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
@@ -35,16 +33,12 @@ const useToken = createPersistedState('token')
 function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
-  // const [token, setToken] = useState()
   const [username, setUsername] = useUsername()
-  // const [username, setUsername] = useState()
   const [isCaptain, setCaptain] = useState(false)
   const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
-  // const [myTeam, setMyTeam] = useMyTeam()
   const [myTeam, setMyTeam] = useState()
   const [myPod, setMyPod] = useState()
-  // const [myTeamName, setMyTeamName] = useMyTeamName()
   const [myTeamName, setMyTeamName] = useState()
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
@@ -57,8 +51,6 @@ function App () {
   }
 
   const isLoggedIn = (username && token)
-
-  // useEffect(updateTeams, [token, username, isCreatingTeam, setIsCreatingTeam])
 
   useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam])
   function updatePods () {
@@ -98,34 +90,6 @@ function App () {
         }
       })
   }
-  // function updateTeams () {
-  //   console.log('creating a new team?')
-  //   getTeams(token)
-  //     .then(teams => {
-  //       setTeams(teams)
-  //       if (teams) {
-  //         for (const team of teams) {
-  //           console.log(username, team.captain)
-  //           if (username === team.captain) {
-  //             setCaptain(true)
-  //             setMyTeam(team.pk)
-  //             setMyTeamName(team.name)
-  //             console.log('I am captain of:')
-  //             console.log(team.pk)
-  //             console.log(team.name)
-  //           }
-  //           for (const member of team.members) {
-  //             if (username === member.username) {
-  //               console.log('setting team to: ', team.pk)
-  //               setMyTeam(team.pk)
-  //               setMyTeamName(team.name)
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //     )
-  // }
 
   useEffect(updateProfile, [token, username])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
@@ -135,6 +99,7 @@ function App () {
   function updateAssignments () {
     getAssignments(token).then(assignments => {
       setAssignments(assignments)
+      // this is the rewind code for reseeding the data quickly
       // for (const day of dayDict) {
       //   for (const assignment of assignments) {
       //     if (assignment.assignment_type === day.day && todayIndex < day.index) {
@@ -176,7 +141,7 @@ function App () {
 
   return (
     <Router>
-      <MDBNavbar color='black' fixed='top' dark expand='md'>
+      <MDBNavbar color='black' dark expand='md'>
         <MDBContainer>
           <MDBNavbarBrand href='/'>
             <div className='flex header'>
@@ -188,7 +153,7 @@ function App () {
             </div>
           </MDBNavbarBrand>
           <MDBNavbarToggler />
-          <MDBCollapse navbar>
+          <MDBCollapse navbar isOpen>
             <MDBNavbarNav left>
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
@@ -245,9 +210,9 @@ function App () {
                       )}
                 </div>
               </MDBNavItem>
-
             </MDBNavbarNav>
           </MDBCollapse>
+
         </MDBContainer>
       </MDBNavbar>
 
@@ -278,42 +243,11 @@ function App () {
           <CreateTeamDashboard token={token} profileUsername={username} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
         </Route>
 
-        {/* Member Chores List Dashboard */}
-        <Route path='/member/:username/chores'>
-          <div className='App' />
-          {teams && (
-            <ChoreDashboard token={token} />
-          )}
-        </Route>
-
-        {/* Member Chore Detail Dashboard */}
-        {/* <Route path='/choredetail/:chorePk'>
-          <div className='App' />
-          <ChoreRecordDetail token={token} />
-        </Route> */}
-
         {/* CHORE ASSIGNMENT PAGE */}
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
-          <ChoreAssignment token={token} />
-        </Route>
+          <ChoreSummary token={token} today={today} todayIndex={todayIndex} />
 
-        <Route path='/chore-collected/:teamPk'>
-          <div className='App' />
-          {myTeam && token && (
-            <div>
-              {/* <ChoreList token={token} /> */}
-              <ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={myTeam} teamView />
-            </div>
-          )}
-        </Route>
-
-        <Route path='/chore-summary/:teamPk'>
-          <div className='App' />
-          {myTeam && token && (
-            <ChoreSummary token={token} today={today} todayIndex={todayIndex} teamPk={myTeam} teamView />
-
-          )}
         </Route>
 
         <Route path='/create-team-members/:teamPk/:teamName'>

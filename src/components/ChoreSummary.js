@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
-import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, updateAssignment } from './../api'
+import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, updateAssignment } from '../api'
 import { useParams, Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
 
-function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username }) {
+function ChoreSummary ({ token, today, todayIndex }) {
+  const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
@@ -22,7 +23,7 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
   console.log(teamPk, 'this is my team pk')
   const [userProfiles, setUserProfiles] = useState([])
 
-  useEffect(updateProfiles, [token, team, isUpdating, username])
+  useEffect(updateProfiles, [token, team, isUpdating])
   function updateProfiles () {
     // loop over ever member of team -- get userprofile and create --- member.profile//
     // make an array of user profiles and map over them // concat to userProfiles
@@ -32,25 +33,8 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     // }
     if (team) {
       let allUserProfiles = []
-      if (teamView === true) {
-        for (const member of team.members) {
-          getUserProfile(token, member.username).then(profile => {
-            allUserProfiles = allUserProfiles.concat(profile)
-            for (const profile of allUserProfiles) {
-              let possiblePoints = 0
-              console.log('type of assignments', typeof (profile.assignments))
-              for (const assignment of profile.assignments) {
-                possiblePoints += assignment.chore.points
-              }
-              profile.possiblePoints = possiblePoints
-              console.log('I am updating profiles')
-            }
-            setUserProfiles(allUserProfiles)
-          }
-          )
-        }
-      } else {
-        getUserProfile(token, username).then(profile => {
+      for (const member of team.members) {
+        getUserProfile(token, member.username).then(profile => {
           allUserProfiles = allUserProfiles.concat(profile)
           for (const profile of allUserProfiles) {
             let possiblePoints = 0
@@ -91,7 +75,7 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     // console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
     dropNode.current.addEventListener('dragend', handleDragEnd)
-    const choreTransfer = assignment.chore.name + '???' + assignment.pk
+    const choreTransfer = assignment.chore.name + '???' + 'ASSIGN' + '???' + assignment.pk
     event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
     // window.scroll({
@@ -99,6 +83,22 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     //   left: 1000,
     //   behavior: 'smooth'
     // })
+  }
+
+  function handleDragStartCreate (event, { chore }) {
+    console.log('drag is starting baby!', chore, chore.name, chore.pk)
+    dragItem.current = chore // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
+    console.log('what type is chore', typeof (chore))
+    dropNode.current = event.target
+    dropNode.current.addEventListener('dragend', handleDragEnd)
+    const choreTransfer = chore.name + '???' + 'CHORE' + '???' + chore.pk
+    event.dataTransfer.setData('text/plain', choreTransfer)
+    setDragging(true) // hey react! just letting u know we are dragging now
+    window.scroll({
+      top: 1000,
+      left: 1000,
+      behavior: 'smooth'
+    })
   }
 
   function handleDragEnd () {
@@ -126,6 +126,17 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     }
   }
 
+  function handleAssignChores (chore, member, day) {
+    // event.preventDefault()
+    // const dayUpper = dayToUppercase(day)
+    console.log(chore, day, member)
+    postAssigment(token, chore, member, day)
+      .then(data => {
+        setIsUpdating(false)
+        console.log('here is the output from the post', data)
+      })
+  }
+
   function handleDrop (event, { day, member }) {
     event.preventDefault()
     console.log('handle Drop is firing')
@@ -134,13 +145,19 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     const newData = document.createElement('div')
     newData.className = 'chore-card'
     const assignmentArray = data.split('???')
-    newData.innerText = assignmentArray[0]
-    const assignmentPk = assignmentArray[1]
+    const dropType = assignmentArray[1]
+    // newData.innerText = assignmentArray[0]
+    const assignmentPk = assignmentArray[2]
     console.log('this is the drop zone where assignpk just landed', assignmentPk)
-    event.target.appendChild(newData)
+    // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdating(true)
-    handleAssignmentUpdate(assignmentPk, false, member.username, day)
+    if (dropType === 'CHORE') {
+      handleAssignChores(assignmentPk, member.username, day)
+    } else {
+      handleAssignmentUpdate(assignmentPk, false, member.username, day)
+    }
+
     // here we would write a patch function that would update the assignemntpk to new member and/or day
   }
 
@@ -148,6 +165,21 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     <div>
       {userProfiles && chores && (
         <div>
+          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+            <div className='flex'>
+              {chores.map(chore => (
+                <div key={chore.pk}>
+                  <Card
+                      draggable
+                      onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
+                    >
+                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
+                    </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
@@ -178,7 +210,6 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
                                   <Card
                                     draggable
                                     onDragStart={(event) => { handleDragStart(event, { assignment, day, member }) }}
-
                                   >
                                     {(assignment.complete === true)
                                       ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
