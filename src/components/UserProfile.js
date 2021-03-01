@@ -5,7 +5,7 @@ import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints
 import AvatarImage from './AvatarImage'
 import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
-import ChoreSummary from './ChoreSummary'
+import ChoreSummaryAlt from './ChoreSummaryAlt'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
@@ -238,15 +238,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div className='media-hide'><ChoreSummary token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} /></div>
+                    ? <div className='media-hide'><ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} setIsUpdatingAssignment={setIsUpdatingAssignment} /></div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
 
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 

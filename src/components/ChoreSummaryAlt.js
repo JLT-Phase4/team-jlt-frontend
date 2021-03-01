@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
 
-function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username }) {
+function ChoreSummaryAlt ({ token, today, todayIndex, teamPk, teamView, username, setIsUpdatingAssignment }) {
   const [team, setTeam] = useState()
   const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
@@ -22,7 +22,7 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
   console.log(teamPk, 'this is my team pk')
   const [userProfiles, setUserProfiles] = useState([])
 
-  useEffect(updateProfiles, [token, team, isUpdating, username])
+  useEffect(updateProfiles, [token, team, isUpdating, username, setIsUpdatingAssignment])
   function updateProfiles () {
     // loop over ever member of team -- get userprofile and create --- member.profile//
     // make an array of user profiles and map over them // concat to userProfiles
@@ -181,20 +181,22 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     <div>
       {userProfiles && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
-            <div className='flex'>
-              {chores.map(chore => (
-                <div key={chore.pk}>
-                  <Card
-                    draggable
-                    onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
-                  >
-                    <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
-                  </Card>
-                </div>
-              ))}
+          {teamView && (
+            <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+              <div className='flex'>
+                {chores.map(chore => (
+                  <div key={chore.pk}>
+                    <Card
+                      draggable
+                      onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
+                    >
+                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
+                    </Card>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
@@ -254,4 +256,4 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
   )
 }
 
-export default ChoreSummary
+export default ChoreSummaryAlt
