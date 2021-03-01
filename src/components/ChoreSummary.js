@@ -16,7 +16,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const { teamPk } = useParams()
   // const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
-  days.sort()
+  // days.sort()
 
   const [userProfiles, setUserProfiles] = useState([])
 

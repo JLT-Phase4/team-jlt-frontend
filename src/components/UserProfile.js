@@ -10,6 +10,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
+  const [isUpdatingAssignment, setIsUpdatingAssignment] = useState(false)
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
@@ -21,8 +22,9 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
+  const newData = useRef()
 
-  useEffect(updateProfile, [token, username, isUpdating, setPoints])
+  useEffect(updateProfile, [token, username, isUpdating, setPoints, isUpdatingAssignment])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -45,7 +47,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     })
   }
 
-  // useEffect(updatePoints, [token, username])
   useEffect(updatePoints, [token, username, setMyAssignments, myAssignments])
   function updatePoints () {
     getPoints(token, username).then(points => setPoints(points))
@@ -73,7 +74,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     setShowSummary(!showSummary)
   }
 
-  // useEffect(handleAssignmentUpdate)
   function handleAssignmentUpdate (assignPk, status, profileUsername, day) {
     if (assignPk) {
       updateAssignment(token, assignPk, status, profileUsername, day).then(updateProfile())
@@ -83,7 +83,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   function handleDragStart (event, { assignment, today, userProfile }) {
     console.log('drag is starting baby!', assignment.pk, assignment.chore.name, today, userProfile.username)
     dragItem.current = assignment // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
-    // console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
     dropNode.current.addEventListener('dragend', handleDragEnd)
     const choreTransfer = assignment.chore.name + '???' + assignment.pk
@@ -99,9 +98,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   function handleDragEnd () {
     console.log('drag ends when I release my mouse')
     setDragging(false)
+    setIsUpdatingAssignment(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
+    newData.current = null
   }
 
   function handleDragOver (event) {
@@ -110,33 +111,40 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     event.dataTransfer.dropEffect = 'move' // make a copy instead of moving chore
   }
 
-  // function handleAssignmentUpdate (assignPk, status, member, day) {
-  //   if (assignPk) {
-  //     console.log(assignPk, status, day, member)
-  //     updateAssignment(token, assignPk, status, member, day).then(data => {
-  //       setIsUpdating(false)
-  //       console.log('here is the output from patch', data)
-  //     }) // .then(updateProfiles())
-  //   }
-  // }
-
-  function handleDrop (event, { day, member, assignment }) {
+  function handleDropComplete (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    console.log('this is the day param', day, member.username)
+    console.log('this is the day param', member)
     const newData = document.createElement('div')
-    const status = !assignment.complete
     newData.className = 'chore-card'
+    console.log('this is the data transfer', data)
     const assignmentArray = data.split('???')
     newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
     console.log('this is the drop zone where assignpk just landed', assignmentPk)
     event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
-    setIsUpdating(true)
-    handleAssignmentUpdate(assignmentPk, status, member.username, day)
-    // here we would write a patch function that would update the assignemntpk to new member and/or day
+    setIsUpdatingAssignment(true)
+    handleAssignmentUpdate(assignmentPk, true, userProfile.username, today)
   }
+
+  function handleDropInComplete (event, { day, member }) {
+    event.preventDefault()
+    const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
+    console.log('this is the day param', member)
+    const newData = document.createElement('div')
+    newData.className = 'chore-card'
+    console.log('this is the data transfer', data)
+    const assignmentArray = data.split('???')
+    newData.innerText = assignmentArray[0]
+    const assignmentPk = assignmentArray[1]
+    console.log('this is the drop zone where assignpk just landed', assignmentPk)
+    event.target.appendChild(newData)
+    newData.setAttribute('draggable', true)
+    setIsUpdatingAssignment(true)
+    handleAssignmentUpdate(assignmentPk, false, userProfile.username, today)
+  }
+
   return (
     <div style={{ textAlign: 'center' }}>
       {userProfile && team && myAssignments && points && (
@@ -188,7 +196,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                   <div style={{ }} className='flex-col-center'>
                     <div style={{ marginTop: '50px', fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
                     <div style={{ maxWidth: '900px' }} className='flex-sa'>
-                      <div className='flex-sb user-profile-mini-container'>
+                      <div
+                        className='flex user-profile-mini-container' id={today}
+                        onDrop={(event) => { handleDropInComplete(event, { today, userProfile }) }}
+                        onDragOver={handleDragOver}
+                      >
                         {userProfile.assignments.length > 0 && (
                           <div className='flex-sb'>
                             <div>Today's Chores
@@ -199,7 +211,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                                       draggable
                                       onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                     >
-                                      {/* <Card onClick={() => handleAssignmentUpdate(assignment.pk, true, username, today)}> */}
                                       <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>
                                     </Card>)}
                                 </div>))}
@@ -207,23 +218,28 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                           </div>
                         )}
                       </div>
-                      <div className='flex user-profile-mini-container'>Completed Chores {today} <span> {points.chore__points__sum ? <span>{points.chore__points__sum}</span> : 0} of {myPossiblePoints}</span>
+                      <div
+                        className='flex user-profile-mini-container' id={today}
+                        onDrop={(event) => { handleDropComplete(event, { today, userProfile }) }}
+                        onDragOver={handleDragOver}
+                      >
+                        Completed Chores {today} <span> {points.chore__points__sum ? <span>{points.chore__points__sum}</span> : 0} of {myPossiblePoints}</span>
                         {userProfile.assignments.length > 0 && (
-                          <>
+                          <div>
                             {userProfile.assignments.map((assignment, idx) => (
-                              <div key={idx}>
+                              <div
+                                key={idx}
+                              >
                                 {((assignment.assignment_type.includes(today)) && assignment.complete === true) && (
-                                // <Card onClick={() => handleAssignmentUpdate(assignment.pk, false, username, today)}>
-                                  <Card // className='drop-container'
-                                    id={today}
-                                    onDrop={(event) => { handleDrop(event, { today, userProfile, assignment }) }}
-                                    onDragOver={handleDragOver} key={idx}
+                                  <Card
+                                    draggable
+                                    onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                   >
 
                                     <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
                                   </Card>)}
                               </div>))}
-                          </>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -255,14 +271,14 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                           ))}
                         </div>
                       </div>
-                      </div>
+                    </div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 
