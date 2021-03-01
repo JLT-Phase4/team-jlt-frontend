@@ -5,7 +5,6 @@ import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints
 import AvatarImage from './AvatarImage'
 import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
-import ChoreSummaryAlt from './ChoreSummaryAlt'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
@@ -87,7 +86,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
       )
     }
     console.log(newDayByDayPoints)
-    // setDayByDayPoints(newDay)
   }
   if (dayByDayPoints) {
     console.log(dayByDayPoints)
@@ -285,15 +283,55 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div className='media-hide'><ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} setIsUpdatingAssignment={setIsUpdatingAssignment} /></div>
+                    ?
+                    // <div className='media-hide'><ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} setIsUpdatingAssignment={setIsUpdatingAssignment} /></div>
+                      <div className='flex'>
+                        <div style={{ minWidth: '900px' }} className='team-member-container-list flex-row'>
+                          <Link to={`/user-profile/${userProfile.username}/`} className={userProfile.username}>
+                            {userProfile.username}<br />
+                            <div style={{ backgroundImage: `url(${userProfile.avatar}`, width: '100px', height: '100px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
+                          </Link>
+                          <div className='flex-row'>
+                            {days.map((day, index) => (
+                              <div // className='drop-container'
+                                key={index}
+                              >
+                                <Card style={{ width: '100%' }}>
+                                  <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
+                                    {day}
+                                  </Card.Body>
+                                </Card>
+                                <>
+                                  {userProfile.assignments.map((assignment, idx) => (
+                                    <div key={idx}>
+                                      {(assignment.assignment_type.includes(day)) && (
+                                        <Card>
+                                          {(assignment.complete === true)
+                                            ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+
+                                          // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
+                                            : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
+                                        </Card>
+                                      )}
+                                    </div>))}
+                                </>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className='team-member-container-list'>
+                          <div>Points</div>
+                          <div>? of {userProfile.possiblePoints}</div>
+                        </div>
+                      </div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
 
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 
