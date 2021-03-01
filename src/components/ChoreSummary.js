@@ -12,6 +12,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const [isUpdating, setIsUpdating] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
+  const newData = useRef()
   const { teamPk } = useParams()
   // const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
@@ -71,11 +72,11 @@ function ChoreSummary ({ token, today, todayIndex }) {
     const choreTransfer = assignment.chore.name + '???' + assignment.pk
     event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
-    window.scroll({
-      top: 1000,
-      left: 1000,
-      behavior: 'smooth'
-    })
+    // window.scroll({
+    //   top: 1000,
+    //   left: 1000,
+    //   behavior: 'smooth'
+    // })
   }
 
   function handleDragEnd () {
@@ -84,6 +85,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
+    newData.current = null
   }
 
   function handleDragOver (event) {
@@ -104,6 +106,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
 
   function handleDrop (event, { day, member }) {
     event.preventDefault()
+    console.log('handle Drop is firing')
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
     console.log('this is the day param', day, member.username)
     const newData = document.createElement('div')
