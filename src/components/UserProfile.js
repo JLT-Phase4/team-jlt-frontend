@@ -5,6 +5,7 @@ import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints
 import AvatarImage from './AvatarImage'
 import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
+import ChoreSummary from './ChoreSummary'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
@@ -15,7 +16,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
   const [myAssignments, setMyAssignments] = useState()
-  const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const [showSummary, setShowSummary] = useState(true)
   const [points, setPoints] = useState(0)
   const [myPossiblePoints, setMyPossiblePoints] = useState()
@@ -146,14 +146,13 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   }
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
       {userProfile && team && myAssignments && points && (
         <>
-          <div className='flex-col-center'>
-            <div style={{ maxWidth: '1250px', marginTop: '100px' }} className='flex'>
+          <div className='flex-col'>
+            <div style={{ maxWidth: '1250px', marginTop: '100px', marginLeft: '45px', marginRight: '45px' }} className='flex'>
               <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
               <div style={{ marginTop: '30px' }} className='flex-col team-title'>{userProfile.username}'s page!
-                {/* {(profileUsername === username) && */}
                 <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>
               </div>
               <div className='flex-col user-profile-mini-container'>Score Summary
@@ -165,23 +164,12 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}> Member of {team.name}</Link>
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                   {team.members.map(member => (
-                    <div key={member.username}> {member.username !== username && (
-                      <ul className='flex'>
+                    <div key={member.username}>
+                      <div>
                         <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
-                        <div style={{ backgroundColor: '#0e0e0eba', width: '50px', height: '20px', padding: '10px' }}>
-                          <Spring
-                            reset
-                            config={{ duration: 3000 }}
-                            from={{ backgroundColor: '#00ff00', height: '20px', width: '0px', padding: '10px', marginTop: '10px' }}
-                            to={{ backgroundColor: '#00ff00', height: '20px', width: '50px', padding: '10px', marginTop: '10px' }}
-                          >
-                            {props => (
-                              <div style={props} />
-                            )}
-                          </Spring>
-                        </div>
-                      </ul>
-                    )}
+                        <MDBProgress style={{ backgroundColor: `${team.dashboard_style}`, marginTop: '30px' }} marginTop='30px' height='30px' value={75}>{75}%</MDBProgress>
+                      </div>
+
                     </div>
                   ))}
                 </div>
@@ -193,8 +181,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
             {(!isUpdating)
               ? <div style={{ minWidth: '100%' }}>
                 <div className='flex-col'>
-                  <div style={{ }} className='flex-col-center'>
-                    <div style={{ marginTop: '50px', fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
+                  <div style={{ }} className='flex-col'>
+                    <div style={{ marginTop: '50px', marginLeft: '45px', fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
                     <div style={{ maxWidth: '900px' }} className='flex-sa'>
                       <div
                         className='flex user-profile-mini-container' id={today}
@@ -246,39 +234,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div onClick={() => toggleSummary()} className='flex-col-center' style={{ marginTop: '50px' }}>
-                      <div style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Chore Summary</div>
-                      <div className='flex user-profile-sum-container'>
-                        <div className='flex'>
-                          {days.map((day, index) => (
-                            <div key={index}>
-                              <Card style={{ width: '100%' }}>
-                                <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
-                                  {day}
-                                </Card.Body>
-                              </Card>
-                              {userProfile.assignments.map((assignment, idx) => (
-                                <div key={idx}>
-                                  {(assignment.assignment_type.includes(day)) && (
-                                    <Card>
-                                      {(assignment.complete === true)
-                                        ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
-                                        : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
-                                    </Card>
-                                  )}
-                                </div>))}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                    ? <div className='media-hide'><ChoreSummary token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} /></div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
+
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </>
 

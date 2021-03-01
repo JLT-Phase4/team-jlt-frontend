@@ -148,6 +148,20 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
     <div>
       {userProfiles && chores && (
         <div>
+          {/* <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+            <div className='flex'>
+              {chores.map(chore => (
+                <ul key={chore.pk}>
+                  <li
+                    draggable
+                    onDragStart={(event) => { handleDragStart(event, { chore }) }}
+                  >{chore.name}
+                  </li>
+                </ul>
+              ))}
+            </div>
+          </div> */}
+
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
@@ -178,7 +192,6 @@ function ChoreSummary ({ token, today, todayIndex, teamPk, teamView, username })
                                   <Card
                                     draggable
                                     onDragStart={(event) => { handleDragStart(event, { assignment, day, member }) }}
-
                                   >
                                     {(assignment.complete === true)
                                       ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
