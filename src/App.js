@@ -10,7 +10,8 @@ import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 import ChoreDashboard from './components/ChoreDashboard'
 import ChoreSummary from './components/ChoreSummary'
-
+import ChoreSummaryAlt from './components/ChoreSummaryAlt'
+import ChoreList from './components/ChoreList'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
@@ -297,9 +298,22 @@ function App () {
           <ChoreAssignment token={token} />
         </Route>
 
+        <Route path='/chore-collected/:teamPk'>
+          <div className='App' />
+          {myTeam && token && (
+            <div>
+              {/* <ChoreList token={token} /> */}
+              <ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={myTeam} teamView />
+            </div>
+          )}
+        </Route>
+
         <Route path='/chore-summary/:teamPk'>
           <div className='App' />
-          <ChoreSummary token={token} today={today} todayIndex={todayIndex} />
+          {myTeam && token && (
+            <ChoreSummary token={token} today={today} todayIndex={todayIndex} teamPk={myTeam} teamView />
+
+          )}
         </Route>
 
         <Route path='/create-team-members/:teamPk/:teamName'>

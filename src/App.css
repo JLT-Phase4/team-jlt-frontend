@@ -424,6 +424,10 @@ label {
     width: 130px;
     height: 130px;
   }
+
+  .media-hide {
+    display: none;
+  }
   /* .header {
     flex-wrap:nowrap;    
   }
