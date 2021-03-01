@@ -91,7 +91,7 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                 </div>
                 <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-                    {userProfiles.length > 2
+                    {userProfiles.length > 0
                       ? (
                         <div>
                           {userProfiles.map(member => (
