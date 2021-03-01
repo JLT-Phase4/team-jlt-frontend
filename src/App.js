@@ -98,34 +98,6 @@ function App () {
         }
       })
   }
-  // function updateTeams () {
-  //   console.log('creating a new team?')
-  //   getTeams(token)
-  //     .then(teams => {
-  //       setTeams(teams)
-  //       if (teams) {
-  //         for (const team of teams) {
-  //           console.log(username, team.captain)
-  //           if (username === team.captain) {
-  //             setCaptain(true)
-  //             setMyTeam(team.pk)
-  //             setMyTeamName(team.name)
-  //             console.log('I am captain of:')
-  //             console.log(team.pk)
-  //             console.log(team.name)
-  //           }
-  //           for (const member of team.members) {
-  //             if (username === member.username) {
-  //               console.log('setting team to: ', team.pk)
-  //               setMyTeam(team.pk)
-  //               setMyTeamName(team.name)
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //     )
-  // }
 
   useEffect(updateProfile, [token, username])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
@@ -176,7 +148,7 @@ function App () {
 
   return (
     <Router>
-      <MDBNavbar color='black' fixed='top' dark expand='md'>
+      <MDBNavbar color='black' dark expand='md'>
         <MDBContainer>
           <MDBNavbarBrand href='/'>
             <div className='flex header'>
@@ -188,7 +160,7 @@ function App () {
             </div>
           </MDBNavbarBrand>
           <MDBNavbarToggler />
-          <MDBCollapse navbar>
+          <MDBCollapse navbar isOpen>
             <MDBNavbarNav left>
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
@@ -245,9 +217,9 @@ function App () {
                       )}
                 </div>
               </MDBNavItem>
-
             </MDBNavbarNav>
           </MDBCollapse>
+
         </MDBContainer>
       </MDBNavbar>
 

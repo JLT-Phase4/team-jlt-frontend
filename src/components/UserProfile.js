@@ -76,7 +76,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
 
   function handleAssignmentUpdate (assignPk, status, profileUsername, day) {
     if (assignPk) {
-      updateAssignment(token, assignPk, status, profileUsername, day).then(updateProfile())
+      updateAssignment(token, assignPk, status, profileUsername, day).then(data => {
+        setIsUpdatingAssignment(false)
+        updateProfile()
+      }
+      )
     }
   }
 
@@ -98,7 +102,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   function handleDragEnd () {
     console.log('drag ends when I release my mouse')
     setDragging(false)
-    setIsUpdatingAssignment(false)
+    // setIsUpdatingAssignment(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
@@ -119,10 +123,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     newData.className = 'chore-card'
     console.log('this is the data transfer', data)
     const assignmentArray = data.split('???')
-    newData.innerText = assignmentArray[0]
+    // newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
     console.log('this is the drop zone where assignpk just landed', assignmentPk)
-    event.target.appendChild(newData)
+    // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdatingAssignment(true)
     handleAssignmentUpdate(assignmentPk, true, userProfile.username, today)
@@ -136,10 +140,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     newData.className = 'chore-card'
     console.log('this is the data transfer', data)
     const assignmentArray = data.split('???')
-    newData.innerText = assignmentArray[0]
+    // newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
     console.log('this is the drop zone where assignpk just landed', assignmentPk)
-    event.target.appendChild(newData)
+    // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdatingAssignment(true)
     handleAssignmentUpdate(assignmentPk, false, userProfile.username, today)
