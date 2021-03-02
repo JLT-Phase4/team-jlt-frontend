@@ -337,7 +337,7 @@ export function postMessage (token, teamPk, author, message) {
 
 export function getFeed (token, teamPk) {
   return API
-    .get(`feed/${teamPk}/`, {
+    .get(`feed-detail/${teamPk}/`, {
       headers: {
         Authorization: `Token ${token}`
       }
