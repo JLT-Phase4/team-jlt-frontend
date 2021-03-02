@@ -263,6 +263,17 @@ export function updateAssignment (token, assignPk, status, profileUsername, day)
     .then(res => res.data)
 }
 
+export function deleteAssignment (token, assignPk) {
+  return API
+    .delete(`assignment-detail/${assignPk}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    }
+    )
+    .then(res => res.data)
+}
+
 export function postAssigment (token, chore, username, assignmentType) {
   console.log(chore, assignmentType, username)
   return API
