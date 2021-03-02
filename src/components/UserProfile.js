@@ -3,7 +3,6 @@ import { Card } from 'react-bootstrap'
 import { useParams, Link } from 'react-router-dom'
 import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints, getPointsByDay } from '../api'
 import AvatarImage from './AvatarImage'
-import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
@@ -14,10 +13,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const [avatar, setAvatar] = useState('')
   const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
-  const [myAssignments, setMyAssignments] = useState()
   const [showSummary, setShowSummary] = useState(true)
-  const [points, setPoints] = useState(0)
-  const [myPossiblePoints, setMyPossiblePoints] = useState()
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
@@ -25,72 +21,33 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const [dayByDayPoints, setDayByDayPoints] = useState()
 
-  useEffect(updateProfile, [token, username, isUpdating, setPoints, isUpdatingAssignment])
+  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
       setUserProfile(profile)
       setTeamPk(profile.teams[0])
-      console.log('we are getting user profile', profile.teams[0])
-      const userAssignments = []
-      if (profile) {
-        for (const assignment of profile.assignments) {
-          if (!userAssignments.includes(assignment)) {
-            userAssignments.push(assignment)
-          }
-        }
-        setMyAssignments(userAssignments)
-        console.log(userAssignments)
-        let possiblePoints = 0
-        for (const assignment of userAssignments) {
-          possiblePoints += assignment.chore.points
-        }
-        setMyPossiblePoints(possiblePoints)
-      }
     })
   }
 
-  useEffect(updatePoints, [token, username, setMyAssignments, myAssignments])
-  function updatePoints () {
-    console.log('we are getting total points')
-    getPoints(token, username).then(points => {
-      if (points.chore__points__sum !== null) {
-        setPoints(points.chore__points__sum)
-      } else {
-        setPoints(0)
-      }
-      console.log('we are setting points', points.chore__points__sum)
-    }
-    )
-  }
+  // useEffect(updatePointsByDay, [token, username, today, userProfile, setMyAssignments, myAssignments, isUpdatingAssignment, setDayByDayPoints])
+  // function updatePointsByDay () {
+  //   let newDayByDayPoints = []
+  //   console.log('points by day running')
+  //   for (const day of days) {
+  //     const dayToPass = day.toLowerCase()
 
-  useEffect(updatePointsByDay, [token, username, today, userProfile, setMyAssignments, myAssignments, isUpdatingAssignment, setDayByDayPoints])
-  function updatePointsByDay () {
-    let newDayByDayPoints = []
-    console.log('points by day running')
-    for (const day of days) {
-      const dayToPass = day.toLowerCase()
-
-      getPointsByDay(token, username, dayToPass).then(points => {
-        let dailyPoints = 0
-        if (points && points.chore__points__sum !== null) {
-          dailyPoints = points.chore__points__sum
-        }
-        console.log(dailyPoints)
-        console.log('array before', newDayByDayPoints)
-        newDayByDayPoints = newDayByDayPoints.concat({ day, dailyPoints })
-        console.log('array after', newDayByDayPoints)
-        console.log(typeof (newDayByDayPoints))
-        setDayByDayPoints(newDayByDayPoints)
-      }
-      )
-    }
-    console.log(newDayByDayPoints)
-  }
-  if (dayByDayPoints) {
-    console.log(dayByDayPoints)
-    console.log(dayByDayPoints[0])
-  }
+  //     getPointsByDay(token, username, dayToPass).then(points => {
+  //       let dailyPoints = 0
+  //       if (points && points.chore__points__sum !== null) {
+  //         dailyPoints = points.chore__points__sum
+  //       }
+  //       newDayByDayPoints = newDayByDayPoints.concat({ day, dailyPoints })
+  //       setDayByDayPoints(newDayByDayPoints)
+  //     }
+  //     )
+  //   }
+  // }
 
   function updateAvatar () {
     updateUserProfile(token, username, avatar).then(profile => setUserProfile(profile))
@@ -104,7 +61,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
     }
   }
 
-  useEffect(updateTeam, [token, teamPk])
+  useEffect(updateTeam, [token, teamPk, isUpdatingAssignment])
   function updateTeam () {
     if (teamPk !== '') {
       getTeam(token, teamPk).then(team => setTeam(team))
@@ -143,7 +100,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   function handleDragEnd () {
     console.log('drag ends when I release my mouse')
     setDragging(false)
-    // setIsUpdatingAssignment(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
     dropNode.current = null
@@ -192,7 +148,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
 
   return (
     <div>
-      {userProfile && team && myAssignments && dayByDayPoints && points >= 0 && (
+      {userProfile && team && (
         <>
           <div className='flex-col'>
             <div style={{ maxWidth: '1250px', marginTop: '100px', marginLeft: '45px', marginRight: '45px' }} className='flex'>
@@ -202,12 +158,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
               </div>
               <div className='flex-col user-profile-mini-container'>Score Summary
                 <>
-                  {points &&
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}`, marginTop: '30px' }} marginTop='30px' height='30px' value={100 * parseInt(points) / myPossiblePoints}>{(100 * parseInt(points) / myPossiblePoints).toFixed(1)}%</MDBProgress>}
-                  {dayByDayPoints &&
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum}>{(100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
+                  {/* {dayByDayPoints &&
                     dayByDayPoints.map(day =>
                       <div key={day.day}>{day.day} Points {day.dailyPoints}</div>
-                    )}
+                    )} */}
                 </>
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}> Member of {team.name}</Link>
@@ -216,9 +171,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                     <div key={member.username}>
                       <div>
                         <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
-                        <MDBProgress style={{ backgroundColor: `${team.dashboard_style}`, marginTop: '30px' }} marginTop='30px' height='30px' value={75}>{75}%</MDBProgress>
+                        <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
                       </div>
-
                     </div>
                   ))}
                 </div>
@@ -260,7 +214,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                         onDrop={(event) => { handleDropComplete(event, { today, userProfile }) }}
                         onDragOver={handleDragOver}
                       >
-                        Completed Chores {today} <span> {points} of {myPossiblePoints}</span>
+                        Completed Chores {today} <span> {userProfile.earned_chore_points.chore__points__sum} of {userProfile.possible_chore_points.chore__points__sum}</span>
                         {userProfile.assignments.length > 0 && (
                           <div>
                             {userProfile.assignments.map((assignment, idx) => (
@@ -272,7 +226,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                                     draggable
                                     onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                   >
-
                                     <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
                                   </Card>)}
                               </div>))}
@@ -283,47 +236,43 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ?
-                    // <div className='media-hide'><ChoreSummaryAlt token={token} today={today} todayIndex={todayIndex} teamPk={team.pk} teamView={false} username={username} setIsUpdatingAssignment={setIsUpdatingAssignment} /></div>
-                      <div className='flex'>
-                        <div style={{ minWidth: '900px' }} className='team-member-container-list flex-row'>
-                          <Link to={`/user-profile/${userProfile.username}/`} className={userProfile.username}>
-                            {userProfile.username}<br />
-                            <div style={{ backgroundImage: `url(${userProfile.avatar}`, width: '100px', height: '100px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
-                          </Link>
-                          <div className='flex-row'>
-                            {days.map((day, index) => (
-                              <div // className='drop-container'
-                                key={index}
-                              >
-                                <Card style={{ width: '100%' }}>
-                                  <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
-                                    {day}
-                                  </Card.Body>
-                                </Card>
-                                <>
-                                  {userProfile.assignments.map((assignment, idx) => (
-                                    <div key={idx}>
-                                      {(assignment.assignment_type.includes(day)) && (
-                                        <Card>
-                                          {(assignment.complete === true)
-                                            ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
-
-                                          // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
-                                            : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
-                                        </Card>
-                                      )}
-                                    </div>))}
-                                </>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className='team-member-container-list'>
-                          <div>Points</div>
-                          <div>? of {userProfile.possiblePoints}</div>
+                    ? <div className='flex'>
+                      <div style={{ minWidth: '900px' }} className='team-member-container-list flex-row'>
+                        <Link to={`/user-profile/${userProfile.username}/`} className={userProfile.username}>
+                          {userProfile.username}<br />
+                          <div style={{ backgroundImage: `url(${userProfile.avatar}`, width: '100px', height: '100px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
+                        </Link>
+                        <div className='flex-row'>
+                          {days.map((day, index) => (
+                            <div
+                              key={index}
+                            >
+                              <Card style={{ width: '100%' }}>
+                                <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
+                                  {day}
+                                </Card.Body>
+                              </Card>
+                              <>
+                                {userProfile.assignments.map((assignment, idx) => (
+                                  <div key={idx}>
+                                    {(assignment.assignment_type.includes(day)) && (
+                                      <Card>
+                                        {(assignment.complete === true)
+                                          ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                          : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
+                                      </Card>
+                                    )}
+                                  </div>))}
+                              </>
+                            </div>
+                          ))}
                         </div>
                       </div>
+                      <div className='team-member-container-list'>
+                        <div>Points</div>
+                        <div>{userProfile.earned_chore_points.chore__points__sum} of {userProfile.possible_chore_points.chore__points__sum}</div>
+                      </div>
+                    </div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
 
                 </div>

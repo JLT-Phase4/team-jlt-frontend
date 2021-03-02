@@ -21,41 +21,11 @@ function ChoreSummary ({ token, today, todayIndex }) {
   // days.sort()
 
   console.log(teamPk, 'this is my team pk')
-  const [userProfiles, setUserProfiles] = useState([])
-
-  useEffect(updateProfiles, [token, team, isUpdating])
-  function updateProfiles () {
-    // loop over ever member of team -- get userprofile and create --- member.profile//
-    // make an array of user profiles and map over them // concat to userProfiles
-    console.log('update profiles use effect happening')
-    // if (team) {
-    //   getTargetProfiles((token, team, username, teamView, setUserProfiles))
-    // }
-    if (team) {
-      let allUserProfiles = []
-      for (const member of team.members) {
-        getUserProfile(token, member.username).then(profile => {
-          allUserProfiles = allUserProfiles.concat(profile)
-          for (const profile of allUserProfiles) {
-            let possiblePoints = 0
-            console.log('type of assignments', typeof (profile.assignments))
-            for (const assignment of profile.assignments) {
-              possiblePoints += assignment.chore.points
-            }
-            profile.possiblePoints = possiblePoints
-            console.log('I am updating profiles')
-          }
-          setUserProfiles(allUserProfiles)
-        }
-        )
-      }
-    }
-  }
 
   useEffect(updateChores, [token, teamPk])
   function updateChores () {
     getTeam(token, teamPk).then(team => {
-      setTeam(team)
+      // setTeam(team)
       getChores(token).then(chores => {
         let newChores = []
         for (const chore of chores) {
@@ -67,6 +37,11 @@ function ChoreSummary ({ token, today, todayIndex }) {
       })
     }
     )
+  }
+
+  useEffect(updateTeam, [token, teamPk, isUpdating])
+  function updateTeam () {
+    getTeam(token, teamPk).then(team => setTeam(team))
   }
 
   function handleDragStart (event, { assignment, day, member }) {
@@ -163,18 +138,18 @@ function ChoreSummary ({ token, today, todayIndex }) {
 
   return (
     <div>
-      {userProfiles && chores && (
+      {team && chores && (
         <div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
                   <Card
-                      draggable
-                      onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
-                    >
-                      <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
-                    </Card>
+                    draggable
+                    onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
+                  >
+                    <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
+                  </Card>
                 </div>
               ))}
             </div>
@@ -183,7 +158,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
-              {userProfiles.map((member) => (
+              {team.members.map((member) => (
                 <div key={member.pk} className='flex'>
                   <div style={{ minWidth: '900px' }} className='team-member-container-list flex-row'>
                     <Link to={`/user-profile/${member.username}/`} className={member.username}>
@@ -226,7 +201,9 @@ function ChoreSummary ({ token, today, todayIndex }) {
                   </div>
                   <div className='team-member-container-list'>
                     <div>Points</div>
-                    <div>? of {member.possiblePoints}</div>
+                    {/* <div>? of {member.possiblePoints}</div> */}
+                    <div>{member.earned_chore_points.chore__points__sum} of {member.possible_chore_points.chore__points__sum} </div>
+
                   </div>
                 </div>
               ))}

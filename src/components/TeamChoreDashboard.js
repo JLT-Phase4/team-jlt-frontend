@@ -4,6 +4,7 @@ import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
 import { Spring } from 'react-spring/renderprops'
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
+import { MDBProgress } from 'mdbreact'
 
 const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   const { teamPk } = useParams()
@@ -59,7 +60,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
               {teamChores.length > 0 &&
                 <div>
                   {teamChores.map((chore) => (
-                    <MDBPopover style={{ color: 'white' }} key={chore.pk} size='lg' color='black' dismiss btnChildren={chore.name}>
+                    <MDBPopover data-mdb-trigger='focus' style={{ color: 'white' }} key={chore.pk} size='lg' color='black' dismiss btnChildren={chore.name}>
                       <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
                       <MDBPopoverBody>{chore.points}</MDBPopoverBody>
                     </MDBPopover>
@@ -92,11 +93,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
 
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body style={{ border: '2px solid yellowgreen ' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                  </Card>}
+                </Card>}
             </div>
 
             <div className='flex'>
@@ -109,21 +110,10 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
               <div className='team-scoreboard-container-dash' style={{ border: `3px solid ${team.dashboard_style}` }}>
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                   {team.members.map(member => (
-                    <ul className='flex' key={member.username}>
+                    <div key={member.username}>
                       <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
-                      <div style={{ backgroundColor: '#0e0e0eba', width: '50px', height: '20px', padding: '10px' }}>
-                        <Spring
-                          reset
-                          config={{ duration: 3000 }}
-                          from={{ backgroundColor: '#00ff00', height: '20px', width: '0px', padding: '10px', marginTop: '10px' }}
-                          to={{ backgroundColor: '#00ff00', height: '20px', width: '50px', padding: '10px', marginTop: '10px' }}
-                        >
-                          {props => (
-                            <div style={props} />
-                          )}
-                        </Spring>
-                      </div>
-                    </ul>
+                      <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
+                    </div>
                   ))}
                 </div>
               </div>
