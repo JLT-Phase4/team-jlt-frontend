@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { getMusicSamples } from './../api'
 
 const MusicSearch = ({ token, setMusicTrack }) => {
-  const [tracks, setTracks] = useState([])
+  const [tracks, setTracks] = useState()
   const [searchTerm, setSearchTerm] = useState('')
 
   function getTracks (keyword) {
