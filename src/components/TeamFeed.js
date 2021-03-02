@@ -1,26 +1,47 @@
-import { useState } from 'react'
-import { postMessage } from './../api'
+import { useState, useEffect } from 'react'
+import { postMessage, getFeed } from './../api'
 
-function TeamFeed () {
+function TeamFeed ({teamPk}) {
   const [message, setMessage] = useState('')
-  const [messageList, setMessageList] = useState([])
+  const [feed, setFeed] = useState()
 
-  function handleAddMessage (event) {
+  useEffect(renderFeed, [token, teamPk])
+
+  function renderFeed() {
     event.preventDefault()
-    postMessage(token, teamFeed, author, message)
-      .then(data => updateMessageList(data.message))
+    getFeed(token, teamPk)
+      .then(feed => setFeed(feed) )
   }
 
-  function updateMessageList () {
-    // setMessageList by pushing new message onto end of array
-  }
+//   function handleAddMessage (event) {
+//     event.preventDefault()
+//     postMessage(token, teamPk, author, message)
+//       .then(data => updateFeed(data.message))
+//   }
+
+//   function updateFeed() {
+//     // setMessageList by pushing new message onto end of array
+//   }
 
   return (
-    <form className='add-message' onSubmit={handleAddMessage}>
-      <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
-      <button type='submit'>Post</button>
-    </form>
-
+    <div className='flex'>
+      {chores.map(chore => (
+        <ul key={chore.pk}>
+          <li
+            draggable
+            onDragStart={(event) => { handleDragStart(event, { chore }) }}
+          >{chore.name}
+          </li>
+        </ul>
+      ))}
+    </div>
+ 
+    <div>
+        <form className='add-message' onSubmit={handleAddMessage}>
+        <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
+        <button type='submit'>Post</button>
+        </form>
+    </div>
   )
 }
 export default TeamFeed
