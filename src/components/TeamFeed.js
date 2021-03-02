@@ -14,14 +14,14 @@ function TeamFeed ({ token, teamPk, profileUsername }) {
       .then(feed => setFeed(feed))
   }
 
-  function handleAddMessage (event) {
+  function handleSubmit (event) {
     event.preventDefault()
     postMessage(token, teamPk, author, message)
       .then(data => updateFeed(data.message))
   }
 
   function updateFeed () {
-    // setMessageList by pushing new message onto end of array
+
   }
 
   return (
@@ -37,7 +37,7 @@ function TeamFeed ({ token, teamPk, profileUsername }) {
       </div>
 
       <div>
-        <form className='add-message' onSubmit={handleAddMessage}>
+        <form className='add-message' onSubmit={handleSubmit}>
           <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
           <button type='submit'>Post</button>
         </form>
