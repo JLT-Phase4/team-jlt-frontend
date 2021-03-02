@@ -158,11 +158,23 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
               </div>
               <div className='flex-col user-profile-mini-container'>Score Summary
                 <>
+                  <div>Total</div>
                   <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum}>{(100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-                  {/* {dayByDayPoints &&
-                    dayByDayPoints.map(day =>
-                      <div key={day.day}>{day.day} Points {day.dailyPoints}</div>
-                    )} */}
+                  <div>Monday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.monday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Tuesday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.tuesday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Wednesday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.wednesday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Thursday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.thursday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Friday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.friday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Saturday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.saturday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                  <div>Sunday</div>
+                  <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.sunday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+
                 </>
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}> Member of {team.name}</Link>
@@ -268,10 +280,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                           ))}
                         </div>
                       </div>
-                      <div className='team-member-container-list'>
+                      {/* <div className='team-member-container-list'>
                         <div>Points</div>
                         <div>{userProfile.earned_chore_points.chore__points__sum} of {userProfile.possible_chore_points.chore__points__sum}</div>
-                      </div>
+                      </div> */}
                     </div>
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
 
