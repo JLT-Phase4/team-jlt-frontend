@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, updateAssignment } from '../api'
+import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, deleteAssignment, updateAssignment } from '../api'
 import { useParams, Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
@@ -69,11 +69,11 @@ function ChoreSummary ({ token, today, todayIndex }) {
     const choreTransfer = chore.name + '???' + 'CHORE' + '???' + chore.pk
     event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
-    window.scroll({
-      top: 1000,
-      left: 1000,
-      behavior: 'smooth'
-    })
+    // window.scroll({
+    //   top: 1000,
+    //   left: 1000,
+    //   behavior: 'smooth'
+    // })
   }
 
   function handleDragEnd () {
@@ -112,6 +112,29 @@ function ChoreSummary ({ token, today, todayIndex }) {
       })
   }
 
+  function handleDeleteAssignment (assignPk) {
+    deleteAssignment(token, assignPk)
+      .then(response => {
+        setIsUpdating(false)
+        console.log('deleted assignment')
+      })
+  }
+
+  function handleDropOut (event) {
+    event.preventDefault()
+    const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
+    const assignmentArray = data.split('???')
+    const newData = document.createElement('div')
+    newData.className = 'chore-card'
+    // event.target.appendChild(newData)
+
+    newData.setAttribute('draggable', true)
+    setIsUpdating(true)
+    // newData.innerText = assignmentArray[0]
+    const assignmentPk = assignmentArray[2]
+    handleDeleteAssignment(assignmentPk)
+  }
+
   function handleDrop (event, { day, member }) {
     event.preventDefault()
     console.log('handle Drop is firing')
@@ -147,8 +170,9 @@ function ChoreSummary ({ token, today, todayIndex }) {
                   <Card
                     draggable
                     onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
+                    className='chore-card-container'
                   >
-                    <Card.Body style={{ border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{chore.name}</Card.Body>
+                    <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{chore.name}</Card.Body>
                   </Card>
                 </div>
               ))}
@@ -159,11 +183,13 @@ function ChoreSummary ({ token, today, todayIndex }) {
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
               {team.members.map((member) => (
-                <div key={member.pk} className='flex'>
-                  <div style={{ minWidth: '900px' }} className='team-member-container-list flex-row'>
-                    <Link to={`/user-profile/${member.username}/`} className={member.username}>
-                      {member.username}<br />
-                      <div style={{ backgroundImage: `url(${member.avatar}`, width: '100px', height: '100px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
+                <div key={member.pk} className='flex-nowrap'>
+                  <div style={{ minWidth: '850px' }} className='team-member-container-list'>
+                    <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
+                      <div style={{ backgroundImage: `url(${member.avatar}`, width: '40px', height: '40px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
+                      <span>{member.username}</span>
+
+                      <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
                     </Link>
                     <div className='flex-row'>
                       {days.map((day, index) => (
@@ -171,10 +197,10 @@ function ChoreSummary ({ token, today, todayIndex }) {
                           id={day}
                       // onDrop={handleDrop({ day, member })}
                           onDrop={(event) => { handleDrop(event, { day, member }) }}
-                          onDragOver={handleDragOver} key={index}
+                          onDragOver={handleDragOver} key={index} style={{ paddingBottom: '50px' }}
                         >
-                          <Card style={{ width: '100%' }}>
-                            <Card.Body style={{ fontWeight: '300', backgroundColor: 'black', border: '2px solid' }}>
+                          <Card className='chore-card-container'>
+                            <Card.Body className='day-of-week-card'>
                               {day}
                             </Card.Body>
                           </Card>
@@ -185,25 +211,43 @@ function ChoreSummary ({ token, today, todayIndex }) {
                                   <Card
                                     draggable
                                     onDragStart={(event) => { handleDragStart(event, { assignment, day, member }) }}
+                                    className='chore-card-container'
                                   >
                                     {(assignment.complete === true)
-                                      ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                      ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
 
                                       // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
-                                      : <Card.Body style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882', width: '100%' } : { border: `2px solid ${team.dashboard_style}`, width: '100%' }}>{assignment.chore.name}</Card.Body>}
+                                      : <Card.Body className='chore-card' style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}
                                   </Card>
                                 )}
                               </div>))}
                           </>
                         </div>
                       ))}
+                      {/* <div
+                        onDrop={(event) => { handleDropOut(event) }}
+                        onDragOver={handleDragOver}
+                        className='day-of-week-card' style={{ border: '2px solid grey' }}
+                        // className='team-member-container-list'
+                      >
+                        Delete
+                      </div> */}
                     </div>
                   </div>
-                  <div className='team-member-container-list'>
+                  {/* <div className='team-member-container-list'>
                     <div>Points</div>
-                    {/* <div>? of {member.possiblePoints}</div> */}
                     <div>{member.earned_chore_points.chore__points__sum} of {member.possible_chore_points.chore__points__sum} </div>
-
+                  </div> */}
+                  <div
+                    onDrop={(event) => { handleDropOut(event) }}
+                    onDragOver={handleDragOver}
+                    className='team-member-container-list'
+                  >
+                    <Card className='chore-card-container'>
+                      <Card.Body className='day-of-week-card'>
+                        Delete
+                      </Card.Body>
+                    </Card>
                   </div>
                 </div>
               ))}
