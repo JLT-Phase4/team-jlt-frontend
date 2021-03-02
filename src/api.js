@@ -309,3 +309,17 @@ export function getPointsByDay (token, username, day) {
     })
     .then(res => res.data)
 }
+
+export function postMessage (token, teamFeed, author, message) {
+  return API
+    .post('notifications/', {
+      feed: teamFeed,
+      sender: author,
+      message: message
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
