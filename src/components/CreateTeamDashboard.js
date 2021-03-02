@@ -3,11 +3,11 @@ import { Redirect } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import MusicSearch from './MusicSearch'
-import { createTeam, updatePod } from '../api'
+import { createTeam, updateAssignment, updatePod } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
+const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam, setMyPod }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
@@ -21,12 +21,16 @@ const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
-      .then(updatePod(token, teamName, podPk))
-      .then(setIsCreatingTeam(false))
+    // .then(updatePod(token, teamName, podPk))
+    // .then(setIsCreatingTeam(false))
   }
 
   if (team) {
-    return <Redirect to={`/team/${team.pk}`} />
+    // return <Redirect to={`/team/${team.pk}`} />
+    updatePod(token, teamName, podPk)
+    setIsCreatingTeam(false)
+    setMyPod(podPk)
+    return <Redirect to='/' />
   }
 
   function handleNextStep () {

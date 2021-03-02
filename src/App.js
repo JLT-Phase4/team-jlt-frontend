@@ -52,7 +52,7 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam])
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod])
   function updatePods () {
     getPods(token)
       .then(pods => {
@@ -240,7 +240,7 @@ function App () {
 
         <Route path='/create-team-dashboard'>
           <div className='App' />
-          <CreateTeamDashboard token={token} profileUsername={username} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
+          <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
         </Route>
 
         {/* CHORE ASSIGNMENT PAGE */}
@@ -292,7 +292,8 @@ function App () {
                     ))}
                   </div>
                   )
-                : <button onClick={() => setIsCreatingTeam(true)} style={{ border: '3px solid purple', backgroundColor: 'purple' }} className='team-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>}
+                : <CreateTeamDashboard token={token} profileUsername={username} isCreatingTeam setIsCreatingTeam={setIsCreatingTeam} />}
+              {/* <button onClick={() => setIsCreatingTeam(true)} style={{ border: '3px solid purple', backgroundColor: 'purple' }} className='team-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>} */}
             </div>
           )}
 

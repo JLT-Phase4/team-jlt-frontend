@@ -89,35 +89,21 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                     <li>emojis?</li>
                   </ul>
                 </div>
-                <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
+                <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                     {userProfiles.length > 0
                       ? (
                         <div>
-                          {userProfiles.map(member => (
-                            <ul className='flex' key={member.username}>
+                          {team.members.map(member => (
+                          // {userProfiles.map(member => (
+                            <div key={member.username}>
                               <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
 
-                              <div style={{ backgroundColor: '#0e0e0eba', width: '200px', height: '20px', padding: '10px' }}>
-                                {member.currentPoints &&
-                                  <>
-                                    {/* {(member.currentPoints !== null) && member.currentPoints !== '' && */}
-                                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * (member.currentPoints / member.possiblePoints)}>{(100 * member.currentPoints / member.possiblePoints).toFixed(1)}%</MDBProgress>
-                                  </>}
+                              {/* <div style={{ backgroundColor: '#0e0e0eba', width: '200px', height: '20px', padding: '10px' }} /> */}
+                              <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
 
-                                {/* <Spring
-                                  reset
-                                  config={{ duration: 3000 }}
-                                  from={{ backgroundColor: '#00ff00', height: '20px', width: '0px', padding: '10px', marginTop: '10px' }}
-                                  to={{ backgroundColor: '#00ff00', height: '20px', width: '50px', padding: '10px', marginTop: '10px' }}
-                                >
-                                  {props => (
-                                    <div style={props} />
-                                  )}
-                                </Spring> */}
-                              </div>
-                              <div>{member.possiblePoints} and {member.currentPoints}</div>
-                            </ul>
+                              {/* <div>{member.earned_chore_points.chore__points__sum} of {member.possible_chore_points.chore__points__sum} </div> */}
+                            </div>
                           ))}
                         </div>
                         )
