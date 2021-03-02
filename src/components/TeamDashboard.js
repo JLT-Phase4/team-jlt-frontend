@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getTeam, getUserProfile, getPoints } from './../api'
 import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
-import TeamFeed from './components'
+// import TeamFeed from './components'
 
 const TeamDashboard = ({ token, profileUsername, today }) => {
   const { teamPk } = useParams()
@@ -83,13 +83,13 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
               </div>
               <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
                 <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-                  {/* <h1>Feed will go here:</h1>
+                  <h1>Feed will go here:</h1>
                   <ul>
                     <li>notifications</li>
                     <li>comments</li>
-                    <li>emojis?</li> */}
-                  {/* </ul> */}
-                  <TeamFeed teamPk={teamPk} />
+                    <li>emojis?</li>
+                  </ul>
+                  {/* <TeamFeed teamPk={teamPk} /> */}
                 </div>
                 <div className='team-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
