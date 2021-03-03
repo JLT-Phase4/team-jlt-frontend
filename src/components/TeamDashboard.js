@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getTeam, postNotification, getFeeds, getFeed } from './../api'
+import { getTeam, postNotification, getFeed } from './../api'
 import PodFeed from './PodFeed'
 import ScoreBoard from './ScoreBoard'
 
@@ -94,7 +94,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, myFeedPk }) => {
                     <li>emojis?</li>
                   </ul> */}
                   {feed && (
-                    <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} myPod={myPod} feed={feed} notPosted={notPosted} />
+                    <PodFeed token={token} profileUsername={profileUsername} today={today} myPod={myPod} myFeedPk={myFeedPk} />
                   )}
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>

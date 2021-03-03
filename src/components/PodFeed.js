@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
-import { postMessage } from '../api'
+import { postMessage, getFeed } from '../api'
 
-function PodFeed ({ token, profileUsername, today, myPod, feed }) {
-  const [message, setMessage] = useState('')
+function PodFeed ({ token, profileUsername, today, myPod, myFeedPk }) {
+  const [message, setMessage] = useState()
+  const [feed, setFeed] = useState()
 
-  // function handleSubmit (event) {
-  //   event.preventDefault()
-  //   postMessage(token, feed.pk, profileUsername, message, today)
-  //     .then(data => updateFeed(data.message))
-  // }
+  function handleSubmit (event) {
+    event.preventDefault()
+    postMessage(token, myFeedPk, profileUsername, message, today)
+      .then((response) => {
+        updateFeed()
+      })
+  }
 
-  // function updateFeed () {
-
-  // }
+  useEffect(updateFeed, [token])
+  function updateFeed () {
+    getFeed(token, myFeedPk).then(feed => setFeed(feed))
+  }
 
   return (
     <div>
@@ -31,7 +35,7 @@ function PodFeed ({ token, profileUsername, today, myPod, feed }) {
 
           </div>
           <div>
-            <form className='add-message'>
+            <form className='add-message' onSubmit={handleSubmit}>
               <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
               <button type='submit'>Post</button>
             </form>
