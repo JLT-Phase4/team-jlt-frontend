@@ -1,28 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getTeam, getUserProfile, getPoints } from './../api'
-import { MDBProgress } from 'mdbreact'
+import { getTeam } from './../api'
 import PodFeed from './PodFeed'
+import ScoreBoard from './ScoreBoard'
 
 const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
-  const [isMember, setIsMember] = useState(false)
-  const [userProfiles, setUserProfiles] = useState([])
-  const [pointsSummary, setPointsSummary] = useState()
-  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
-
-  // const [teamPointTotals, setTeamPoints] = useState([])
-
-  useEffect(checkMember, [profileUsername, team])
-
-  function checkMember () {
-    if (team) {
-      if (team.members.includes(profileUsername)) {
-        setIsMember(true)
-      }
-    }
-  }
 
   useEffect(updateTeam, [token, teamPk, today, profileUsername])
 
@@ -30,49 +14,9 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  useEffect(updateProfiles, [token, team, today, teamPk])
-  function updateProfiles () {
-    console.log('update profiles use effect happening')
-    if (team) {
-      let allUserProfiles = []
-      for (const member of team.members) {
-        getUserProfile(token, member.username).then(profile => {
-          allUserProfiles = allUserProfiles.concat(profile)
-          for (const profile of allUserProfiles) {
-            let possiblePoints = 0
-            console.log('type of assignments', typeof (profile.assignments))
-            for (const assignment of profile.assignments) {
-              possiblePoints += assignment.chore.points
-            }
-            profile.possiblePoints = possiblePoints
-            getPoints(token, member.username).then(points => {
-              console.log(points.chore__points__sum)
-              // const pointsSummary = points.chore__points__sum
-              setPointsSummary(points.chore__points__sum)
-            })
-            if (pointsSummary) {
-              profile.currentPoints = pointsSummary
-            }
-
-            // for (const user of teamPointTotals) {
-            //   if (user.user === member.username) {
-            //     console.log('setting current points to userprofile')
-            //     profile.currentPoints = user.userPoints
-            //   }
-            // }
-            console.log('I am updating profiles')
-          }
-
-          setUserProfiles(allUserProfiles)
-        }
-        )
-      }
-    }
-  }
-
   return (
     <div style={{ textAlign: 'center' }}>
-      {team && userProfiles &&
+      {team &&
         (
           <>
             <div className='flex-center'>
@@ -94,16 +38,11 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-                    {userProfiles.length > 0
+                    {team.members.length > 0
                       ? (
                         <div>
                           {team.members.map(member => (
-                            <div key={member.username}>
-                              {/* <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={{ backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div> */}
-                              <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
-
-                              <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-                            </div>
+                            <ScoreBoard team={team} member={member} key={member.username} />
                           ))}
                         </div>
                         )
