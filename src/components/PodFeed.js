@@ -9,7 +9,6 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
 
   useEffect(renderFeeds, [token])
   function renderFeeds () {
-    // event.preventDefault()
     getFeeds(token)
       .then(feeds => setFeeds(feeds))
   }
@@ -44,10 +43,10 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
         </div>
       )}
       <div>
-        {/* <form className='add-message' onSubmit={handleSubmit}>
+        <form className='add-message'>
           <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
           <button type='submit'>Post</button>
-        </form> */}
+        </form>
       </div>
     </div>
   )
