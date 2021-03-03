@@ -3,14 +3,27 @@ import { postMessage, getFeeds, getFeed } from '../api'
 
 function PodFeed ({ token, profileUsername, today, myPod }) {
   const [message, setMessage] = useState('')
-  const [feeds, setFeeds] = useState()
+  const [feed, setFeed] = useState()
+  const [feedPk, setFeedPk] = useState()
 
-  // const feedPk =
+  // console.log(myPod)
 
   useEffect(renderFeeds, [token])
   function renderFeeds () {
+    // console.log(myPod)
     getFeeds(token)
-      .then(feeds => setFeeds(feeds))
+      .then(feeds => {
+        for (const feed of feeds) {
+          console.log(feed)
+          // console.log(myPod)
+          if (feed.pod === myPod) {
+            console.log(myPod)
+            console.log(feed.pod)
+            getFeed(token, feed.pk)
+              .then(feed => setFeed(feed))
+          }
+        }
+      })
   }
 
   // function handleSubmit (event) {
@@ -25,21 +38,16 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
 
   return (
     <div>
-      {feeds && (
+      {feed && (
         <div className='flex'>
-          {feeds.map(feed => (
-            <div key={feed.pk}>
-              {feed.pod === myPod && (
-                <div>
-                  {feed.notifications.map(notification => (
-                    <div key={notification.message}>
-                      {notification.message}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          <div>
+            {feed.notifications.map(notification => (
+              <div key={notification.message}>
+                {notification.message}
+              </div>
+            ))}
+          </div>
+
         </div>
       )}
       <div>
