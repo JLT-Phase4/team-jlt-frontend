@@ -346,11 +346,10 @@ export function postMessage (token, feedPk, sender, message, day) {
     .then(res => res.data)
 }
 
-export function postNotification (token, feedPk, sender, target, message) {
+export function postNotification (token, feedPk, target, message) {
   return API
     .post('notifications/', {
       feed: feedPk,
-      sender: sender,
       target: target,
       message: message
     }, {

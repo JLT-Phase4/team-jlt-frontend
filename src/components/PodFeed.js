@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { postMessage, getFeeds } from '../api'
 
-function PodFeed ({ token, profileUsername, today, myPod, notPosted }) {
+function PodFeed ({ token, profileUsername, today, myPod }) {
   const [message, setMessage] = useState('')
   const [feeds, setFeeds] = useState()
 
   // const feedPk =
 
-  useEffect(renderFeeds, [token, notPosted])
+  useEffect(renderFeeds, [token])
   function renderFeeds () {
     // event.preventDefault()
     getFeeds(token)

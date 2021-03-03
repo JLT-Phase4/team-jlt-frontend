@@ -33,7 +33,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
         console.log(member.possible_chore_points.chore__points__sum, member.earned_chore_points.chore__points__sum)
         if (member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum < 0.5) {
           console.log(member.username + 'has less than 50%')
-          createNotifications(14, team.captain, member.pk, 'you are below 50%')
+          createNotifications(14, member.pk, 'you are below 50%')
         }
       }
     }
@@ -67,7 +67,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
                     <li>comments</li>
                     <li>emojis?</li>
                   </ul> */}
-                  <PodFeed notPosted={notPosted} teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} />
+                  <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} />
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
