@@ -39,7 +39,9 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
           <div>
             {feed.notifications.map(notification => (
               <div key={notification.message}>
-                {notification.message}
+                <p>notification or message: "{notification.message}"</p>
+                <p>message sent to {notification.target} from {notification.sender}.</p>
+
               </div>
             ))}
           </div>
