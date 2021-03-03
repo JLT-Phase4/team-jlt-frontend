@@ -230,7 +230,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} />
+          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} />
         </Route>
 
         <Route path='/team-chores/:teamPk'>

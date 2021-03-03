@@ -321,12 +321,13 @@ export function getPointsByDay (token, username, day) {
     .then(res => res.data)
 }
 
-export function postMessage (token, teamPk, author, message) {
+export function postMessage (token, feedPk, sender, message, day) {
   return API
     .post('notifications/', {
-      feed: teamPk,
-      sender: author,
-      message: message
+      feed: feedPk,
+      sender: sender,
+      message: message,
+      notification_type: day
     }, {
       headers: {
         Authorization: `Token ${token}`
@@ -335,9 +336,19 @@ export function postMessage (token, teamPk, author, message) {
     .then(res => res.data)
 }
 
-export function getFeed (token, teamPk) {
+export function getFeed (token, feedPk) {
   return API
-    .get(`feed-detail/${teamPk}/`, {
+    .get(`feed-detail/${feedPk}/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
+export function getFeeds (token) {
+  return API
+    .get('feeds/', {
       headers: {
         Authorization: `Token ${token}`
       }

@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom'
 import { getTeam, getUserProfile, getPoints } from './../api'
 import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
-import TeamFeed from './components'
+import PodFeed from './PodFeed'
 
-const TeamDashboard = ({ token, profileUsername, today }) => {
+const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isMember, setIsMember] = useState(false)
@@ -89,7 +89,7 @@ const TeamDashboard = ({ token, profileUsername, today }) => {
                     <li>comments</li>
                     <li>emojis?</li>
                   </ul> */}
-                  <TeamFeed teamPk={teamPk} token={token} profileUsername={profileUsername} />
+                  <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} />
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
