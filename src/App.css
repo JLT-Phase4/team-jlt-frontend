@@ -317,7 +317,7 @@ label {
   border-radius: 25px;
   padding: 2%;
   height: 40vh;
-  width: 40%;
+  width: 50%;
   min-width: 340px;
 }
 
@@ -336,8 +336,20 @@ label {
   /* max-width: 400px; */
 }
 
-.color-dropdown {
-  background-color: none;
+.color-dropdown button, .color-dropdown button:active {
+  background-color: rgba(8, 8, 8, 0.322);
+  border: 1px solid rgba(8, 8, 8, 0.322);
+}
+.color-dropdown button:not(:disabled) {
+  background-color: rgba(8, 8, 8, 0.322);
+
+}
+.dropdown-toggle {
+  background-color: rgba(8, 8, 8, 0.322);
+}
+.btn-primary.dropdown-toggle {
+  background-color: rgba(8, 8, 8, 0.322);
+
 }
 .create-card-header {
   font-size: 24px;
@@ -355,7 +367,7 @@ label {
   border-radius: 25px;
   padding: 2%;
   min-height: 20vh;
-  max-width: 40%;
+  width: 400px;
 }
 
 .team-dashboard-scoreboard-container {
@@ -379,7 +391,7 @@ label {
   flex-direction: column; */
   justify-content: center;
   align-items: center;
-  min-width: 40%;
+  min-width: 33%;
   background-size: cover;
   margin: 4%;
   /* margin-top: 8%; */
@@ -466,8 +478,8 @@ label {
 /* why isnt this working? */
 @media only screen and (max-width:900px) {
   .team-dash-button {
-    width: 130px;
-    height: 130px;
+    /* width: 130px;
+    height: 130px; */
   }
 
   .media-hide {

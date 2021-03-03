@@ -152,6 +152,16 @@ export function getTeam (token, teamPk) {
     .then(res => res.data)
 }
 
+// export function getTeam (token, teamPk) {
+//   return API
+//     .get(`team/${teamPk}`, {
+//       headers: {
+//         Authorization: `Token ${token}`
+//       }
+//     })
+//     .then(res => res.data)
+// }
+
 export function getMyProfile (token) {
   return API
     .get('my-profile/', {
@@ -328,6 +338,20 @@ export function postMessage (token, feedPk, sender, message, day) {
       sender: sender,
       message: message,
       notification_type: day
+    }, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
+
+export function postNotification (token, feedPk, target, message) {
+  return API
+    .post('notifications/', {
+      feed: feedPk,
+      target: target,
+      message: message
     }, {
       headers: {
         Authorization: `Token ${token}`

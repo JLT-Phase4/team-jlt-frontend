@@ -53,7 +53,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
               {teamChores.length > 0 &&
                 <div>
                   {teamChores.map((chore) => (
-                    <MDBPopover data-mdb-trigger='focus' style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }} key={chore.pk} size='lg' color='black' dismiss btnChildren={chore.name}>
+                    <MDBPopover trigger='hover' style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }} key={chore.pk} size='lg' color='black' placement='right' dismiss btnChildren={chore.name}>
                       <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
                       <MDBPopoverBody>{chore.points}</MDBPopoverBody>
                     </MDBPopover>
@@ -72,10 +72,10 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                  </Card>
+                </Card>
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  </Card>}
             </div>
 
             <div className='flex'>

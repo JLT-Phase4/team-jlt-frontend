@@ -1,25 +1,51 @@
-export const fakeTeams = [
-
-  {
-    pk: 1,
-    name: 'Team Momentum',
-    captain: 'Logan',
-    members: [
-      'Jesse',
-      'Tracy'
-    ],
-    background_image: 'https://images.unsplash.com/photo-1590692464206-7c465d86d95f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2851&q=80'
-  },
-  {
-    pk: 2,
-    name: 'Kings Landing',
-    captain: 'Andy',
-    members: [
-      'Jonah',
-      'Brennan'
-    ],
-    background_image: 'https://images.unsplash.com/photo-1595854443827-9d1a1ae30f0d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'
+const scoreSummary = {
+  dataLine: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'My First dataset',
+        fill: true,
+        lineTension: 0.3,
+        backgroundColor: 'rgba(225, 204,230, .3)',
+        borderColor: 'rgb(205, 130, 158)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgb(205, 130,1 58)',
+        pointBackgroundColor: 'rgb(255, 255, 255)',
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgb(0, 0, 0)',
+        pointHoverBorderColor: 'rgba(220, 220, 220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [65, 59, 80, 81, 56, 55, 40]
+      },
+      {
+        label: 'My Second dataset',
+        fill: true,
+        lineTension: 0.3,
+        backgroundColor: 'rgba(184, 185, 210, .3)',
+        borderColor: 'rgb(35, 26, 136)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgb(35, 26, 136)',
+        pointBackgroundColor: 'rgb(255, 255, 255)',
+        pointBorderWidth: 10,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgb(0, 0, 0)',
+        pointHoverBorderColor: 'rgba(220, 220, 220, 1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [28, 48, 40, 19, 86, 27, 90]
+      }
+    ]
   }
-]
+}
 
-export default fakeTeams
+export default scoreSummary
