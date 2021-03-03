@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getTeam, postNotification } from './../api'
+import { getTeam, postNotification, getFeeds, getFeed } from './../api'
 import PodFeed from './PodFeed'
 import ScoreBoard from './ScoreBoard'
 
@@ -8,11 +8,29 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [notPosted, setNotPosted] = useState(false)
+  const [feed, setFeed] = useState()
+  const [feedPk, setFeedPk] = useState()
 
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
 
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
+  }
+
+  useEffect(renderFeeds, [token, feedPk, setFeedPk, myPod, notPosted])
+  function renderFeeds () {
+    getFeeds(token)
+      .then(feeds => {
+        for (const feed of feeds) {
+          // console.log(feed)
+          if (feed.pod === myPod) {
+            console.log('this is my feed', feed)
+            setFeedPk(feed.pk)
+            getFeed(token, feed.pk)
+              .then(feed => setFeed(feed))
+          }
+        }
+      })
   }
 
   // const list = ['a', 'b', 'c']
@@ -27,20 +45,20 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
 
   useEffect(updateNotifications, [token, today, notPosted])
   function updateNotifications () {
-    if (team && notPosted) {
+    if (team && notPosted && feed) {
       console.log('I am in update notifications')
       for (const member of team.members) {
         console.log(member.possible_chore_points.chore__points__sum, member.earned_chore_points.chore__points__sum)
-        if (member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum < 0.5) {
-          console.log(member.username + 'has less than 50%')
-          createNotifications(15, member.pk, 'you are below 50%')
+        if (member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum > 0.5) {
+          console.log(member.username + 'has more than than than 50%')
+          createNotifications(feed.pk, member.username, 'you are above 30%')
         }
       }
     }
   }
 
-  function createNotifications (pod, sender, target, message) {
-    postNotification(token, pod, sender, target, message).then((response) => {
+  function createNotifications (feedPk, target, message) {
+    postNotification(token, feedPk, target, message).then((response) => {
       updateTeam()
       setNotPosted(false)
     }
@@ -67,7 +85,9 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
                     <li>comments</li>
                     <li>emojis?</li>
                   </ul> */}
-                  <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} myPod={myPod} />
+                  {feed && (
+                    <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} myPod={myPod} feed={feed} notPosted={notPosted} />
+                  )}
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
