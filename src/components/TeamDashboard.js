@@ -4,12 +4,12 @@ import { getTeam, postNotification, getFeeds, getFeed } from './../api'
 import PodFeed from './PodFeed'
 import ScoreBoard from './ScoreBoard'
 
-const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
+const TeamDashboard = ({ token, profileUsername, today, myPod, myFeedPk }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [notPosted, setNotPosted] = useState(false)
   const [feed, setFeed] = useState()
-  const [feedPk, setFeedPk] = useState()
+  // const [feedPk, setFeedPk] = useState()
 
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
 
@@ -17,20 +17,28 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  useEffect(renderFeeds, [token, feedPk, setFeedPk, myPod, notPosted])
-  function renderFeeds () {
-    getFeeds(token)
-      .then(feeds => {
-        for (const feed of feeds) {
-          // console.log(feed)
-          if (feed.pod === myPod) {
-            console.log('this is my feed', feed)
-            setFeedPk(feed.pk)
-            getFeed(token, feed.pk)
-              .then(feed => setFeed(feed))
-          }
-        }
-      })
+  // useEffect(renderFeeds, [token, feedPk, setFeedPk, myPod, notPosted])
+  // function renderFeeds () {
+  //   getFeeds(token)
+  //     .then(feeds => {
+  //       for (const feed of feeds) {
+  //         // console.log(feed)
+  //         if (feed.pod === myPod) {
+  //           console.log('this is my feed', feed)
+  //           setFeedPk(feed.pk)
+  //           getFeed(token, feed.pk)
+  //             .then(feed => setFeed(feed))
+  //         }
+  //       }
+  //     })
+  // }
+
+  useEffect(renderFeed, [token, myFeedPk, myPod, notPosted])
+  function renderFeed () {
+    if (myFeedPk) {
+      getFeed(token, myFeedPk)
+        .then(feed => setFeed(feed))
+    }
   }
 
   // const list = ['a', 'b', 'c']
@@ -57,8 +65,8 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
     }
   }
 
-  function createNotifications (feedPk, target, message) {
-    postNotification(token, feedPk, target, message).then((response) => {
+  function createNotifications (myFeedPk, target, message) {
+    postNotification(token, myFeedPk, target, message).then((response) => {
       updateTeam()
       setNotPosted(false)
     }

@@ -41,6 +41,7 @@ function App () {
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
   const [myPod, setMyPod] = useState()
+  const [myFeedPk, setMyFeedPk] = useState()
   const [myTeamName, setMyTeamName] = useState()
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
@@ -54,7 +55,7 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod])
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, myFeedPk, setMyFeedPk])
   function updatePods () {
     getPods(token)
       .then(pods => {
@@ -62,24 +63,22 @@ function App () {
         for (const pod of pods) {
           if (pod.teams) {
             for (const team of pod.teams) {
-              console.log(username, team.captain)
               if (username === team.captain) {
                 setCaptain(true)
                 setMyTeam(team.pk)
                 setMyTeamName(team.name)
                 setTeams(pod.teams)
                 setMyPod(pod.pk)
-                console.log('I am captain of:')
-                console.log(team.pk)
-                console.log(team.name)
+                setMyFeedPk(pod.feed.pk)
+                console.log(pod.feed.pk, pod.feed)
               }
               for (const member of team.members) {
                 if (username === member.username) {
-                  console.log('setting team to: ', team.pk)
                   setMyTeam(team.pk)
                   setMyTeamName(team.name)
                   setTeams(pod.teams)
                   setMyPod(pod.pk)
+                  setMyFeedPk(pod.feed.pk)
                 }
               }
               // if (team.pk === myTeam) {
@@ -232,7 +231,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} />
+          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} myFeedPk={myFeedPk} />
         </Route>
 
         <Route path='/team-chores/:teamPk'>
