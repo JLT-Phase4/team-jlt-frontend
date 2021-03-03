@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { postMessage, getFeeds } from '../api'
+import { postMessage, getFeeds, getFeed } from '../api'
 
 function PodFeed ({ token, profileUsername, today, myPod }) {
   const [message, setMessage] = useState('')
@@ -30,13 +30,15 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
         <div className='flex'>
           {feeds.map(feed => (
             <div key={feed.pk}>
-              <div>
-                {feed.notifications.map(notification => (
-                  <div key={notification.message}>
-                    {notification.message}
-                  </div>
-                ))}
-              </div>
+              {feed.pod === myPod && (
+                <div>
+                  {feed.notifications.map(notification => (
+                    <div key={notification.message}>
+                      {notification.message}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
