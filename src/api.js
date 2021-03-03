@@ -362,7 +362,7 @@ export function postNotification (token, feedPk, target, message) {
 
 export function getFeed (token, feedPk) {
   return API
-    .get(`feed-detail/${feedPk}/`, {
+    .get(`feed-detail/${feedPk}`, {
       headers: {
         Authorization: `Token ${token}`
       }

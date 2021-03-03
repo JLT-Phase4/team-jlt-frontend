@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react'
-import { postMessage, getFeeds } from '../api'
+import { postMessage, getFeeds, getFeed } from '../api'
 
 function PodFeed ({ token, profileUsername, today, myPod }) {
   const [message, setMessage] = useState('')
-  const [feeds, setFeeds] = useState()
+  const [feed, setFeed] = useState()
+  const [feedPk, setFeedPk] = useState()
 
-  // const feedPk =
-
-  useEffect(renderFeeds, [token])
+  useEffect(renderFeeds, [token, feedPk, setFeedPk])
   function renderFeeds () {
-    // event.preventDefault()
     getFeeds(token)
-      .then(feeds => setFeeds(feeds))
+      .then(feeds => {
+        for (const feed of feeds) {
+          if (feed.pod === myPod) {
+            setFeedPk(feed.pk)
+            getFeed(token, feed.pk)
+              .then(feed => setFeed(feed))
+          }
+        }
+      })
   }
+
+  console.log(feedPk)
 
   // function handleSubmit (event) {
   //   event.preventDefault()
@@ -26,26 +34,25 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
 
   return (
     <div>
-      {feeds && (
+      {feed && (
         <div className='flex'>
-          {feeds.map(feed => (
-            <div key={feed.pk}>
-              <div>
-                {feed.notifications.map(notification => (
-                  <div key={notification.message}>
-                    {notification.message}
-                  </div>
-                ))}
+          <div>
+            {feed.notifications.map(notification => (
+              <div key={notification.message}>
+                <p>notification or message: "{notification.message}"</p>
+                <p>message sent to {notification.target} from {notification.sender}.</p>
+
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       )}
       <div>
-        {/* <form className='add-message' onSubmit={handleSubmit}>
+        <form className='add-message'>
           <input type='text' placeholder='Write a comment' value={message} onChange={event => setMessage(event.target.value)} />
           <button type='submit'>Post</button>
-        </form> */}
+        </form>
       </div>
     </div>
   )

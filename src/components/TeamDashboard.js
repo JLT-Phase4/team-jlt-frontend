@@ -67,7 +67,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
                     <li>comments</li>
                     <li>emojis?</li>
                   </ul> */}
-                  <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} />
+                  <PodFeed teamPk={teamPk} token={token} profileUsername={profileUsername} today={today} myPod={myPod} />
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
                   <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
