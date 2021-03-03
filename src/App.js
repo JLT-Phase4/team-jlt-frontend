@@ -69,7 +69,7 @@ function App () {
                 setMyTeamName(team.name)
                 setTeams(pod.teams)
                 setMyPod(pod.pk)
-                setMyFeedPk(pod.feed.pk)
+                setMyFeedPk(pod.feed[0].pk)
                 console.log(pod.feed.pk, pod.feed)
               }
               for (const member of team.members) {
@@ -78,7 +78,7 @@ function App () {
                   setMyTeamName(team.name)
                   setTeams(pod.teams)
                   setMyPod(pod.pk)
-                  setMyFeedPk(pod.feed.pk)
+                  setMyFeedPk(pod.feed[0].pk)
                 }
               }
               // if (team.pk === myTeam) {
