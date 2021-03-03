@@ -5,6 +5,7 @@ import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
 
 function ChoreSummary ({ token, today, todayIndex }) {
+  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [chores, setChores] = useState([])
@@ -186,7 +187,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
                 <div key={member.pk} className='flex-nowrap'>
                   <div style={{ minWidth: '850px' }} className='team-member-container-list'>
                     <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
-                      <div style={{ backgroundImage: `url(${member.avatar}`, width: '40px', height: '40px', backgroundSize: 'cover', borderRadius: '150px', marginRight: '10px' }} />
+                      <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
                       <span>{member.username}</span>
 
                       <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>

@@ -6,6 +6,7 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownM
 import TeamDashboard from './components/TeamDashboard'
 import TeamChoreDashboard from './components/TeamChoreDashboard'
 import HomeCarouselTeams from './components/HomeCarouselTeams'
+import Homepage from './components/Homepage'
 import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 // import ChoreDashboard from './components/ChoreDashboard'
@@ -35,6 +36,7 @@ function App () {
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
   const [isCaptain, setCaptain] = useState(false)
+  // call this isTeamCaptain
   const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
@@ -263,39 +265,14 @@ function App () {
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
-          {token && assignments && (
-            <div>
-              <div className='App' />
-              {teams && myPod
-                ? (
-                  <div>
-                    <Carousel>
-                      {teams.map((team, idx) => (
-                        <Carousel.Item key={idx} className='carousel-holder'>
-                          {team && (
-                            <div className='flex-col'>
-                              <Card>
-                                <Card.Body>
-                                  <HomeCarouselTeams team={team} displayHeight='50vh' />
-                                </Card.Body>
-                              </Card>
-                            </div>
-                          )}
-                        </Carousel.Item>
-                      ))}
-                    </Carousel>
-                    <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={username} />
+          {/* Turn all of this into a component to see if it handles re-rendering issues */}
+          <div>
+            {token && teams && myPod
 
-                    <div className='footer-feed'>Latest Notification Feed</div>
-                    {assignments.map((assignment, idx) => (
-                      <div key={idx}>{assignment.assignment_type}</div>
-                    ))}
-                  </div>
-                  )
-                : <CreateTeamDashboard token={token} profileUsername={username} isCreatingTeam setIsCreatingTeam={setIsCreatingTeam} />}
-              {/* <button onClick={() => setIsCreatingTeam(true)} style={{ border: '3px solid purple', backgroundColor: 'purple' }} className='team-dash-button'><Link to='/create-team-dashboard'>Create a Team</Link></button>} */}
-            </div>
-          )}
+              ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} />
+              : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />}
+
+          </div>
 
         </Route>
       </Switch>

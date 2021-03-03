@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam, getUserProfile, getPoints } from './../api'
-import { Spring } from 'react-spring/renderprops'
 import { MDBProgress } from 'mdbreact'
 import PodFeed from './PodFeed'
 
@@ -11,6 +10,8 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
   const [isMember, setIsMember] = useState(false)
   const [userProfiles, setUserProfiles] = useState([])
   const [pointsSummary, setPointsSummary] = useState()
+  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
+
   // const [teamPointTotals, setTeamPoints] = useState([])
 
   useEffect(checkMember, [profileUsername, team])
@@ -78,8 +79,8 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
               <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
                 <div className='team-title'>{team.name}!</div>
                 <div className='team-slogan'>{team.slogan}!
-                  <audio controls style={{ width: '140px', height: '15px' }} src={team.theme_song} />
                 </div>
+                <audio controls src={team.theme_song} />
               </div>
               <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
                 <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -97,14 +98,11 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
                       ? (
                         <div>
                           {team.members.map(member => (
-                          // {userProfiles.map(member => (
                             <div key={member.username}>
-                              <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div style={{ width: '40px', height: '40px', margin: '5px', backgroundColor: 'crimson', backgroundSize: 'cover', backgroundImage: `url(${member.avatar})`, borderRadius: '100px' }} />{member.username}</Link></div>
+                              {/* <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={{ backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div> */}
+                              <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
 
-                              {/* <div style={{ backgroundColor: '#0e0e0eba', width: '200px', height: '20px', padding: '10px' }} /> */}
                               <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-
-                              {/* <div>{member.earned_chore_points.chore__points__sum} of {member.possible_chore_points.chore__points__sum} </div> */}
                             </div>
                           ))}
                         </div>

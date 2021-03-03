@@ -394,26 +394,27 @@ label {
   margin: 4%;
   /* margin-top: 8%; */
   border-radius: 25px;
-  padding: 2%;
+  /* padding: 2%; */
+  padding: 20px;
   min-height: 20vh;
   /* max-width: 400px; */
 }
 
 
 .team-title {
-  font-size: 30px;
+  font-size: 40px;
   margin-bottom: 20px;
-  background-color: rgba(0, 0, 0, 0.311);
+  background-color: rgba(0, 0, 0, 0.49);
   text-align: center;
-
+  border-radius: 10px;
 }
 
 .team-slogan {
-  font-size: 25px;
+  font-size: 28px;
   margin-bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.311);
+  background-color: rgba(0, 0, 0, 0.491);
   text-align: center;
-
+  border-radius: 10px;
 }
 .team-scoreblock {
   padding: 10px;
@@ -654,8 +655,8 @@ ul {
 .chore-card, .day-of-week-card {
   padding: 5px;
   /* border: solid 2px black; */
-  width: 105px;
-  margin: 5px;
+  width: 110px;
+  margin: 7px;
   border-radius: 10px;
   text-align: center;
 }
@@ -670,4 +671,13 @@ ul {
 
 .chore-card-container {
   background-color: black;
+}
+
+.avatar-holder {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background-color: crimson;
+  background-size: cover;
+  border-radius: 100px;
 }
