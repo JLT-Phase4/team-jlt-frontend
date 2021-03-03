@@ -7,7 +7,7 @@ import { createTeam, updateAssignment, updatePod } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam, setMyPod }) => {
+const CreateTeamDashboard = ({ token, setMyPod }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
@@ -28,7 +28,7 @@ const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam, setMyPo
   if (team) {
     // return <Redirect to={`/team/${team.pk}`} />
     updatePod(token, teamName, podPk)
-    setIsCreatingTeam(false)
+    // setIsCreatingTeam(false)
     setMyPod(podPk)
     return <Redirect to={`/team/${team.pk}`} />
   }
@@ -42,10 +42,8 @@ const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam, setMyPo
 
   return (
     <div>
-      {isCreatingTeam && (
-
-        <div>
-          {/* <div className='flex'>
+      <div>
+        {/* <div className='flex'>
             <div className='team-dashboard-container' style={{ backgroundColor: 'crimson', backgroundImage: `url(${backgroundImage}` }}>
               <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
               <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
@@ -59,68 +57,68 @@ const CreateTeamDashboard = ({ token, isCreatingTeam, setIsCreatingTeam, setMyPo
             </div>
           </div> */}
 
-          <div className='flex'>
-            <div className='team-chore-mini' style={{ backgroundImage: `url(${backgroundImage}` }}>
-              <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
-              <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
-                <audio controls style={{ width: '140px', height: '15px' }} src={musicTrack} />
-              </div>
+        <div className='flex'>
+          <div className='team-chore-mini' style={{ backgroundImage: `url(${backgroundImage}` }}>
+            <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
+            <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
+              <audio controls style={{ width: '140px', height: '15px' }} src={musicTrack} />
             </div>
-            <div className='create-team-container' style={{ border: `3px solid ${teamDashboardStyle}` }}>
-              <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col' />
+          </div>
+          <div className='create-team-container' style={{ border: `3px solid ${teamDashboardStyle}` }}>
+            <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col' />
 
-              {(step === 1) &&
-                <div>
-                  <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Choose Team Name & Slogan</button>
-                  <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>
-                    <DropdownButton
-                      className='color-dropdown'
-                      alignRight
-                      title='Select Team Color'
-                      id='display-color'
-                      onSelect={(e) => setTeamDashboardStyle(e)}
-                    >
-                      <Dropdown.Item style={{ backgroundColor: 'crimson' }} eventKey='crimson'>Crimson</Dropdown.Item>
-                      <Dropdown.Item style={{ backgroundColor: 'dodgerblue' }} eventKey='dodgerblue'>DodgerBlue</Dropdown.Item>
-                      <Dropdown.Item style={{ backgroundColor: 'purple' }} eventKey='purple'>Purple</Dropdown.Item>
-                    </DropdownButton>
-                  </button>
-                  <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button' onClick={() => handleNextStep()}>Next Step</button>
-                </div>}
-              {(step === 2) &&
-                <div style={{ textAlign: 'center' }}>
-                  <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
-                  <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
-                  <BackgroundImage token={token} setBackgroundImage={setBackgroundImage} />
-                </div>}
-              {(step === 3) &&
-                <div style={{ textAlign: 'center' }}>
-                  <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
-                  <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
-                  <MusicSearch token={token} setMusicTrack={setMusicTrack} />
-                </div>}
+            {(step === 1) &&
+              <div>
+                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Choose Team Name & Slogan</button>
+                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>
+                  <DropdownButton
+                    className='color-dropdown'
+                    alignRight
+                    title='Select Team Color'
+                    id='display-color'
+                    onSelect={(e) => setTeamDashboardStyle(e)}
+                  >
+                    <Dropdown.Item style={{ backgroundColor: 'crimson' }} eventKey='crimson'>Crimson</Dropdown.Item>
+                    <Dropdown.Item style={{ backgroundColor: 'dodgerblue' }} eventKey='dodgerblue'>DodgerBlue</Dropdown.Item>
+                    <Dropdown.Item style={{ backgroundColor: 'purple' }} eventKey='purple'>Purple</Dropdown.Item>
+                  </DropdownButton>
+                </button>
+                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button' onClick={() => handleNextStep()}>Next Step</button>
+              </div>}
+            {(step === 2) &&
+              <div style={{ textAlign: 'center' }}>
+                <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
+                <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
+                <BackgroundImage token={token} setBackgroundImage={setBackgroundImage} />
+              </div>}
+            {(step === 3) &&
+              <div style={{ textAlign: 'center' }}>
+                <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
+                <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
+                <MusicSearch token={token} setMusicTrack={setMusicTrack} />
+              </div>}
 
-              {(step === 4) &&
-                <div className='flex-col' style={{ textAlign: 'center' }}>
-                  <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
-                  {/* <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button> */}
-                  {/* <div>Select Your Pod or Create a New One</div> */}
-                  <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} onClick={() => handleNextStep()} className='team-dash-button'>Enter Pod Code</button>
-                  <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} onClick={() => handleNextStep()} className='team-dash-button'>Choose a New Pod</button>
+            {(step === 4) &&
+              <div className='flex-col' style={{ textAlign: 'center' }}>
+                <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
+                {/* <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button> */}
+                {/* <div>Select Your Pod or Create a New One</div> */}
+                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} onClick={() => handleNextStep()} className='team-dash-button'>Enter Pod Code</button>
+                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} onClick={() => handleNextStep()} className='team-dash-button'>Choose a New Pod</button>
 
-                </div>}
+              </div>}
 
-              {(step === 5) &&
-                <div className='flex-col' style={{ textAlign: 'center' }}>
-                  <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
-                  <button onClick={() => handleCreateTeam()} style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Create Your Team!</button>
-                </div>}
-            </div>
-
+            {(step === 5) &&
+              <div className='flex-col' style={{ textAlign: 'center' }}>
+                <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
+                <button onClick={() => handleCreateTeam()} style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Create Your Team!</button>
+              </div>}
           </div>
 
         </div>
-      )}
+
+      </div>
+
     </div>
   )
 }
