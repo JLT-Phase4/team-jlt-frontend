@@ -11,7 +11,9 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
     getFeeds(token)
       .then(feeds => {
         for (const feed of feeds) {
+          // console.log(feed)
           if (feed.pod === myPod) {
+            console.log(feed)
             setFeedPk(feed.pk)
             getFeed(token, feed.pk)
               .then(feed => setFeed(feed))
@@ -20,7 +22,7 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
       })
   }
 
-  console.log(feedPk)
+  // console.log(feedPk)
 
   // function handleSubmit (event) {
   //   event.preventDefault()

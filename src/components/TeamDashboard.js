@@ -33,7 +33,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod }) => {
         console.log(member.possible_chore_points.chore__points__sum, member.earned_chore_points.chore__points__sum)
         if (member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum < 0.5) {
           console.log(member.username + 'has less than 50%')
-          createNotifications(14, member.pk, 'you are below 50%')
+          createNotifications(15, member.pk, 'you are below 50%')
         }
       }
     }
