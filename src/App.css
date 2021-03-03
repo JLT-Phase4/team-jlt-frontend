@@ -292,6 +292,9 @@ label {
   padding: 2%;
   /* min-width: 345px; */
   width: 345px;
+  /* set max heigh inorder to add scroll bar.  Set height to anything */
+  height: 300px; 
+  overflow-y: scroll;
 }
 .team-dashboard-container {
   display: flex;
