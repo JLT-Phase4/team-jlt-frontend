@@ -6,25 +6,21 @@ function PodFeed ({ token, profileUsername, today, myPod }) {
   const [feed, setFeed] = useState()
   const [feedPk, setFeedPk] = useState()
 
-  // console.log(myPod)
-
-  useEffect(renderFeeds, [token])
+  useEffect(renderFeeds, [token, feedPk, setFeedPk])
   function renderFeeds () {
-    // console.log(myPod)
     getFeeds(token)
       .then(feeds => {
         for (const feed of feeds) {
-          console.log(feed)
-          // console.log(myPod)
           if (feed.pod === myPod) {
-            console.log(myPod)
-            console.log(feed.pod)
+            setFeedPk(feed.pk)
             getFeed(token, feed.pk)
               .then(feed => setFeed(feed))
           }
         }
       })
   }
+
+  console.log(feedPk)
 
   // function handleSubmit (event) {
   //   event.preventDefault()
