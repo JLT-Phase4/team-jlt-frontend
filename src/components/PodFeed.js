@@ -10,6 +10,7 @@ function PodFeed ({ token, profileUsername, today, myPod, myFeedPk }) {
     postMessage(token, myFeedPk, profileUsername, message, today)
       .then((response) => {
         updateFeed()
+        setMessage('')
       })
   }
 
