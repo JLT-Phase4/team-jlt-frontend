@@ -2,12 +2,10 @@ import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
-import { Spring } from 'react-spring/renderprops'
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
-import { MDBProgress } from 'mdbreact'
+import ScoreBoard from './ScoreBoard'
 
 const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
-  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isCreating, setIsCreating] = useState(false)
@@ -16,10 +14,6 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   const [choreDetail, setChoreDetail] = useState('')
   const [chorePoints, setChorePoints] = useState(1)
   const [teamChores, setTeamChores] = useState([])
-  const [detailShown, setDetailShown] = useState({})
-  const toggleDetail = (id) => {
-    setDetailShown(prev => !prev[id] ? { ...prev, [id]: true } : { ...prev, [id]: false })
-  }
 
   useEffect(updateTeamChores, [token, teamPk, isAdding, setIsAdding, setIsCreating])
 
@@ -51,9 +45,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
 
   return (
     <div>
-
       {(team && teamChores) && (
-
         <div>
           <div className='flex-col'>
             <h2 className='log-reg-header'>Chores for <span style={{ color: 'yellowgreen' }}>{team.name}</span></h2>
@@ -65,25 +57,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
                       <MDBPopoverBody>{chore.points}</MDBPopoverBody>
                     </MDBPopover>
-
                   ))}
-                  {/* {teamChores.length > 0 &&
-                <div className='flex'>
-                  {teamChores.map((chore) => (
-                    <Card key={chore.pk} style={{ margin: '10px' }} className='flex'>
-                      {chore ? <Card.Body onMouseOver={() => toggleDetail(chore.pk)} onMouseLeave={() => toggleDetail(chore.pk)}>{chore.name}</Card.Body> : null}
-                      {detailShown[chore.pk]
-                        ? <Card.Body style={{ backgroundColor: 'yellowgreen', color: 'black' }}>
-                          {chore.detail} [{chore.points}] points
-                          </Card.Body>
-                        : null}
-                    </Card>
-                  ))} */}
                 </div>}
-
               {isCreating
                 ? <Card style={{ margin: '10px' }}>
-                  <Card.Body className='chore-card'>
+                  <Card.Body>
                     <form onSubmit={(e) => handleCreate(e)}>
                       <label className='chore-detail' htmlFor='chore-title'>Chore Title</label>
                       <input type='text' id='chore-title' required value={choreName} onClick={event => setChoreName('')} onChange={evt => setChoreName(evt.target.value)} />
@@ -95,7 +73,6 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                     </form>
                   </Card.Body>
                   </Card>
-
                 : <Card style={{ margin: '10px' }} className='flex'>
                   <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
                 </Card>}
@@ -107,27 +84,20 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                 <div className='team-slogan'>{team.slogan}!
                 </div>
                 <audio controls src={team.theme_song} />
-
               </div>
               <div className='team-scoreboard-container-dash' style={{ border: `3px solid ${team.dashboard_style}` }}>
                 <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
                   {team.members.map(member => (
-                    <div key={member.username}>
-                      <div style={{ fontSize: '23px', padding: '10px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
-                      <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-                    </div>
+                    <ScoreBoard team={team} member={member} key={member.username} />
                   ))}
                 </div>
               </div>
               <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/chore-assignment/${team.pk}`}>Assign Chores</Link></button>
               <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Members</Link></button>
               <button style={{ color: 'white', border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notification</button>
-
             </div>
           </div>
-
         </div>
-
       )}
     </div>
   )

@@ -43,25 +43,11 @@ const CreateTeamDashboard = ({ token, setMyPod }) => {
   return (
     <div>
       <div>
-        {/* <div className='flex'>
-            <div className='team-dashboard-container' style={{ backgroundColor: 'crimson', backgroundImage: `url(${backgroundImage}` }}>
-              <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
-              <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
-                <audio controls style={{ width: '140px', height: '15px' }} src={musicTrack} />
-              </div>
-              <div className='team-scoreblock flex' />
-            </div>
-            <div style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: `${teamDashboardStyle}` }} className='team-feed-container'>
-              <h1>Feed will go here:</h1>
-              <ul />
-            </div>
-          </div> */}
-
         <div className='flex'>
           <div className='team-chore-mini' style={{ backgroundImage: `url(${backgroundImage}` }}>
             <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
             <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
-              <audio controls style={{ width: '140px', height: '15px' }} src={musicTrack} />
+              <audio controls src={musicTrack} />
             </div>
           </div>
           <div className='create-team-container' style={{ border: `3px solid ${teamDashboardStyle}` }}>

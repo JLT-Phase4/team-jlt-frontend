@@ -156,8 +156,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
     } else {
       handleAssignmentUpdate(assignmentPk, false, member.username, day)
     }
-
-    // here we would write a patch function that would update the assignemntpk to new member and/or day
   }
 
   return (
@@ -196,7 +194,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
                       {days.map((day, index) => (
                         <div // className='drop-container'
                           id={day}
-                      // onDrop={handleDrop({ day, member })}
                           onDrop={(event) => { handleDrop(event, { day, member }) }}
                           onDragOver={handleDragOver} key={index} style={{ paddingBottom: '50px' }}
                         >
@@ -225,20 +222,10 @@ function ChoreSummary ({ token, today, todayIndex }) {
                           </>
                         </div>
                       ))}
-                      {/* <div
-                        onDrop={(event) => { handleDropOut(event) }}
-                        onDragOver={handleDragOver}
-                        className='day-of-week-card' style={{ border: '2px solid grey' }}
-                        // className='team-member-container-list'
-                      >
-                        Delete
-                      </div> */}
+
                     </div>
                   </div>
-                  {/* <div className='team-member-container-list'>
-                    <div>Points</div>
-                    <div>{member.earned_chore_points.chore__points__sum} of {member.possible_chore_points.chore__points__sum} </div>
-                  </div> */}
+
                   <div
                     onDrop={(event) => { handleDropOut(event) }}
                     onDragOver={handleDragOver}
