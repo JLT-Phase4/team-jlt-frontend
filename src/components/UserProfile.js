@@ -3,8 +3,10 @@ import { Card } from 'react-bootstrap'
 import { useParams, Link } from 'react-router-dom'
 import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints, getPointsByDay } from '../api'
 import AvatarImage from './AvatarImage'
-import { MDBProgress } from 'mdbreact'
+import { MDBProgress, MDBContainer } from 'mdbreact'
+import { Line } from 'react-chartjs-2'
 import ScoreBoard from './ScoreBoard'
+import ScoreChart from './ScoreChart'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const { username } = useParams()
@@ -34,6 +36,42 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
         setAvatar(AVATAR)
       }
     })
+  }
+
+  let mondayScore = 0
+  let mondayPossible = 0
+  let tuesdayScore = 0
+  let tuesdayPossible = 0
+  let wednesdayScore = 0
+  let wednesdayPossible = 0
+  let thursdayScore = 0
+  let thursdayPossible = 0
+  let fridayScore = 0
+  let fridayPossible = 0
+  let saturdayScore = 0
+  let saturdayPossible = 0
+  let sundayScore = 0
+  let sundayPossible = 0
+
+  if (userProfile) {
+    mondayScore = userProfile.monday_chore_points.chore__points__sum
+    mondayPossible = userProfile.monday_possible_points.chore__points__sum
+    tuesdayScore = mondayScore + userProfile.tuesday_chore_points.chore__points__sum
+    tuesdayPossible = mondayPossible + userProfile.tuesday_possible_points.chore__points__sum
+    wednesdayScore = tuesdayScore + userProfile.wednesday_chore_points.chore__points__sum
+    wednesdayPossible = tuesdayPossible + userProfile.wednesday_possible_points.chore__points__sum
+
+    thursdayScore = wednesdayScore + userProfile.thursday_chore_points.chore__points__sum
+    thursdayPossible = wednesdayPossible + userProfile.thursday_possible_points.chore__points__sum
+
+    fridayScore = thursdayScore + userProfile.friday_chore_points.chore__points__sum
+    fridayPossible = thursdayPossible + userProfile.friday_possible_points.chore__points__sum
+
+    saturdayScore = fridayScore + userProfile.saturday_chore_points.chore__points__sum
+    saturdayPossible = fridayPossible + userProfile.saturday_possible_points.chore__points__sum
+
+    sundayScore = saturdayScore + userProfile.sunday_chore_points.chore__points__sum
+    sundayPossible = saturdayPossible + userProfile.sunday_possible_points.chore__points__sum
   }
 
   function updateAvatar () {
@@ -146,39 +184,59 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                 </div>
               </div>
               <div className='flex-col user-profile-mini-container'><span style={{ color: 'yellowgreen', fontSize: '24px' }}>Score Summary</span>
+                {/* <ScoreChart today={today} todayIndex={todayIndex} userProfile={userProfile} /> */}
+
+                {/* <MDBContainer>
+                  <h3 className='mt-5'>Line chart</h3>
+                  <Line data={scoreSummary.dataLine} options={{ responsive: true }} />
+                </MDBContainer> */}
                 <div>Total</div>
                 <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum}>{(100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
                 <div>Monday</div>
-                <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.monday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * mondayScore / mondayPossible} />
+
+                {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.monday_chore_points.chore__points__sum / userProfile.monday_possible_points.chore__points__sum} /> */}
                 {todayIndex >= 1 && (
                   <>
                     <div>Tuesday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.tuesday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * tuesdayScore / tuesdayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.tuesday_chore_points.chore__points__sum / userProfile.tuesday_possible_points.chore__points__sum} /> */}
                   </>)}
                 {todayIndex >= 2 && (
                   <>
                     <div>Wednesday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.wednesday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * wednesdayScore / wednesdayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.wednesday_chore_points.chore__points__sum / userProfile.wednesday_possible_points.chore__points__sum} /> */}
                   </>)}
                 {todayIndex >= 3 && (
                   <>
                     <div>Thursday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.thursday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * thursdayScore / thursdayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.thursday_chore_points.chore__points__sum / userProfile.thursday_possible_points.chore__points__sum} /> */}
                   </>)}
                 {todayIndex >= 4 && (
                   <>
                     <div>Friday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.friday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * fridayScore / fridayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.friday_chore_points.chore__points__sum / userProfile.friday_possible_points.chore__points__sum} /> */}
                   </>)}
                 {todayIndex >= 5 && (
                   <>
                     <div>Saturday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.saturday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * saturdayScore / saturdayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.saturday_chore_points.chore__points__sum / userProfile.saturday_possible_points.chore__points__sum} /> */}
                   </>)}
                 {todayIndex >= 6 && (
                   <>
                     <div>Sunday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.sunday_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum} />
+                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * sundayScore / sundayPossible} />
+
+                    {/* <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.sunday_chore_points.chore__points__sum / userProfile.sunday_possible_points.chore__points__sum} /> */}
                   </>)}
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}><span style={{ color: 'yellowgreen', fontSize: '24px' }}>{team.name}</span> </Link>
@@ -285,16 +343,16 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                         ))}
 
                       </div>
-                      </div>
+                    </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
 
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </>
 
