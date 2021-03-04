@@ -279,25 +279,25 @@ label {
   float: right;
 } */
 
-.team-feed-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* .team-feed-container {
+  display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: flex-end;
   align-items: center;
   min-width: 30%;
   background-size: cover;
-  margin: 4%;
+  margin: 4%; */
   /* margin-top: 8%; */
-  border-radius: 25px;
-  padding: 2%;
+  /* border-radius: 25px;
+  padding: 2%; */
   /* min-width: 345px; */
-  width: 345px;
+  /* width: 345px; */
   /* set max heigh inorder to add scroll bar.  Set height to anything */
-  height: 300px; 
+  /* height: 300px; 
   overflow-y: scroll;
-}
+} */
 
-.message-container{
+/* .message-container{
   background-color: whitesmoke;
   color: black;
   border-radius: 10px;
@@ -306,10 +306,23 @@ label {
 .enter-comment-box input{
   width: 100%;
   border-radius: 10px;
-}
+} */
 
-.comment-box button {
- /* decided to hide button? */
+.team-feed-container {
+  width: 100%;
+  height: calc(100% - 15px);
+  max-height: 500px;
+  z-index: 10;
+  overflow: hidden;
+  /*box-shadow: 0 5px 30px rgba(0, 0, 0, .2);*/
+  /* background: rgba(0, 0, 0, .5);*/
+  background: transparent;
+  border-radius: 20px;
+  /* -webkit-border-radius: 20px; */
+  /* -moz-border-radius: 20px; */
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .team-dashboard-container {
