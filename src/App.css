@@ -298,6 +298,8 @@ label {
 .message-container{
   background-color: whitesmoke;
   color: black;
+  background-color: #43414159;
+  color: #d5c4c4;
   border-radius: 10px!important;
   align-content: right;
 }
