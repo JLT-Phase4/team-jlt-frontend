@@ -11,6 +11,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 // import ChoreDashboard from './components/ChoreDashboard'
 import ChoreSummary from './components/ChoreSummary'
+import ChoreSummaryMobile from './components/ChoreSummaryMobile'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
@@ -24,7 +25,6 @@ import laundryImage from './images/laundry-basket.png'
 import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
-import ChoreAssignment from './components/ChoreAssignment'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -258,7 +258,11 @@ function App () {
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreSummary token={token} today={today} todayIndex={todayIndex} />
+        </Route>
 
+        <Route path='/chore-assignment-mobile/:teamPk'>
+          <div className='App' />
+          <ChoreSummaryMobile token={token} today={today} todayIndex={todayIndex} />
         </Route>
 
         <Route path='/create-team-members/:teamPk/:teamName'>
