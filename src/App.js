@@ -41,7 +41,7 @@ function App () {
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
   const [myPod, setMyPod] = useState()
-  const [myFeedPk, setMyFeedPk] = useState()
+  const [myPodFeedPk, setMyPodFeedPk] = useState()
   const [myTeamName, setMyTeamName] = useState()
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
@@ -55,7 +55,7 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, myFeedPk, setMyFeedPk])
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, myPodFeedPk, setMyPodFeedPk])
   function updatePods () {
     getPods(token)
       .then(pods => {
@@ -69,7 +69,7 @@ function App () {
                 setMyTeamName(team.name)
                 setTeams(pod.teams)
                 setMyPod(pod.pk)
-                setMyFeedPk(pod.feed[0].pk)
+                setMyPodFeedPk(pod.feed[0].pk)
                 console.log(pod.feed.pk, pod.feed)
               }
               for (const member of team.members) {
@@ -78,7 +78,7 @@ function App () {
                   setMyTeamName(team.name)
                   setTeams(pod.teams)
                   setMyPod(pod.pk)
-                  setMyFeedPk(pod.feed[0].pk)
+                  setMyPodFeedPk(pod.feed[0].pk)
                 }
               }
               // if (team.pk === myTeam) {
@@ -231,7 +231,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} myFeedPk={myFeedPk} />
+          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} feedPk={myPodFeedPk} />
         </Route>
 
         <Route path='/team-chores/:teamPk'>

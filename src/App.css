@@ -292,7 +292,26 @@ label {
   padding: 2%;
   /* min-width: 345px; */
   width: 345px;
+  /* set max heigh inorder to add scroll bar.  Set height to anything */
+  height: 300px; 
+  overflow-y: scroll;
 }
+
+.message-container{
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 10px;
+  align-content: right;
+}
+.enter-comment-box input{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.comment-box button {
+ /* decided to hide button? */
+}
+
 .team-dashboard-container {
   display: flex;
   flex-direction: column;
