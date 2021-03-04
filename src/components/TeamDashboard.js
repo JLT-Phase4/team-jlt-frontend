@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam, postNotification, getFeed } from './../api'
-import PodFeed from './PodFeed'
+import Feed from './Feed'
 import ScoreBoard from './ScoreBoard'
 
-const TeamDashboard = ({ token, profileUsername, today, myPod, myFeedPk }) => {
+const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [notPosted, setNotPosted] = useState(false)
-  const [feed, setFeed] = useState()
+  // const [feed, setFeed] = useState()
   // const [feedPk, setFeedPk] = useState()
 
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
@@ -17,56 +17,21 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, myFeedPk }) => {
     getTeam(token, teamPk).then(team => setTeam(team))
   }
 
-  // useEffect(renderFeeds, [token, feedPk, setFeedPk, myPod, notPosted])
-  // function renderFeeds () {
-  //   getFeeds(token)
-  //     .then(feeds => {
-  //       for (const feed of feeds) {
-  //         // console.log(feed)
-  //         if (feed.pod === myPod) {
-  //           console.log('this is my feed', feed)
-  //           setFeedPk(feed.pk)
-  //           getFeed(token, feed.pk)
-  //             .then(feed => setFeed(feed))
-  //         }
-  //       }
-  //     })
-  // }
-
-  useEffect(renderFeed, [token, myFeedPk, myPod, notPosted])
-  function renderFeed () {
-    if (myFeedPk) {
-      getFeed(token, myFeedPk)
-        .then(feed => setFeed(feed))
-    }
-  }
-
-  // const list = ['a', 'b', 'c']
-
-  // for (const value of list) {
-  //   console.log(value)
-  //   if (value === 'b') {
-  //     break
-  //   }
-  // }
-  // if(prevState.data !== this.state.data)
-
   useEffect(updateNotifications, [token, today, notPosted])
   function updateNotifications () {
-    if (team && notPosted && feed) {
-      console.log('I am in update notifications')
+    if (team && notPosted && feedPk) {
       for (const member of team.members) {
         console.log(member.possible_chore_points.chore__points__sum, member.earned_chore_points.chore__points__sum)
         if (member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum > 0.5) {
           console.log(member.username + 'has more than than than 50%')
-          createNotifications(feed.pk, member.username, 'you are above 30%')
+          createNotifications(feedPk, member.username, 'you are above 30%')
         }
       }
     }
   }
 
-  function createNotifications (myFeedPk, target, message) {
-    postNotification(token, myFeedPk, target, message).then((response) => {
+  function createNotifications (feedPk, target, message) {
+    postNotification(token, feedPk, target, message).then((response) => {
       updateTeam()
       setNotPosted(false)
     }
@@ -87,14 +52,8 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, myFeedPk }) => {
               </div>
               <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
                 <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-                  {/* <h1>Feed will go here:</h1>
-                  <ul>
-                    <li>notifications</li>
-                    <li>comments</li>
-                    <li>emojis?</li>
-                  </ul> */}
-                  {feed && (
-                    <PodFeed token={token} profileUsername={profileUsername} today={today} myPod={myPod} myFeedPk={myFeedPk} />
+                  {feedPk && (
+                    <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
                   )}
                 </div>
                 <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>

@@ -296,6 +296,22 @@ label {
   height: 300px; 
   overflow-y: scroll;
 }
+
+.message-container{
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 10px;
+  align-content: right;
+}
+.enter-comment-box input{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.comment-box button {
+ /* decided to hide button? */
+}
+
 .team-dashboard-container {
   display: flex;
   flex-direction: column;
