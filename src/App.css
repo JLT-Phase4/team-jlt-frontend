@@ -302,8 +302,14 @@ label {
   align-content: right;
 }
 
+.message-username{
+  text-align: left;
+}
+.message-avatar {
+  float: left;
+}
+
 .comment-box {
-  flex: 0 1 42px;
   width: 90%;
   background: white; 
   margin:2px auto;
@@ -312,6 +318,7 @@ label {
   border-radius: 20px!important; 
   height:40px;
   border:1px solid #ccc;
+  float: right;
 }
  
 .comment-input {
@@ -327,7 +334,7 @@ label {
   color: black;
 }
 
-.comment-submit {
+.comment-submit-button {
 top: 0px;
 color: #4A90E2;
 border: none;
@@ -339,8 +346,12 @@ padding: 6px 10px;
 border-radius: 5px;
 outline: none!important;
 cursor:pointer;
+/* float: right; */
+position: absolute;
+margin-top: 10px;
+margin-left: 60px;
 }
-.message-submit:hover {
+.comment-submit-button:hover {
   background: white;
   color: black;
 }

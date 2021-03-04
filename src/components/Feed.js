@@ -27,11 +27,11 @@ function Feed ({ token, profileUsername, today, feedPk }) {
           <div>
             <div>
               {feed.notifications.map(notification => (
-                <div key={notification.message + notification.target + today}>
-                  {/* <img src={notification.sender.avatar} /> */}
-                  <div className='avatar-holder' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
-                  <p> {notification.sender.username}</p>
-                  <p className='message-container'>{notification.message}</p>
+                <div className='message-container' key={notification.message + notification.target + today}>
+                  {/* <p className='message-username'> {notification.sender.username}</p> */}
+                  <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
+                  <p className='message-username'> {notification.sender.username}</p>
+                  <p>{notification.message}</p>
                 </div>
               ))}
             </div>
@@ -40,7 +40,7 @@ function Feed ({ token, profileUsername, today, feedPk }) {
           <div>
             <form className='comment-box' onSubmit={handleSubmit}>
               <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
-              <button className='comment-submit' type='submit'>Send</button>
+              <button className='comment-submit-button' type='submit'>Send</button>
             </form>
           </div>
         </div>
