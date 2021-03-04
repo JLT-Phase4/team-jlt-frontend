@@ -282,7 +282,7 @@ label {
  .team-feed-container {
   display: flex; 
   flex-direction: column;
-  justify-content: center; 
+  justify-content: flex-end; 
   align-items: center;
   min-width: 30%;
   background-size: cover;
@@ -291,7 +291,7 @@ label {
   border-radius: 25px;
   padding: 2%; 
   width: 345px;
-  height: 300px;  
+  height: 345px;  
   overflow-y: scroll;
 } 
 
