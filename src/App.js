@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
 import TeamDashboard from './components/TeamDashboard'
@@ -25,6 +25,7 @@ import laundryImage from './images/laundry-basket.png'
 import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
+import Welcome from './components/Welcome'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -102,7 +103,7 @@ function App () {
       })
   }
 
-  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk])
+  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
     { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
 
@@ -272,20 +273,22 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} />
+          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          <div>
-            {token && teams && myPod
+          {token
+            ? <div>
+              {teams && myPod
 
-              ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
-              : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />}
+                ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
+                : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />}
 
-          </div>
+            </div>
+            : <Welcome />}
 
         </Route>
       </Switch>
