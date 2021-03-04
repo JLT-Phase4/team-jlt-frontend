@@ -279,51 +279,83 @@ label {
   float: right;
 } */
 
-/* .team-feed-container {
-  display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: flex-end;
+ .team-feed-container {
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end; 
   align-items: center;
   min-width: 30%;
   background-size: cover;
-  margin: 4%; */
-  /* margin-top: 8%; */
-  /* border-radius: 25px;
-  padding: 2%; */
-  /* min-width: 345px; */
-  /* width: 345px; */
-  /* set max heigh inorder to add scroll bar.  Set height to anything */
-  /* height: 300px; 
+  margin: 4%; 
+  margin-top: 8%; 
+  border-radius: 25px;
+  padding: 2%; 
+  width: 345px;
+  height: 345px;  
   overflow-y: scroll;
-} */
+} 
 
-/* .message-container{
+.message-container{
   background-color: whitesmoke;
   color: black;
-  border-radius: 10px;
+  border-radius: 10px!important;
   align-content: right;
 }
-.enter-comment-box input{
-  width: 100%;
-  border-radius: 10px;
-} */
 
-.team-feed-container {
-  width: 100%;
-  height: calc(100% - 15px);
-  max-height: 500px;
-  z-index: 10;
-  overflow: hidden;
-  /*box-shadow: 0 5px 30px rgba(0, 0, 0, .2);*/
-  /* background: rgba(0, 0, 0, .5);*/
-  background: transparent;
-  border-radius: 20px;
-  /* -webkit-border-radius: 20px; */
-  /* -moz-border-radius: 20px; */
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+.message-username{
+  text-align: left;
 }
+.message-avatar {
+  float: left;
+}
+
+.comment-box {
+  width: 90%;
+  background: white; 
+  margin:2px auto;
+  padding: 10px;
+  position: relative;
+  border-radius: 20px!important; 
+  height:40px;
+  border:1px solid #ccc;
+  float: right;
+}
+ 
+.comment-input {
+  background: none;
+  border: none;
+  outline: none!important;
+  resize: none; 
+  font-size: 15px;
+  height: 24px;
+  margin: 0;
+  padding-right: 20px;
+  width: 265px;
+  color: black;
+}
+
+.comment-submit-button {
+top: 0px;
+color: #4A90E2;
+border: none;
+background: white;
+font-size: 12px;
+text-transform: uppercase;
+line-height: 1;
+padding: 6px 10px;
+border-radius: 5px;
+outline: none!important;
+cursor:pointer;
+/* float: right; */
+position: absolute;
+margin-top: 10px;
+margin-left: 60px;
+}
+.comment-submit-button:hover {
+  background: white;
+  color: black;
+}
+  
 
 .team-dashboard-container {
   display: flex;
