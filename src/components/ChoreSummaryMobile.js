@@ -162,7 +162,7 @@ function ChoreSummaryMobile ({ token, today, todayIndex }) {
     <div>
       {team && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+          {/* <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
@@ -172,51 +172,66 @@ function ChoreSummaryMobile ({ token, today, todayIndex }) {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }}>
             <div>
-              <div className='flex-row'>
-                {days.map((day, index) => (
-                  <div key={day}>
-                    <Card className='chore-card-container'>
-                      <Card.Body className='day-of-week-card'>
-                        {day}
-                      </Card.Body>
-                    </Card>
-                    {team.members.map((member) => (
-
-                      <div key={member.pk} className='flex'>
-
-                        <div>
-                          <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
-                            <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
-                            <span>{member.username}</span>
-
-                            <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
-                          </Link>
-                        </div>
-                        <>
-                          {member.assignments.map((assignment, idx) => (
-                            <div key={idx}>
-                              {(assignment.assignment_type.includes(day)) && (
-                                <Card >
-                                  {(assignment.complete === true)
-                                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
-
-                                  // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
-                                    : <Card.Body className='chore-card' style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}
-                                </Card>
-                              )}
-                            </div>))}
-                        </>
-
+              <div className='flex'>
+                {team.members.map((member, index) => (
+                  <div key={index}>
+                    <Link style={{ fontSize: '22px', marginTop: '10px', width: '320px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
+                      <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
+                      <span>{member.username}</span>
+                      <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
+                    </Link>
+                    {/* </div> */}
+                    {chores.map(chore => (
+                      <div key={chore.pk}>
+                        <Card>
+                          <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{chore.name}</Card.Body>
+                        </Card>
                       </div>
                     ))}
+                    {/* {days.map((day, index) => (
+                      <div key={day}>
+                        <Card className='chore-card-container'>
+                          <Card.Body style={{ width: '300px' }} className='day-of-week-card'>
+                            {day}
+                          </Card.Body>
+                        </Card> */}
 
+                    {/* {team.members.map((member) => (
+                        <div key={member.pk} className='flex'>
+                          <div>
+                            <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
+                              <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
+                              <span>{member.username}</span>
+
+                              <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
+                            </Link>
+                          </div>
+                          <>
+                            {member.assignments.map((assignment, idx) => (
+                              <div key={idx}>
+                                {(assignment.assignment_type.includes(day)) && (
+                                  <Card>
+                                    {(assignment.complete === true)
+                                      ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                    // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
+                                      : <Card.Body className='chore-card' style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}
+                                  </Card>
+                                )}
+                              </div>))}
+                          </>
+                        </div>
+                      ))} */}
+
+                    {/* </div>
+                    ))} */}
                   </div>
                 ))}
+
               </div>
 
             </div>

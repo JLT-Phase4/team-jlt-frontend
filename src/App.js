@@ -164,7 +164,7 @@ function App () {
             </div>
           </MDBNavbarBrand>
           <MDBNavbarToggler />
-          <MDBCollapse navbar isOpen>
+          <MDBCollapse navbar>
             <MDBNavbarNav left>
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
