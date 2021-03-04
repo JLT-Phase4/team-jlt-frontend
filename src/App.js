@@ -268,7 +268,7 @@ function App () {
           <div>
             {token && teams && myPod
 
-              ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} />
+              ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
               : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />}
 
           </div>
