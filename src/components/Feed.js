@@ -27,7 +27,7 @@ function Feed ({ token, profileUsername, today, feedPk }) {
             <div>
               {feed.notifications.map(notification => (
                 <div className='message-container' key={notification.message + notification.target + today}>
-                  <p> {notification.sender}</p>
+                  <p> {notification.sender.username}</p>
                   <p>{notification.message}</p>
                 </div>
               ))}
