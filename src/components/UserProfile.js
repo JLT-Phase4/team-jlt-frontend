@@ -112,11 +112,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
     const choreTransfer = assignment.chore.name + '???' + assignment.pk
     event.dataTransfer.setData('text/plain', choreTransfer)
     setDragging(true) // hey react! just letting u know we are dragging now
-    window.scroll({
-      top: 1000,
-      left: 1000,
-      behavior: 'smooth'
-    })
   }
 
   function handleDragEnd () {
@@ -339,7 +334,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                   <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -349,11 +344,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                     {/* add condition that userpfoile matches somehow */}
                   </div>
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 
