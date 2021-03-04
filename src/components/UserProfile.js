@@ -7,8 +7,9 @@ import { MDBProgress, MDBContainer } from 'mdbreact'
 import { Line } from 'react-chartjs-2'
 import ScoreBoard from './ScoreBoard'
 import ScoreChart from './ScoreChart'
+import Feed from './Feed'
 
-const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
+const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
@@ -24,7 +25,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
-  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment])
+  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment, feedPk])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -343,16 +344,22 @@ const UserProfile = ({ token, profileUsername, today, todayIndex }) => {
                         ))}
 
                       </div>
-                    </div>
+
+                      </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
-
+                  <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
+                    {feedPk && (
+                      <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
+                    )}
+                    {/* add condition that userpfoile matches somehow */}
+                  </div>
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </>
 
