@@ -11,6 +11,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import Card from 'react-bootstrap/Card'
 // import ChoreDashboard from './components/ChoreDashboard'
 import ChoreSummary from './components/ChoreSummary'
+import ChoreSummaryMobile from './components/ChoreSummaryMobile'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
@@ -24,7 +25,6 @@ import laundryImage from './images/laundry-basket.png'
 import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
-import ChoreAssignment from './components/ChoreAssignment'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -42,6 +42,7 @@ function App () {
   const [myTeam, setMyTeam] = useState()
   const [myPod, setMyPod] = useState()
   const [myPodFeedPk, setMyPodFeedPk] = useState()
+  const [myTeamFeedPk, setMyTeamFeedPk] = useState()
   const [myTeamName, setMyTeamName] = useState()
   const [userProfile, setUserProfile] = useState()
   const [isCaptainStatus, setCaptainStatus] = useState(false)
@@ -66,19 +67,28 @@ function App () {
               if (username === team.captain) {
                 setCaptain(true)
                 setMyTeam(team.pk)
-                setMyTeamName(team.name)
+                if (team.feed[0]) {
+                  setMyTeamFeedPk(team.feed[0].pk)
+                } setMyTeamName(team.name)
                 setTeams(pod.teams)
                 setMyPod(pod.pk)
-                setMyPodFeedPk(pod.feed[0].pk)
-                console.log(pod.feed.pk, pod.feed)
+                if (pod.feed[0]) {
+                  setMyPodFeedPk(pod.feed[0].pk)
+                }
               }
               for (const member of team.members) {
                 if (username === member.username) {
                   setMyTeam(team.pk)
                   setMyTeamName(team.name)
+                  if (team.feed[0]) {
+                    setMyTeamFeedPk(team.feed[0].pk)
+                  }
+
                   setTeams(pod.teams)
                   setMyPod(pod.pk)
-                  setMyPodFeedPk(pod.feed[0].pk)
+                  if (pod.feed[0]) {
+                    setMyPodFeedPk(pod.feed[0].pk)
+                  }
                 }
               }
               // if (team.pk === myTeam) {
@@ -92,7 +102,7 @@ function App () {
       })
   }
 
-  useEffect(updateProfile, [token, username])
+  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
     { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
 
@@ -154,7 +164,7 @@ function App () {
             </div>
           </MDBNavbarBrand>
           <MDBNavbarToggler />
-          <MDBCollapse navbar isOpen>
+          <MDBCollapse navbar>
             <MDBNavbarNav left>
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
@@ -248,7 +258,11 @@ function App () {
         <Route path='/chore-assignment/:teamPk'>
           <div className='App' />
           <ChoreSummary token={token} today={today} todayIndex={todayIndex} />
+        </Route>
 
+        <Route path='/chore-assignment-mobile/:teamPk'>
+          <div className='App' />
+          <ChoreSummaryMobile token={token} today={today} todayIndex={todayIndex} />
         </Route>
 
         <Route path='/create-team-members/:teamPk/:teamName'>
@@ -258,7 +272,7 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} />
+          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
