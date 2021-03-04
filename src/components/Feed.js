@@ -20,14 +20,14 @@ function Feed ({ token, profileUsername, today, feedPk }) {
   }
 
   return (
-    <div>
+    <div className='messages'>
       {feed && (
         <div>
           <div>
             <div>
               {feed.notifications.map(notification => (
-                <div className='message-container' key={notification.message + notification.target + today}>
-                  <p> {notification.sender}</p>
+                <div className='message-content' key={notification.message + notification.target + today}>
+                  <p> {notification.sender.username}</p>
                   <p>{notification.message}</p>
                 </div>
               ))}
@@ -35,10 +35,9 @@ function Feed ({ token, profileUsername, today, feedPk }) {
 
           </div>
           <div>
-            <form className='enter-comment-box' onSubmit={handleSubmit}>
-              <input type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
-              {/* we can submit when you press enter.  Do yall want button or no? */}
-              {/* <button type='submit'>Post</button> */}
+            <form className='message-box' onSubmit={handleSubmit}>
+              <input className='message-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
+              <button className='message-submit' type='submit'>Send</button>
             </form>
           </div>
         </div>
