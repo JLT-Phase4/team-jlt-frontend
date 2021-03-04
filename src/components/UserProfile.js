@@ -9,7 +9,7 @@ import ScoreBoard from './ScoreBoard'
 import ScoreChart from './ScoreChart'
 import Feed from './Feed'
 
-const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk }) => {
+const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
@@ -343,7 +343,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk }) => {
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                   <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-                    {feedPk && (
+                    {feedPk && (myTeam === teamPk) && (
                       <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
                     )}
                     {/* add condition that userpfoile matches somehow */}
