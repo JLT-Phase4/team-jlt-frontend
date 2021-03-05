@@ -166,12 +166,12 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   return (
     <div>
       {userProfile && team && (
-        <>
-          <div className='flex-col'>
-            <div style={{ maxWidth: '1250px', marginTop: '100px', marginLeft: '45px', marginRight: '45px' }} className='flex'>
+        <div><span className='profile-title'>{userProfile.username}'s page!</span>
+          <div className='flex-col-center'>
+            <div style={{ marginTop: '20px', width: '1200px', justifyContent: 'center' }} className='flex'>
               <div>
                 <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
-                <div style={{ marginTop: '30px' }} className='flex-col team-title'>{userProfile.username}'s page!
+                <div style={{ marginTop: '20px' }} className='flex-col'>
                   <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>
                 </div>
               </div>
@@ -228,7 +228,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                   </>)}
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}><span style={{ color: 'yellowgreen', fontSize: '24px' }}>{team.name}</span> </Link>
-                <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
+                <div className='team-scoreblock flex-col'>
                   {team.members.map(member => (
                     <ScoreBoard team={team} member={member} key={member.username} />
                   ))}
@@ -239,8 +239,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
           <div className=' member-dashboard-container'>
 
             {(!isUpdating)
-              ? <div style={{ minWidth: '100%' }}>
-                <div className='flex-center'>
+              ? <div style={{ minWidth: '100%', width: '1200px' }}>
+                <div className='flex'>
                   <div style={{ }} className='flex-col'>
                     <div style={{ marginTop: '50px', marginLeft: '45px', fontSize: '25px', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
                     <div style={{ maxWidth: '900px' }} className='flex-sa'>
@@ -298,7 +298,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div key={userProfile.pk} style={{ marginLeft: '50px', minWidth: '850px', maxWidth: '1100px' }} className='team-member-container-list flex-nowrap'>
+                    ? <div key={userProfile.pk} style={{ marginLeft: '50px', minWidth: '850px', maxWidth: '1200px' }} className='team-member-container-list flex-nowrap'>
                       <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${userProfile.username}/`} className={`${userProfile.username} flex`}>
                         <div className='avatar-holder' style={(userProfile.avatar === undefined || userProfile.avatar === '' || userProfile.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${userProfile.avatar})` }} />
                         <span>{userProfile.username}</span>
@@ -334,7 +334,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                   {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -344,13 +344,13 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                     {/* add condition that userpfoile matches somehow */}
                   {/* </div> } */}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
-        </>
+        </div>
 
       )}
     </div>

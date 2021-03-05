@@ -300,6 +300,7 @@ label {
   padding: 10px;
   width: 340px;
   font-size: 20px;
+  margin-left: 100px;
 }
 .user-profile-sum-container {
   max-width: 1100px;
@@ -537,6 +538,12 @@ margin-right: 5px;
   border-radius: 10px;     
 }
 
+.profile-title {
+  font-size: 40px;
+  border-radius: 10px;
+  margin-left: 50px;
+}
+
 .team-slogan {
   font-size: 28px;
   margin-bottom: 10px;
@@ -615,6 +622,7 @@ ul {
 
 .card {
   background-color: #eef0f300;
+  border: none;
   /* background-color: none; */
 }
 
@@ -780,7 +788,7 @@ ul {
 }
 
 .progress {
-  background-color:#2d2b2bf0;
+  background-color:#2d2b2b4a;
   
   /* margin-top: 30px; */
 }
