@@ -162,7 +162,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
     <div>
       {team && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Chores</span>
+          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ fontSize: '25px' }}>Chores</span>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
@@ -178,7 +178,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
             </div>
           </div>
 
-          <div className='members' style={{ color: 'yellowgreen', fontSize: '25px' }}>Chore Assignments</div>
+          <div className='members' style={{ fontSize: '25px' }}>Chore Assignments</div>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
               {team.members.map((member) => (
@@ -188,7 +188,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
                       <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
                       <span>{member.username}</span>
 
-                      <span style={{ color: 'yellowgreen', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
+                      <span style={{ color: 'rgb(15, 82, 152)', fontSize: '22px', marginLeft: '5px' }}>{member.possible_chore_points.chore__points__sum} Points</span>
                     </Link>
                     <div className='flex-row'>
                       {days.map((day, index) => (
