@@ -28,13 +28,17 @@ body {
 }
 
 .home-header {
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all 0.2s ease-in-out;
   border: 2px solid gold;
   border-radius: 25px;
   margin: 10px;
   border: 5px solid #c2dbe769;
   background-color: #8da8bd6b;
   background-color: rgba(204, 224, 240, 0.964)
-
+  
 }
 
 .home-page-container {
@@ -234,15 +238,22 @@ label {
 }
 
 .carousel-team-title {
-  font-size: 50px;
+  font-size: 45px;
   margin-top: 5px;
-  margin-bottom: 140px;
-  background-color: rgba(0, 0, 0, 0.411);
+  margin-bottom: 10px;
+  /* background-color: rgba(0, 0, 0, 0.699); */
+  background-color: rgba(0, 0, 0, 0.829);
+  border-radius: 10px;
   text-align: center;
+  padding: 5px;
+  font-weight: bold;
 }
 .carousel-team-title a {
-  color: white;
+  /* color: white; */
+  color: rgb(227, 230, 236)
+  /* color: black */
 }
+
 .search-results-container {
   display: flex;
   flex-direction: column;
@@ -298,8 +309,9 @@ label {
  .team-feed-container {
  
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* flex-direction: column; */
+  align-items: flex-end;
+  /* align-content: center; */
   /* min-width: 30%; */
   background-size: cover;
   /* margin: 4%; */
@@ -315,6 +327,10 @@ label {
   background-color: #8da8bd6b;
   background-color: rgba(141, 168, 189, 0.42);
   background-color: rgba(204, 224, 240, 0.964);
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all 0.2s ease-in-out;
 
 
 } 
@@ -325,7 +341,6 @@ label {
   background-color: #43414159;
   color: #d5c4c4;
   border-radius: 10px!important;
-  align-content: right;
 }
 
 .message-username{
@@ -344,7 +359,6 @@ label {
   border-radius: 20px!important; 
   height:40px;
   border:1px solid #ccc;
-  float: right;
 }
  
 .comment-input {
@@ -361,21 +375,21 @@ label {
 }
 
 .comment-submit-button {
-top: 0px;
 color: #4A90E2;
 border: none;
 background: white;
 font-size: 12px;
 text-transform: uppercase;
-line-height: 1;
-padding: 6px 10px;
 border-radius: 5px;
 outline: none!important;
 cursor:pointer;
-/* float: right; */
+width: 20%;
 position: absolute;
+top: 0;
+right: 0;
 margin-top: 10px;
-margin-left: 60px;
+margin-right: 5px;
+
 }
 .comment-submit-button:hover {
   background: white;
@@ -501,7 +515,7 @@ margin-left: 60px;
   margin-bottom: 20px;
   background-color: rgba(0, 0, 0, 0.49);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 10px;     
 }
 
 .team-slogan {
