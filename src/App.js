@@ -310,15 +310,16 @@ function App () {
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          {token
-            ? <div>
-              {teams && myPod
+          {token &&
+            <div>
+              {teams && myPod && (
+                <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
+              )}
 
-                ? <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
-                : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />}
+              {/* <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />} */}
 
-            </div>
-            : <Welcome />}
+            </div>}
+          {/* : <Welcome /> */}
 
         </Route>
       </Switch>

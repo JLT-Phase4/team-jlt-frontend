@@ -23,7 +23,7 @@ function Feed ({ token, profileUsername, today, feedPk }) {
   return (
     <div>
       {feed && (
-        <div>
+        <div className='flex-col' style={{ justifyContent: 'space-between', height: '600px' }}>
           <div>
             <div>
               {feed.notifications.map(notification => (
