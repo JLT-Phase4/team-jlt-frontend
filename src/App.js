@@ -153,7 +153,51 @@ function App () {
 
   return (
     <Router>
-      <MDBNavbar color='black' dark expand='md'>
+      <nav class='navbar navbar-inverse'>
+        <div class='container-fluid'>
+          <div class='navbar-header'>
+            <Link class='navbar-brand' to='/'>
+              <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+              <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
+              <Link to='/' className='banner'>Chore Wars</Link>
+              <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
+              <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
+            </Link>
+          </div>
+          <ul class='nav navbar-nav'>
+            <li class='active'><Link to='/'>My Pod</Link></li>
+            <li><Link to={`/chore-assignment/${myTeam}/`}>Team Chores</Link></li>
+            <li><Link to={`/user-profile/${username}`}>My Profile</Link></li>
+          </ul>
+
+          <ul class='nav navbar-nav navbar-right'>
+            {/* <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link> */}
+
+            <li><Link to='/login'><span class='glyphicon glyphicon-log-in' /> Login</Link><span> or </span><Link to='/register'>Sign Up</Link></li>
+            <li><span>Hello {username}!</span><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> LogOut</Link></li>
+
+            <li>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <div className='d-none d-md-inline'>Day</div>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu right>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
+
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      {/* <MDBNavbar color='black' dark expand='md'>
         <MDBContainer>
           <MDBNavbarBrand href='/'>
             <div className='flex header'>
@@ -170,31 +214,17 @@ function App () {
               <MDBNavItem active>
                 <MDBNavLink to='/'>Home</MDBNavLink>
               </MDBNavItem>
-              {isCaptain === false && teams &&
-                <MDBNavItem>
-                  <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
-                </MDBNavItem>}
+              <MDBNavItem>
+                <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
+              </MDBNavItem>
               {isCaptain === false &&
                 <MDBNavItem>
                   <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
                 </MDBNavItem>}
-              {/* {isCaptainStatus === true && isCaptain === false && */}
-              {/* <MDBNavItem>
-                <MDBNavLink onClick={() => setIsCreatingTeam(true)} to='/create-team-dashboard'>Create a Team</MDBNavLink>
-              </MDBNavItem> */}
-              {isCaptain === true &&
-                <MDBNavItem>
-                  <MDBNavLink to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Team Members</MDBNavLink>
-                </MDBNavItem>}
-              {isCaptain === true &&
-                <MDBNavItem>
-                  <MDBNavLink to={`/team-chores/${myTeam}`}>Chore Dashboard</MDBNavLink>
-                </MDBNavItem>}
               <MDBNavItem>
-
                 <MDBDropdown>
                   <MDBDropdownToggle nav caret>
-                    <div className='d-none d-md-inline'>Select Day</div>
+                    <div className='d-none d-md-inline'>Day</div>
                   </MDBDropdownToggle>
                   <MDBDropdownMenu right>
                     <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
@@ -226,7 +256,7 @@ function App () {
           </MDBCollapse>
 
         </MDBContainer>
-      </MDBNavbar>
+      </MDBNavbar> */}
 
       <Switch>
 
