@@ -61,6 +61,18 @@ body {
   font-size: 30px;
 }
 
+.navigation-bar {
+  background-color: rgb(15, 82, 152));
+}
+.nav-bar-links {
+  margin-top: 25px;
+}
+
+.nav-bar-link {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .flex {
   display: flex;
   flex-wrap: wrap;

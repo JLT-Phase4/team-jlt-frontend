@@ -153,28 +153,39 @@ function App () {
 
   return (
     <Router>
-      <nav class='navbar navbar-inverse'>
-        <div class='container-fluid'>
-          <div class='navbar-header'>
-            <Link class='navbar-brand' to='/'>
-              <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+      <nav className='navbar navbar-inverse'>
+        <div className='container-fluid'>
+          <div className='navbar-header'>
+            <Link className='navbar-brand' to='/'>
+              {/* <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} /> */}
               <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
               <Link to='/' className='banner'>Chore Wars</Link>
-              <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
-              <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
+              {/* <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} /> */}
+              {/* <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} /> */}
             </Link>
           </div>
-          <ul class='nav navbar-nav'>
-            <li class='active'><Link to='/'>My Pod</Link></li>
-            <li><Link to={`/chore-assignment/${myTeam}/`}>Team Chores</Link></li>
-            <li><Link to={`/user-profile/${username}`}>My Profile</Link></li>
+          <ul className='nav-bar-links flex'>
+            <li className='nav-bar-link' class='active'><Link to='/'>My Pod</Link></li>
+            <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>My Team</Link></li>
+            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>Team Chores</Link></li>
+            <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>My Profile</Link></li>
+            {isLoggedIn
+              ? (
+                <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
+                )
+              : (
+                <span>
+                  <Link className='nav-bar-link' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
+                </span>
+                )}
           </ul>
 
-          <ul class='nav navbar-nav navbar-right'>
+          <ul className='nav-bar-links flex'>
             {/* <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link> */}
 
-            <li><Link to='/login'><span class='glyphicon glyphicon-log-in' /> Login</Link><span> or </span><Link to='/register'>Sign Up</Link></li>
-            <li><span>Hello {username}!</span><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> LogOut</Link></li>
+            {/* <li><Link to='/login'><span class='glyphicon glyphicon-log-in' /> Login</Link><span> or </span><Link to='/register'>Sign Up</Link></li> */}
+            {/* <li><span>Hello {username}!</span><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> LogOut</Link></li> */}
+            {/* <li><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> Logout</Link></li> */}
 
             <li>
               <MDBDropdown>
