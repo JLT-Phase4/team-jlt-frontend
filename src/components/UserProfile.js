@@ -240,9 +240,9 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
             {(!isUpdating)
               ? <div style={{ minWidth: '100%' }}>
-                <div className='flex-col'>
+                <div className='flex-center'>
                   <div style={{ }} className='flex-col'>
-                    <div style={{ marginTop: '50px', marginLeft: '45px', fontSize: '25px', color: 'yellowgreen', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
+                    <div style={{ marginTop: '50px', marginLeft: '45px', fontSize: '25px', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div>
                     <div style={{ maxWidth: '900px' }} className='flex-sa'>
                       <div
                         className='flex user-profile-mini-container' id={today}
@@ -334,21 +334,21 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                      </div>
+                    </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
-                  <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
+                  {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
                     {feedPk && (myTeam === teamPk) && (
                       <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
                     )}
                     {/* add condition that userpfoile matches somehow */}
-                  </div>
+                  {/* </div> } */}
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh', alignItems: 'center' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button onClick={() => updateAvatar()} className='home-dash-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </>
 

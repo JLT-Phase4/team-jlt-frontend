@@ -42,39 +42,74 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk }) => {
     <div style={{ textAlign: 'center' }}>
       {team &&
         (
-          <>
-            <div className='flex-center'>
-              <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
-                <div className='team-title'>{team.name}!</div>
-                <div className='team-slogan'>{team.slogan}!
+          <div>
+        <div>
+          <div className='flex-nowrap home-page-container'>
+            <div className='flex-col' style={{ width: '800px' }}>
+            <div className='carousel-team-dashboard-container' style={{ height: '40vh', backgroundImage: `url(${team.background_image}` }}>
+               <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
+                <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!
                 </div>
                 <audio controls src={team.theme_song} />
               </div>
-              <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
-                <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-                  {feedPk && (
-                    <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
-                  )}
-                </div>
-                <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
-                  <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-                    {team.members.length > 0
-                      ? (
-                        <div>
-                          {team.members.map(member => (
-                            <ScoreBoard team={team} member={member} key={member.username} />
-                          ))}
-                        </div>
-                        )
-                      : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
-                  </div>
-                </div>
-                {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button> */}
-
-                <button onClick={() => setNotPosted(true)} style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button>
-              </div>
+              <div>
+              {team.members.length > 0
+                    && (
+                      <div className='flex-sa home-header'  >
+                         <div style={{width: '340px' }} className='flex team-scoreboard-container-home'>
+                           {team.members.map(member => (
+                             <ScoreBoard team={team} member={member} key={member.username} />
+                           ))}
+                         </div>
+                         
+                        <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>
+           </div>
+            )}
             </div>
-          </>
+            </div>
+            {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
+            <div className='team-feed-container'>
+              <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed>
+            </div>
+            {/* </div> */}
+
+          </div>
+        </div>
+      )}
+    </div>
+          // <>
+          //   <div className='flex-center'>
+          //     <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
+          //       <div className='team-title'>{team.name}!</div>
+          //       <div className='team-slogan'>{team.slogan}!
+          //       </div>
+          //       <audio controls src={team.theme_song} />
+          //     </div>
+          //     <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
+          //       <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
+          //         {feedPk && (
+          //           <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
+          //         )}
+          //       </div>
+          //       <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
+          //         <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
+          //           {team.members.length > 0
+          //             ? (
+          //               <div>
+          //                 {team.members.map(member => (
+          //                   <ScoreBoard team={team} member={member} key={member.username} />
+          //                 ))}
+          //               </div>
+          //               )
+          //             : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
+          //         </div>
+          //       </div>
+          //       {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button> */}
+
+          //       <button onClick={() => setNotPosted(true)} style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button>
+          //     </div>
+          //   </div>
+          // </>
         )}
     </div>
   )

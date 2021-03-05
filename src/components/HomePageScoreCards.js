@@ -5,9 +5,9 @@ const HomePageScoreCards = ({ teams, isCaptain, profileUsername }) => {
   return (
     <div className='home-header flex-sa'>
       {teams.map((team, idx) => (
-        <div style={{ minWidth: '340px' }} key={idx}>
+        <div key={idx}>
           {(team) && (
-            <div className='team-scoreboard-container-home' style={{ border: `3px solid ${team.dashboard_style}` }}>
+            <div className='team-scoreboard-container-home'>
               <Link to={`/team/${team.pk}`} style={{ fontSize: '25px', fontWeight: '600' }}>{team.name}</Link>
               {team.members.map(member => (
                 <ScoreBoard team={team} member={member} key={member.username} />
