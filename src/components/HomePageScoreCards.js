@@ -3,7 +3,7 @@ import ScoreBoard from './ScoreBoard'
 
 const HomePageScoreCards = ({ teams, isCaptain, profileUsername }) => {
   return (
-    <div className='home-header flex-sa'>
+    <div className='home-header flex'>
       {teams.map((team, idx) => (
         <div key={idx}>
           {(team) && (

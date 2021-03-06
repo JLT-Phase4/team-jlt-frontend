@@ -7,11 +7,12 @@ import { createTeam, updateAssignment, updatePod } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token, setMyPod }) => {
+const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
-  const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1537440499989-de5f6b6854de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHwxMHx8a2lkc3xlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080')
+  // const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1537440499989-de5f6b6854de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHwxMHx8a2lkc3xlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080')
+  const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1515041219749-89347f83291a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2534&q=80')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('gold')
@@ -26,9 +27,9 @@ const CreateTeamDashboard = ({ token, setMyPod }) => {
   }
 
   if (team) {
-    // return <Redirect to={`/team/${team.pk}`} />
+    // return <Redirect to='/' />
     updatePod(token, teamName, podPk)
-    // setIsCreatingTeam(false)
+    setIsCreatingTeam(false)
     setMyPod(podPk)
     return <Redirect to={`/team/${team.pk}`} />
   }

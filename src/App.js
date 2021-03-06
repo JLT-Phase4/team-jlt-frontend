@@ -49,6 +49,7 @@ function App () {
   const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
+  const [isLoading, setIsLoading] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -57,8 +58,9 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, myPodFeedPk, setMyPodFeedPk])
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, myPodFeedPk, setMyPodFeedPk, setIsLoading])
   function updatePods () {
+    setIsLoading(true)
     getPods(token)
       .then(pods => {
         // setTeams(pod.teams)
@@ -101,9 +103,13 @@ function App () {
           }
         }
       })
+      .then(setIsLoading(false))
+    // if (token && myPod && teams) {
+    //   setIsLoading(false)
+    // }
   }
 
-  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk])
+  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
     { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
 
@@ -153,8 +159,8 @@ function App () {
 
   return (
     <Router>
-      <nav className='navbar navbar-inverse'>
-        <div className='container-fluid'>
+      <nav className='navbar navbar-inverse chore-wars-nav'>
+        <div className='container-fluid chore-wars-bar'>
           <div className='navbar-header'>
             <Link className='navbar-brand' to='/'>
               {/* <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} /> */}
@@ -165,11 +171,11 @@ function App () {
             </Link>
           </div>
           <ul className='nav-bar-links flex'>
-            <li className='nav-bar-link' class='active'><Link to='/'>My Pod</Link></li>
-            <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>My Team</Link></li>
-            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Team Chores'}</Link></li>
+            <li className='nav-bar-link' class='active'><Link to='/'>Pod</Link></li>
+            <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>Team</Link></li>
+            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
             {isCaptain === false &&
-              <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>My Profile</Link></li>}
+              <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>Profile</Link></li>}
             {isCaptain === true &&
               <li className='nav-bar-link'><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
 
@@ -287,7 +293,7 @@ function App () {
 
         <Route path='/team/:teamPk'>
           <div className='App' />
-          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} feedPk={myPodFeedPk} />
+          <TeamDashboard token={token} profileUsername={username} today={today} todayIndex={todayIndex} myPod={myPod} feedPk={myPodFeedPk} isCaptain={isCaptain} setIsCreatingTeam={setIsCreatingTeam} />
         </Route>
 
         <Route path='/team-chores/:teamPk'>
@@ -313,7 +319,7 @@ function App () {
 
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
-          <CreateTeamMembers token={token} />
+          <CreateTeamMembers token={token} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
         </Route>
 
         <Route path='/user-profile/:username'>
@@ -325,13 +331,12 @@ function App () {
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          {token &&
+          {token && !isLoading &&
             <div>
-              {teams && myPod && (
-                <Homepage token={token} teams={teams} myPod={myPod} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
-              )}
+              {teams && myPod
+                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
 
-              {/* <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} />} */}
+                : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
             </div>}
           {/* : <Welcome /> */}

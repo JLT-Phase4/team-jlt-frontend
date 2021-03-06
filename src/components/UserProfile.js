@@ -167,9 +167,9 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
     <div>
       {userProfile && team && (
         // <div><span className='profile-title'>{userProfile.username}'s page!</span>
-        <div>
-          <div className='flex-col-center'>
-            <div style={{ marginTop: '20px', width: '1200px', justifyContent: 'center' }} className='flex'>
+        <div className='flex-col-center'>
+          <div className='flex-col'>
+            <div style={{ marginTop: '20px', width: '1100px', marginLeft: '70px' }} className='flex'>
               <div>
                 <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
                 <div style={{ marginTop: '20px' }} className='flex-col'>
@@ -287,12 +287,14 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                   </div>
 
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div key={userProfile.pk} style={{ marginLeft: '50px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
+                    ? <div key={userProfile.pk} style={{ marginLeft: '50px', width: '1100px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
                       <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${userProfile.username}/`} className={`${userProfile.username} flex`}>
-                        <div className='avatar-holder' style={(userProfile.avatar === undefined || userProfile.avatar === '' || userProfile.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${userProfile.avatar})` }} />
-                        <span>{userProfile.username}</span>
+                        <div>
+                          <div className='avatar-holder-medium' style={(userProfile.avatar === undefined || userProfile.avatar === '' || userProfile.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${userProfile.avatar})` }} />
+                          <div>{userProfile.username}</div>
 
-                        <span style={{ color: `${team.dashboard_style}`, fontSize: '22px', marginLeft: '5px' }}>{userProfile.possible_chore_points.chore__points__sum} Points</span>
+                          <span style={{ color: `${team.dashboard_style}`, fontSize: '22px', marginLeft: '5px' }}>{userProfile.possible_chore_points.chore__points__sum} Points</span>
+                        </div>
                       </Link>
                       <div className='flex-row'>
                         {days.map((day, index) => (

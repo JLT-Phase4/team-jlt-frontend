@@ -4,6 +4,7 @@ import HomeCarouselTeams from './HomeCarouselTeams'
 import HomePageScoreCards from './HomePageScoreCards'
 import CreateTeamDashboard from './CreateTeamDashboard'
 import Feed from './Feed'
+import FeedTest from './FeedTest'
 
 const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today }) => {
   return (
@@ -17,7 +18,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
 
-                      <HomeCarouselTeams team={team} displayHeight='40vh' />
+                      <HomeCarouselTeams team={team} displayHeight='50vh' />
 
                     )}
                   </Carousel.Item>
@@ -27,7 +28,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
             </div>
             {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
             <div className='team-feed-container'>
-              <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed>
+              <FeedTest token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedTest>
             </div>
             {/* </div> */}
 
