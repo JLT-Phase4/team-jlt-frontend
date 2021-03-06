@@ -75,7 +75,7 @@ const ScoreChart = ({ userProfile, today, todayIndex }) => {
         {
           label: 'Scores',
           // fill: true,
-          lineTension: 0.3,
+          lineTension: 0.8,
           backgroundColor: 'rgba(225, 204,230, .3)',
           borderColor: 'rgb(205, 130, 158)',
           borderCapStyle: 'butt',
@@ -104,7 +104,7 @@ const ScoreChart = ({ userProfile, today, todayIndex }) => {
     <>
       {userProfile && (
         <MDBContainer>
-          <h3 className='mt-5'>Line chart</h3>
+          {/* <h3 className='mt-5'>Line chart</h3> */}
           <Line data={scoreSummary.dataLine} options={{ responsive: true }} />
         </MDBContainer>
 

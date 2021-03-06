@@ -7,11 +7,12 @@ import { createTeam, updateAssignment, updatePod } from '../api'
 
 import BackgroundImage from './BackgroundImage'
 
-const CreateTeamDashboard = ({ token, setMyPod }) => {
+const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
   const [team, setTeam] = useState()
   const [step, countStep] = useState(1)
   const [musicTrack, setMusicTrack] = useState('')
-  const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1537440499989-de5f6b6854de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHwxMHx8a2lkc3xlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080')
+  // const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1537440499989-de5f6b6854de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHwxMHx8a2lkc3xlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080')
+  const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1515041219749-89347f83291a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2534&q=80')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('gold')
@@ -26,9 +27,9 @@ const CreateTeamDashboard = ({ token, setMyPod }) => {
   }
 
   if (team) {
-    // return <Redirect to={`/team/${team.pk}`} />
+    // return <Redirect to='/' />
     updatePod(token, teamName, podPk)
-    // setIsCreatingTeam(false)
+    setIsCreatingTeam(false)
     setMyPod(podPk)
     return <Redirect to={`/team/${team.pk}`} />
   }
@@ -43,20 +44,23 @@ const CreateTeamDashboard = ({ token, setMyPod }) => {
   return (
     <div>
       <div>
-        <div className='flex'>
-          <div className='team-chore-mini' style={{ backgroundImage: `url(${backgroundImage}` }}>
-            <div className='team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
-            <div className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
-              <audio controls src={musicTrack} />
+        <div className='flex-col home-page-container'>
+          <div className='carousel-team-dashboard-container' style={{ backgroundImage: `url(${backgroundImage}`, width: '800px', height: '40vh' }}>
+            <div style={{ color: 'rgb(227, 230, 236)' }} className='carousel-team-title'><input required onChange={(e) => setTeamName(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='We are team TEAM' /></div>
+            <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'><input required onChange={(e) => setTeamSlogan(e.target.value)} style={{ backgroundColor: '#00000022', color: 'white' }} placeholder='Your Slogan' />
             </div>
+            <audio controls src={musicTrack} />
+
           </div>
-          <div className='create-team-container' style={{ border: `3px solid ${teamDashboardStyle}` }}>
+          <div style={{ width: '100%', marginLeft: '10px' }} className='create-team-container'>
             <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col' />
 
             {(step === 1) &&
               <div>
-                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Choose Team Name & Slogan</button>
-                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>
+                <div>Choose Team Name & Slogan</div>
+                {/* <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'>Choose Team Name & Slogan</button> */}
+                {/* <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button'> */}
+                <div>
                   <DropdownButton
                     className='color-dropdown'
                     alignRight
@@ -68,24 +72,26 @@ const CreateTeamDashboard = ({ token, setMyPod }) => {
                     <Dropdown.Item style={{ backgroundColor: 'dodgerblue' }} eventKey='dodgerblue'>DodgerBlue</Dropdown.Item>
                     <Dropdown.Item style={{ backgroundColor: 'purple' }} eventKey='purple'>Purple</Dropdown.Item>
                   </DropdownButton>
-                </button>
-                <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button' onClick={() => handleNextStep()}>Next Step</button>
+                </div>
+                {/* <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button' onClick={() => handleNextStep()}>Next Step</button> */}
+                <button className='log-reg-button' onClick={() => handleNextStep()}>Next Step</button>
+
               </div>}
             {(step === 2) &&
-              <div style={{ textAlign: 'center' }}>
+              <div>
                 <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
                 <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
                 <BackgroundImage token={token} setBackgroundImage={setBackgroundImage} />
               </div>}
             {(step === 3) &&
-              <div style={{ textAlign: 'center' }}>
+              <div>
                 <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
                 <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button>
                 <MusicSearch token={token} setMusicTrack={setMusicTrack} />
               </div>}
 
             {(step === 4) &&
-              <div className='flex-col' style={{ textAlign: 'center' }}>
+              <div className='flex-col'>
                 <button className='log-reg-button' onClick={() => handlePreviousStep()}>Previous Step</button>
                 {/* <button className='log-reg-button' onClick={() => handleNextStep()}>Next</button> */}
                 {/* <div>Select Your Pod or Create a New One</div> */}

@@ -247,9 +247,8 @@ export function getRecords (token) {
     .then(res => res.data)
     // .then(res => console.log(res.data))
 }
-
-export function unsplashApi (query) {
-  return axios.get(`https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}&orientation=landscape`)
+export function unsplashApi (query, pageNumber) {
+  return axios.get(`https://api.unsplash.com/search/photos?&page=${pageNumber}&orientation=landscape&client_id=${process.env.REACT_APP_UNSPLASH_KEY}&query=${query}`)
     .then(res => res.data.results)
 }
 

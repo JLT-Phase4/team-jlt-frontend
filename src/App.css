@@ -32,13 +32,24 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
     transition: all 0.2s ease-in-out;
-  border: 2px solid gold;
   border-radius: 25px;
   margin: 10px;
   border: 5px solid #c2dbe769;
   background-color: #8da8bd6b;
   background-color: rgba(204, 224, 240, 0.964)
   
+}
+
+
+.chore-detail-container {
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all 0.2s ease-in-out;
+  border-radius: 25px;
+  margin: 10px;
+  border: 5px solid #c2dbe769;
+  background-color: rgba(204, 224, 240, 0.964)
 }
 
 .home-page-container {
@@ -278,6 +289,22 @@ label {
   border-radius: 25px;
   padding: 2%;
   min-height: 40vh;
+  min-height: 10vh;
+  border: solid 2px;
+  border: 4px solid #b0afaf42;
+  background-color: rgba(204, 224, 240, 0.964);
+
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all 0.2s ease-in-out;
+
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  min-width: 340px;
+  font-size: 20px;
+  margin-left: 50px;
 }
 
 .card-body {
@@ -298,9 +325,9 @@ label {
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
-  width: 340px;
+  min-width: 340px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 50px;
 }
 .user-profile-sum-container {
   max-width: 1100px;
@@ -330,7 +357,7 @@ label {
  
   display: flex;
   /* flex-direction: column; */
-  align-items: flex-end;
+  /* align-items: flex-end; */
   /* align-content: center; */
   /* min-width: 30%; */
   background-size: cover;
@@ -362,6 +389,11 @@ label {
   background-color: #43414159;
   color: #d5c4c4;
   border-radius: 10px!important;
+  background-color: whitesmoke;
+  color: black;
+  background-color: #ecf1f6;
+  /* color: #d5c4c4; */
+
 }
 
 .message-username{
@@ -453,6 +485,7 @@ margin-right: 5px;
     background-size: cover;
     border-radius: 25px;
     padding: 10px;
+
 }
 .color-dropdown button, .color-dropdown button:active {
   background-color: rgba(8, 8, 8, 0.322);
@@ -486,6 +519,22 @@ margin-right: 5px;
   padding: 2%;
   min-height: 20vh;
   width: 400px;
+  min-height: 10vh;
+  border: solid 2px;
+  border: 4px solid #b0afaf42;
+  background-color: rgba(204, 224, 240, 0.964);
+
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all 0.2s ease-in-out;
+
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  min-width: 340px;
+  font-size: 20px;
+  margin-left: 50px;
 }
 
 .team-dashboard-scoreboard-container {
@@ -527,7 +576,9 @@ margin-right: 5px;
     background-size: cover;
     border-radius: 25px;
     padding: 10px;
-    width: 340px;
+    width: 350px;
+    margin: 5px;
+    margin-left: 10px;
 }
 
 
@@ -789,12 +840,13 @@ ul {
 
 .progress {
   background-color:#2d2b2b4a;
+  background-color: #abb0b4b5;
   
   /* margin-top: 30px; */
 }
 .progress-bar {
   /* margin-top: 30px; */
-  background-color: #04a504c9;
+  background-color: #04b004c9;
 
 }
 
@@ -828,4 +880,35 @@ ul {
   background-color: crimson;
   background-size: cover;
   border-radius: 100px;
+}
+
+.avatar-holder-medium {
+  width: 55px;
+  height: 55px;
+  margin: 5px;
+  background-color: crimson;
+  background-size: cover;
+  border-radius: 100px;
+}
+
+.chore-wars-bar {
+  background-color:#cddfef;
+  box-shadow: -0.25rem 0 1rem rgb(0 0 0 / 42%);
+
+}
+
+.chore-wars-nav {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.chore-wars-nav li, .chore-wars-nav div {
+  font-size: 21px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.banner {
+  font-size: 32px;
 }

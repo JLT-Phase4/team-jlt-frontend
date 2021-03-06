@@ -4,7 +4,7 @@ import { getTeam, postNotification, getFeed } from './../api'
 import Feed from './Feed'
 import ScoreBoard from './ScoreBoard'
 
-const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk }) => {
+const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatingTeam, setIsCreatingTeam, isCaptain }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [notPosted, setNotPosted] = useState(false)
@@ -15,6 +15,10 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk }) => {
 
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
+  }
+
+  function handleCreate () {
+    setIsCreatingTeam(true)
   }
 
   useEffect(updateNotifications, [token, today, notPosted])
@@ -43,73 +47,83 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk }) => {
       {team &&
         (
           <div>
-        <div>
-          <div className='flex-nowrap home-page-container'>
-            <div className='flex-col' style={{ width: '800px' }}>
-            <div className='carousel-team-dashboard-container' style={{ height: '40vh', backgroundImage: `url(${team.background_image}` }}>
-               <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
-                <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!
+            <div>
+              <div className='flex-nowrap home-page-container'>
+                <div className='flex-col' style={{ width: '800px' }}>
+                  <div className='carousel-team-dashboard-container' style={{ height: '50vh', backgroundImage: `url(${team.background_image}` }}>
+                    {/* <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
+                <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!</div>
+                <audio controls src={team.theme_song} /> */}
+                  </div>
+                  <div>
+                    {team.members.length > 0
+                      ? <div style={{ minHeight: '30vh' }} className='flex-sa home-header'>
+                        <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
+                          {team.members.map(member => (
+                            <ScoreBoard team={team} member={member} key={member.username} />
+                          ))}
+                          {isCaptain === true &&
+                            <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
+                        </div>
+                        <div className='flex-col' style={{ justifyContent: 'space-around' }}>
+                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
+                          <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
+                          <audio controls src={team.theme_song} />
+                        </div>
+                        {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button> */}
+                        </div>
+                      : <div style={{ minHeight: '30vh' }} className='flex home-header'>
+                        <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
+                          <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
+                        </div>
+                        </div>}
+
+                  </div>
                 </div>
-                <audio controls src={team.theme_song} />
+                {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
+                {feedPk &&
+                  <div className='team-feed-container'>
+                    <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed>
+                  </div>}
+                {/* </div> */}
+
               </div>
-              <div>
-              {team.members.length > 0
-                    && (
-                      <div className='flex-sa home-header'  >
-                         <div style={{width: '340px' }} className='flex team-scoreboard-container-home'>
-                           {team.members.map(member => (
-                             <ScoreBoard team={team} member={member} key={member.username} />
-                           ))}
-                         </div>
-                         
-                        <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>
-           </div>
-            )}
             </div>
-            </div>
-            {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
-            <div className='team-feed-container'>
-              <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed>
-            </div>
-            {/* </div> */}
-
+            {/* )} */}
           </div>
-        </div>
-      )}
-    </div>
-          // <>
-          //   <div className='flex-center'>
-          //     <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
-          //       <div className='team-title'>{team.name}!</div>
-          //       <div className='team-slogan'>{team.slogan}!
-          //       </div>
-          //       <audio controls src={team.theme_song} />
-          //     </div>
-          //     <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
-          //       <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-          //         {feedPk && (
-          //           <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
-          //         )}
-          //       </div>
-          //       <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
-          //         <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-          //           {team.members.length > 0
-          //             ? (
-          //               <div>
-          //                 {team.members.map(member => (
-          //                   <ScoreBoard team={team} member={member} key={member.username} />
-          //                 ))}
-          //               </div>
-          //               )
-          //             : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
-          //         </div>
-          //       </div>
-          //       {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button> */}
+      // <>
+      //   <div className='flex-center'>
+      //     <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
+      //       <div className='team-title'>{team.name}!</div>
+      //       <div className='team-slogan'>{team.slogan}!
+      //       </div>
+      //       <audio controls src={team.theme_song} />
+      //     </div>
+      //     <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
+      //       <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
+      //         {feedPk && (
+      //           <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
+      //         )}
+      //       </div>
+      //       <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
+      //         <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
+      //           {team.members.length > 0
+      //             ? (
+      //               <div>
+      //                 {team.members.map(member => (
+      //                   <ScoreBoard team={team} member={member} key={member.username} />
+      //                 ))}
+      //               </div>
+      //               )
+      //             : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
+      //         </div>
+      //       </div>
+      //       {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button> */}
 
-          //       <button onClick={() => setNotPosted(true)} style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button>
-          //     </div>
-          //   </div>
-          // </>
+      //       <button onClick={() => setNotPosted(true)} style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button>
+      //     </div>
+      //   </div>
+      // </>
         )}
     </div>
   )
