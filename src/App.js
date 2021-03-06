@@ -49,7 +49,7 @@ function App () {
   const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -60,7 +60,7 @@ function App () {
 
   useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, myPodFeedPk, setMyPodFeedPk, setIsLoading])
   function updatePods () {
-    setIsLoading(true)
+    // setIsLoading(true)
     getPods(token)
       .then(pods => {
         // setTeams(pod.teams)
@@ -103,7 +103,8 @@ function App () {
           }
         }
       })
-      .then(setIsLoading(false))
+      .then(setTimeout(function () { setIsLoading(false) }, 3000))
+    // setTimeout((setIsLoading(false)), 5000)
     // if (token && myPod && teams) {
     //   setIsLoading(false)
     // }
@@ -157,6 +158,11 @@ function App () {
     }
   }
 
+  function handleLogout () {
+    setToken(null)
+    setUsername(null)
+  }
+
   return (
     <Router>
       <nav className='navbar navbar-inverse chore-wars-nav'>
@@ -181,7 +187,8 @@ function App () {
 
             {isLoggedIn
               ? (
-                <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
+                <span><div className='nav-bar-link' onClick={() => handleLogout()}>Log out</div></span>
+                // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
               : (
                 <span>
