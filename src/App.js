@@ -161,6 +161,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+    return <Redirect to='/register' />
   }
 
   return (
