@@ -166,7 +166,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   return (
     <div>
       {userProfile && team && (
-        // <div><span className='profile-title'>{userProfile.username}'s page!</span>
         <div className='flex-col-center'>
           <div className='flex-col'>
             <div style={{ marginTop: '20px', width: '1100px', marginLeft: '70px' }} className='flex'>
@@ -179,41 +178,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
               </div>
               <div style={{ width: '400px' }} className='flex-col user-profile-mini-container'><span style={{ marginBottom: '30px', color: `${team.dashboard_style}`, fontSize: '24px' }}>Score Summary</span>
                 <ScoreChart today={today} todayIndex={todayIndex} userProfile={userProfile} />
-
-                {/* <div>Total</div>
-                <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum}>{(100 * userProfile.earned_chore_points.chore__points__sum / userProfile.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-                <div>Monday</div>
-                <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.monday_chore_points.chore__points__sum / userProfile.monday_possible_points.chore__points__sum} />
-                {todayIndex >= 1 && (
-                  <>
-                    <div>Tuesday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.tuesday_chore_points.chore__points__sum / userProfile.tuesday_possible_points.chore__points__sum} />
-                  </>)}
-                {todayIndex >= 2 && (
-                  <>
-                    <div>Wednesday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.wednesday_chore_points.chore__points__sum / userProfile.wednesday_possible_points.chore__points__sum} />
-                  </>)}
-                {todayIndex >= 3 && (
-                  <>
-                    <div>Thursday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.thursday_chore_points.chore__points__sum / userProfile.thursday_possible_points.chore__points__sum} />
-                  </>)}
-                {todayIndex >= 4 && (
-                  <>
-                    <div>Friday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.friday_chore_points.chore__points__sum / userProfile.friday_possible_points.chore__points__sum} />
-                  </>)}
-                {todayIndex >= 5 && (
-                  <>
-                    <div>Saturday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.saturday_chore_points.chore__points__sum / userProfile.saturday_possible_points.chore__points__sum} />
-                  </>)}
-                {todayIndex >= 6 && (
-                  <>
-                    <div>Sunday</div>
-                    <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='30px' value={100 * userProfile.sunday_chore_points.chore__points__sum / userProfile.sunday_possible_points.chore__points__sum} />
-                  </>)} */}
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}><span style={{ color: `${team.dashboard_style}`, fontSize: '24px' }}>{team.name}</span> </Link>
                 <div className='team-scoreblock flex-col'>
@@ -230,15 +194,16 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
               ? <div style={{ minWidth: '100%', width: '1200px' }}>
                 <div className='flex'>
                   <div style={{ marginTop: '20px', marginBottom: '20px' }} className='flex-col'>
-                    {/* <div style={{ marginTop: '50px', marginLeft: '45px', fontSize: '25px', marginBottom: '20px' }}>Drag Chores to Mark Them Complete</div> */}
                     <div className='flex-sa'>
+
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
                         onDrop={(event) => { handleDropInComplete(event, { today, userProfile }) }}
                         onDragOver={handleDragOver}
                       >
-                        {userProfile.assignments.length > 0 && (
-                          <div className='flex-sb'>
+
+                        {userProfile.assignments.length > 0 && userProfile.username === profileUsername
+                          ? <div className='flex-sb'>
                             <div>{today}'s Chores
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div key={idx}>
@@ -248,20 +213,34 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                       onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                       className='chore-card-container'
                                     >
+
                                       <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>
                                     </Card>)}
                                 </div>))}
                             </div>
                           </div>
-                        )}
+
+                          : <div className='flex-sb'>
+                            <div>{today}'s Chores
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div key={idx}>
+                                  {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
+                                    <Card
+                                      className='chore-card-container'
+                                    >
+                                      <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>
+                                    </Card>)}
+                                </div>))}
+                            </div>
+                            </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
                         onDrop={(event) => { handleDropComplete(event, { today, userProfile }) }}
                         onDragOver={handleDragOver}
                       >
-                        {userProfile.assignments.length > 0 && (
-                          <div className='flex-sb'>
+                        {userProfile.assignments.length > 0 && userProfile.username === profileUsername
+                          ? <div className='flex-sb'>
                             <div>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div
@@ -273,19 +252,31 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                       onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                       className='chore-card-container'
                                     >
-                                      <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                      <Card.Body className='chore-card' style={{ color: 'white', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                    </Card>)}
+                                </div>))}
+                            </div>
+                          </div>
+                          : <div className='flex-sb'>
+                            <div>Drag to Mark Complete
+                              {userProfile.assignments.map((assignment, idx) => (
+                                <div
+                                  key={idx}
+                                >
+                                  {((assignment.assignment_type.includes(today)) && assignment.complete === true) && (
+                                    <Card
+                                      className='chore-card-container'
+                                    >
+                                      <Card.Body className='chore-card' style={{ color: 'white', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
 
                                       {/* <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body> */}
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
-                        )}
+                            </div>}
                       </div>
-                      {/* <div className='flex user-profile-mini-container'>Drag Chores to Mark Complete</div> */}
                     </div>
                   </div>
-
                   {showSummary && userProfile.assignments.length > 0
                     ? <div key={userProfile.pk} style={{ marginLeft: '50px', width: '1100px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
                       <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${userProfile.username}/`} className={`${userProfile.username} flex`}>
@@ -314,8 +305,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                       className='chore-card-container'
                                     >
                                       {(assignment.complete === true)
-                                        ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
-                                        : <Card.Body className='chore-card' style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}
+                                        ? <Card.Body className='chore-card' style={{ color: 'white', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                        : <Card.Body className='chore-card' style={(index < todayIndex) ? { color: 'grey', border: `2px solid ${team.dashboard_style}`, backgroundColor: '#a7a7ad8c' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}
                                     </Card>
                                   )}
                                 </div>))}

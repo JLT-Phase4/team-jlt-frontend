@@ -378,3 +378,13 @@ export function getFeeds (token) {
     })
     .then(res => res.data)
 }
+
+export function getStatusUpdate (token) {
+  return API
+    .get('activity/feed/14/json/', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
