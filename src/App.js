@@ -167,8 +167,12 @@ function App () {
           <ul className='nav-bar-links flex'>
             <li className='nav-bar-link' class='active'><Link to='/'>My Pod</Link></li>
             <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>My Team</Link></li>
-            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>Team Chores</Link></li>
-            <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>My Profile</Link></li>
+            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Team Chores'}</Link></li>
+            {isCaptain === false &&
+              <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>My Profile</Link></li>}
+            {isCaptain === true &&
+              <li className='nav-bar-link'><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
+
             {isLoggedIn
               ? (
                 <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
