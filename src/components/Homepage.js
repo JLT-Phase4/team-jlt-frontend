@@ -28,7 +28,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
             </div>
             {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
             <div className='team-feed-container'>
-              <FeedTest token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedTest>
+              <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed>
             </div>
             {/* </div> */}
 
