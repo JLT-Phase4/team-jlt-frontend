@@ -6,6 +6,7 @@ import CreateTeamDashboard from './CreateTeamDashboard'
 import Feed from './Feed'
 import FeedTest from './FeedTest'
 import StatusUpdate from './StatusUpdate'
+import FeedCombo from './FeedCombo'
 
 const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today }) => {
   return (
@@ -30,7 +31,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
             {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
             <div className='team-feed-container'>
               {/* <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed> */}
-              <StatusUpdate token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</StatusUpdate>
+              <FeedCombo token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>
 
             </div>
             {/* </div> */}
