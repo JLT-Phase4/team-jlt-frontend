@@ -6,7 +6,27 @@ function StatusUpdate ({ token, profileUsername, today, feedPk }) {
 
   useEffect(updateFeed, [token])
   function updateFeed () {
-    getStatusUpdate(token).then(feed => setFeed(feed))
+    getStatusUpdate(token).then(feed => {
+      const myUpdates = feed.items
+      const mySortedUpdates = myUpdates.sort(compare)
+
+      setFeed(mySortedUpdates)
+    }
+    )
+  }
+
+  function compare (a, b) {
+    // Use toUpperCase() to ignore character casing
+    const titleA = a.title
+    const titleB = b.title
+
+    let comparison = 0
+    if (titleA > titleB) {
+      comparison = 1
+    } else if (titleA < titleB) {
+      comparison = -1
+    }
+    return comparison
   }
 
   return (
@@ -15,7 +35,7 @@ function StatusUpdate ({ token, profileUsername, today, feedPk }) {
         <div className='flex-col' style={{ justifyContent: 'space-between', height: '100%' }}>
           <div>
             <div>
-              {feed.items.map(notification => (
+              {feed.map(notification => (
                 <div className='message-container' key={notification.published}>
                   <p>{notification.title}</p>
                 </div>
