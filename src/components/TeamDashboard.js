@@ -44,7 +44,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   return (

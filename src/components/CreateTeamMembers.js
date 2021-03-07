@@ -45,7 +45,7 @@ const CreateTeamMembers = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   return (
@@ -104,7 +104,7 @@ const CreateTeamMembers = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
               ? <>
                 <div style={{ color: 'yellowgreen', fontSize: '20px' }}>{newMember} has been added to {team.name}</div>
                 <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Done Adding Members</button></Link>
-              </>
+                </>
               : <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Return to Team Dashboard</button></Link>}
           </div>
         )}

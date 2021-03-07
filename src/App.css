@@ -164,6 +164,12 @@ a {
   align-items: flex-start;
 }
 
+.logout:hover {
+  color:rgb(33, 86, 139);
+  text-decoration: underline;
+  
+}
+
 .reg{
   margin-left: 260px;
   margin-top: 170px;
