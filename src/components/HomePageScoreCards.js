@@ -6,22 +6,6 @@ import { MDBProgress } from 'mdbreact'
 const HomePageScoreCards = ({ token, teams, isCaptain, profileUsername }) => {
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
-  // const [totalPoints, setTotalPoints] = useState(0)
-  // useEffect(updateTeamScores, [token, teams, profileUsername])
-  // function updateTeamScores () {
-  //   const teamsTotalPoints = []
-  //   for (const team of teams) {
-  //     let teamTotalPoints = 0
-  //     for (const member of team.members) {
-  //       teamTotalPoints += member.earned_chore_points.chore__points__sum
-  //     }
-  //     team.teamTotalPoints = teamTotalPoints
-  //     teamsTotalPoints.push(team.teamTotalPoints)
-  //     setTotalPoints(team.teamTotalPoints)
-  //   }
-  //   teams.teamTotalPoints = teamsTotalPoints
-  // }
-
   return (
     <div style={{ minHeight: '33vh', overflow: 'scroll' }} className='home-header flex-nowrap'>
       {teams.map((team, idx) => (
@@ -36,7 +20,6 @@ const HomePageScoreCards = ({ token, teams, isCaptain, profileUsername }) => {
                 </div>
                 // <ScoreBoard team={team} member={member} key={member.username} />
               ))}
-              {/* {team.teamTotalPoints && */}
               <div>Total Points: {team.teamTotalPoints}</div>
             </div>
           )}
