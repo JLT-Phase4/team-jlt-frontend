@@ -49,7 +49,7 @@ function App () {
   const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true) // not working right now.
   const history = useHistory()
 
   function setAuth (username, token) {
@@ -111,6 +111,9 @@ function App () {
                   }
                 }
               }
+              if (!myTeam) {
+                setIsLoading(false)
+              }
               // if (team.pk === myTeam) {
               //   setTeams(pod.teams)
               // } else {
@@ -120,7 +123,9 @@ function App () {
           }
         }
       })
-      .then(setTimeout(function () { setIsLoading(false) }, 3000))
+      // .then(updateTeamScores)
+      // .then(setTimeout(function () { setIsLoading(false) }, 3000))
+
     // setTimeout((setIsLoading(false)), 5000)
     // if (token && myPod && teams) {
     //   setIsLoading(false)
@@ -178,8 +183,8 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
-    const path = '/register'
-    history.push(path)
+    // const path = '/register'
+    // history.push(path)
     // return <Redirect to='/register' />
   }
 
@@ -295,12 +300,15 @@ function App () {
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          {token && !isLoading &&
+          {token &&
             <div>
-              {teams && myPod
+              {(teams && myPod)
                 ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
 
-                : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
+                : <div>{(!isLoading) &&
+                  <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
+
+                </div>}
 
             </div>}
           {/* : <Welcome /> */}

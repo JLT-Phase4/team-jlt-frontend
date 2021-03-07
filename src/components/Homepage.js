@@ -20,7 +20,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
 
-                      <HomeCarouselTeams team={team} displayHeight='50vh' />
+                      <HomeCarouselTeams team={team} displayHeight='40vh' />
 
                     )}
                   </Carousel.Item>

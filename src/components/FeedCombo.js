@@ -36,7 +36,9 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         myPodMembersUsernames.push(member.username)
         myPodMembers.push(member)
       }
+      myPodMembersUsernames.push(team.captain)
     }
+
     setPodMemberUsers(myPodMembersUsernames)
     setPodMembers(myPodMembers)
     console.log(myPodMembers)
