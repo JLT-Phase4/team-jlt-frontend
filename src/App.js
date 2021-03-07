@@ -292,12 +292,12 @@ function App () {
           {token &&
             <div>
               {(teams && myPod)
-                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
+                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} isLoading={isLoading} />
 
                 : <div>{(!isLoading) &&
                   <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
-                  </div>}
+                </div>}
 
             </div>}
           {/* : <Welcome /> */}
