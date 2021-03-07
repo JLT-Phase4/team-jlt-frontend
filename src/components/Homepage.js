@@ -26,10 +26,10 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
+              <HomePageScoreCards token={token} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
             </div>
             {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
-            <div style={{ height: '90vh' }} className='team-feed-container'>
+            <div className='team-feed-container'>
               {/* <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed> */}
               <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>
 

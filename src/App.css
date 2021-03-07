@@ -385,7 +385,7 @@ label {
  .team-feed-container {
  
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column-reverse;
   /* align-items: flex-end; */
   /* align-content: center; */
   /* min-width: 30%; */
@@ -397,6 +397,7 @@ label {
   width: 345px;
   /* height: 345px; */
   overflow-y: scroll;
+  height: 82vh;
   padding: 10px;
   padding-left: 25px;
   margin: 10px;
@@ -430,6 +431,9 @@ label {
 }
 .message-avatar {
   float: left;
+}
+.update-avatar {
+  float: right;
 }
 
 .comment-box {
