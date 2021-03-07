@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useHistory } from 'react-router-dom'
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
 import TeamDashboard from './components/TeamDashboard'
@@ -50,6 +50,7 @@ function App () {
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  const history = useHistory()
 
   function setAuth (username, token) {
     setUsername(username)
@@ -161,6 +162,9 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+    const path = '/register'
+    history.push(path)
+    // return <Redirect to='/register' />
   }
 
   return (
