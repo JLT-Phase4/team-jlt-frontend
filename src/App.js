@@ -51,8 +51,6 @@ function App () {
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
-
-
   function setAuth (username, token) {
     setUsername(username)
     setToken(token)
@@ -177,7 +175,6 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
-
   }
 
   return (
@@ -207,7 +204,7 @@ function App () {
 
             {isLoggedIn
               ? (
-                <span><div className='nav-bar-link' onClick={() => handleLogout()}>Log out</div></span>
+                <span><div className='nav-bar-link logout' onClick={() => handleLogout()}>Logout</div></span>
                 // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
               : (
@@ -300,7 +297,7 @@ function App () {
                 : <div>{(!isLoading) &&
                   <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
-                </div>}
+                  </div>}
 
             </div>}
           {/* : <Welcome /> */}
