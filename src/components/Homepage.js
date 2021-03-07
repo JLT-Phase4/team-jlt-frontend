@@ -7,8 +7,13 @@ import Feed from './Feed'
 import FeedTest from './FeedTest'
 import StatusUpdate from './StatusUpdate'
 import FeedCombo from './FeedCombo'
+import { Redirect } from 'react-router-dom'
 
 const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today }) => {
+  if (!token) {
+    return <Redirect to='/register' />
+  }
+
   return (
     <div>
       {token && teams && myPod && feedPk && (
