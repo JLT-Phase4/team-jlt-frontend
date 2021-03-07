@@ -9,8 +9,8 @@ import StatusUpdate from './StatusUpdate'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
-const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today, isLoading }) => {
-  if (!isLoading) {
+const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today, isRedirecting }) => {
+  if (!isRedirecting) {
     if (!token) {
       return <Redirect to='/login' />
     }

@@ -50,6 +50,7 @@ function App () {
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -175,6 +176,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+    setIsRedirecting(true)
   }
 
   return (
@@ -292,7 +294,7 @@ function App () {
           {token &&
             <div>
               {(teams && myPod)
-                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} isLoading={isLoading} />
+                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} isRedirecting={isRedirecting} />
 
                 : <div>{(!isLoading) &&
                   <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
