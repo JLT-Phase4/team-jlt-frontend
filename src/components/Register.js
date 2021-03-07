@@ -29,35 +29,29 @@ function Register ({ isLoggedIn, setAuth }) {
   }
 
   return (
-    <div className='page-container'>
-      <h2 className='log-reg-header'>Register or <Link to='/login'>Login</Link></h2>
+    <div className='page-container flex-col'>
       <Welcome />
+      <h2 className='log-reg-header'>Register or <Link to='/login'>Login</Link></h2>
       <form className='log-reg-header-form' onSubmit={handleSubmit}>
         {errors && (
           <div className='errors'>{errors}</div>
         )}
-
-        <div>
-          <label htmlFor='username'>Username</label>
-          <input
-            type='text'
-            id='username'
-            required
-            value={username}
-            onChange={event => setUsername(event.target.value)}
-          />
-        </div>
-
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            id='password'
-            required
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
-        </div>
+        <label htmlFor='username'>Username</label>
+        <input
+          type='text'
+          id='username'
+          required
+          value={username}
+          onChange={event => setUsername(event.target.value)}
+        />
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          id='password'
+          required
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+        />
 
         <button className='log-reg-button' type='submit'>Register</button>
       </form>
