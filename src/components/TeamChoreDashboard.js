@@ -44,7 +44,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   return (
@@ -86,10 +86,10 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
                 : <Card className='flex'>
                   <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>

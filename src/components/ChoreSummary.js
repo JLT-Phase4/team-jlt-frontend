@@ -46,7 +46,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   function handleDragStart (event, { assignment, day, member }) {

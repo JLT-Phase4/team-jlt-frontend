@@ -95,7 +95,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   function handleAssignmentUpdate (assignPk, status, profileUsername, day) {
@@ -222,7 +222,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
 
                           : <div className='flex-sb'>
                             <div>{today}'s Chores
@@ -236,7 +236,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -260,7 +260,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
                           : <div className='flex-sb'>
                             <div>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -277,7 +277,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
                       </div>
                     </div>
                   </div>
@@ -320,7 +320,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
                   {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -330,11 +330,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                     {/* add condition that userpfoile matches somehow */}
                   {/* </div> } */}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px', marginLeft: '100px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </div>
 

@@ -42,7 +42,7 @@ const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
   }
 
   if (!token) {
-    return <Redirect to='/register' />
+    return <Redirect to='/login' />
   }
 
   return (
