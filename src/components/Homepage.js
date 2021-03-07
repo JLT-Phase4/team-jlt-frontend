@@ -7,10 +7,12 @@ import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
 const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today, isRedirecting }) => {
-  if (!isRedirecting) {
-    if (!token) {
-      return <Redirect to='/login' />
-    }
+  if (isRedirecting) {
+    setTimeout(function () {
+      if (!token) {
+        return <Redirect to='/login' />
+      }
+    }, 1000)
   }
 
   return (
