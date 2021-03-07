@@ -59,6 +59,22 @@ function App () {
 
   const isLoggedIn = (username && token)
 
+  const [totalPoints, setTotalPoints] = useState(0)
+  useEffect(updateTeamScores, [token, teams])
+  function updateTeamScores () {
+    const teamsTotalPoints = []
+    for (const team of teams) {
+      let teamTotalPoints = 0
+      for (const member of team.members) {
+        teamTotalPoints += member.earned_chore_points.chore__points__sum
+      }
+      team.teamTotalPoints = teamTotalPoints
+      teamsTotalPoints.push(team.teamTotalPoints)
+      setTotalPoints(team.teamTotalPoints)
+    }
+    teams.teamTotalPoints = teamsTotalPoints
+  }
+
   useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, myPodFeedPk, setMyPodFeedPk, setIsLoading])
   function updatePods () {
     // setIsLoading(true)
@@ -171,17 +187,20 @@ function App () {
     <Router>
       <nav className='navbar navbar-inverse chore-wars-nav'>
         <div className='container-fluid chore-wars-bar'>
+          {/* <span className='header-bar banner' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+          <span className='header-bar banner' style={{ backgroundImage: `url(${laundryImage})` }} /> */}
+
           <div className='navbar-header'>
             <Link className='navbar-brand' to='/'>
-              {/* <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} /> */}
-              <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
-              <Link to='/' className='banner'>Chore Wars</Link>
+
               {/* <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} /> */}
               {/* <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} /> */}
             </Link>
+
+            <Link to='/' className='banner'>Chore Wars</Link>
           </div>
           <ul className='nav-bar-links flex'>
-            <li className='nav-bar-link' class='active'><Link to='/'>Pod</Link></li>
+            <li className='nav-bar-link active'><Link to='/'>Pod</Link></li>
             <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>Team</Link></li>
             <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
             {isCaptain === false &&
@@ -202,11 +221,6 @@ function App () {
           </ul>
 
           <ul className='nav-bar-links flex'>
-            {/* <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link> */}
-
-            {/* <li><Link to='/login'><span class='glyphicon glyphicon-log-in' /> Login</Link><span> or </span><Link to='/register'>Sign Up</Link></li> */}
-            {/* <li><span>Hello {username}!</span><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> LogOut</Link></li> */}
-            {/* <li><Link href='accounts/logout/' onClick={() => setToken(null)}><span class='glyphicon glyphicon-log-in' /> Logout</Link></li> */}
 
             <li>
               <MDBDropdown>
@@ -228,67 +242,6 @@ function App () {
           </ul>
         </div>
       </nav>
-
-      {/* <MDBNavbar color='black' dark expand='md'>
-        <MDBContainer>
-          <MDBNavbarBrand href='/'>
-            <div className='flex header'>
-              <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-              <div className='header-bar' style={{ backgroundImage: `url(${laundryImage})` }} />
-              <MDBNavLink to='/' className='banner'>Chore Wars</MDBNavLink>
-              <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
-              <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} />
-            </div>
-          </MDBNavbarBrand>
-          <MDBNavbarToggler />
-          <MDBCollapse navbar>
-            <MDBNavbarNav left>
-              <MDBNavItem active>
-                <MDBNavLink to='/'>Home</MDBNavLink>
-              </MDBNavItem>
-              <MDBNavItem>
-                <MDBNavLink to={`/team/${myTeam}/`}>My Team</MDBNavLink>
-              </MDBNavItem>
-              {isCaptain === false &&
-                <MDBNavItem>
-                  <MDBNavLink to={`/user-profile/${username}`}>My Profile</MDBNavLink>
-                </MDBNavItem>}
-              <MDBNavItem>
-                <MDBDropdown>
-                  <MDBDropdownToggle nav caret>
-                    <div className='d-none d-md-inline'>Day</div>
-                  </MDBDropdownToggle>
-                  <MDBDropdownMenu right>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
-                    <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
-
-                  </MDBDropdownMenu>
-                </MDBDropdown>
-              </MDBNavItem>
-              <MDBNavItem>
-
-                <div className='register-and-login'>
-                  {isLoggedIn
-                    ? (
-                      <span>Hello, {username} <button className='logout-button' onClick={() => setToken(null)}>Log out</button></span>
-                      )
-                    : (
-                      <span>
-                        <Link to='/login'><button className='log-button'>Login</button></Link> or <Link to='/register'><button className='reg-button'>Register</button></Link>
-                      </span>
-                      )}
-                </div>
-              </MDBNavItem>
-            </MDBNavbarNav>
-          </MDBCollapse>
-
-        </MDBContainer>
-      </MDBNavbar> */}
 
       <Switch>
 

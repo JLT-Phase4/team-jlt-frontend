@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed, getStatusUpdate } from '../api'
 
-function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
+function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
   const [statusUpdates, setStatusUpdates] = useState()
   const [message, setMessage] = useState()
   const [feed, setFeed] = useState()
@@ -31,18 +32,13 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   function identifyPodMembers () {
     const myPodMembersUsernames = []
     const myPodMembers = []
-    for (const team of teams) {
-      for (const member of team.members) {
-        myPodMembersUsernames.push(member.username)
-        myPodMembers.push(member)
-      }
+    for (const member of team.members) {
+      myPodMembersUsernames.push(member.username)
+      myPodMembers.push(member)
     }
+
     setPodMemberUsers(myPodMembersUsernames)
     setPodMembers(myPodMembers)
-    console.log(myPodMembers)
-    for (const member of myPodMembers) {
-      console.log(member.avatar)
-    }
   }
 
   useEffect(updateFeed, [token])
@@ -85,13 +81,13 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   }
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       {allNotifications && podMemberUsers && (
         // <div className='flex-col' style={{ justifyContent: 'space-between', height: '90vh' }}>
         <div>
           {allNotifications.map(notification => (
             <div className='message-container' key={notification.published}>
-              {notification.message &&
+              {notification.message && podMemberUsers.includes(notification.sender.username) &&
                 <div>
                   <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
                   <p className='message-username'> {notification.sender.username}</p>
@@ -101,7 +97,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
               {notification.title && podMemberUsers.includes(notification.username) &&
                 <div>
                   {podMembers.map((member, idx) => (
-                    <div key={idx}>
+                    <div clasName='message-container' key={idx}>
                       {member.username === notification.username &&
                         <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
                           <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
@@ -110,20 +106,22 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
                         </div>}
                     </div>
                   ))}
-
                 </div>}
             </div>
           ))}
         </div>
       )}
-      <div>
-        <form className='comment-box' onSubmit={handleSubmit}>
-          <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
-          <button className='comment-submit-button' type='submit'>Send</button>
-        </form>
-      </div>
+      {podMemberUsers.includes(profileUsername) &&
+
+        <div>
+          <form className='comment-box' onSubmit={handleSubmit}>
+            <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
+            <button className='comment-submit-button' type='submit'>Send</button>
+          </form>
+
+        </div>}
 
     </div>
   )
 }
-export default FeedCombo
+export default FeedComboTeamLevel
