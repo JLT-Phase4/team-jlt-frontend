@@ -60,7 +60,7 @@ function App () {
   const isLoggedIn = (username && token)
 
   const [totalPoints, setTotalPoints] = useState(0)
-  useEffect(updateTeamScores, [token, teams])
+  useEffect(updateTeamScores, [token, teams, userProfile, setTeams])
   function updateTeamScores () {
     const teamsTotalPoints = []
     for (const team of teams) {

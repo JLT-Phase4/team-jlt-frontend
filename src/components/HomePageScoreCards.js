@@ -36,8 +36,8 @@ const HomePageScoreCards = ({ token, teams, isCaptain, profileUsername }) => {
                 </div>
                 // <ScoreBoard team={team} member={member} key={member.username} />
               ))}
-              {team.teamTotalPoints &&
-                <div>Total Points: {team.teamTotalPoints}</div>}
+              {/* {team.teamTotalPoints && */}
+              <div>Total Points: {team.teamTotalPoints}</div>
             </div>
           )}
         </div>
