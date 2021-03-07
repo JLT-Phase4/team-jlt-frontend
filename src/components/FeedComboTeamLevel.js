@@ -36,7 +36,7 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
       myPodMembersUsernames.push(member.username)
       myPodMembers.push(member)
     }
-
+    myPodMembersUsernames.push(team.captain)
     setPodMemberUsers(myPodMembersUsernames)
     setPodMembers(myPodMembers)
   }
