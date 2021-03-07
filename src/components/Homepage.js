@@ -3,9 +3,6 @@ import Card from 'react-bootstrap/Card'
 import HomeCarouselTeams from './HomeCarouselTeams'
 import HomePageScoreCards from './HomePageScoreCards'
 import CreateTeamDashboard from './CreateTeamDashboard'
-import Feed from './Feed'
-import FeedTest from './FeedTest'
-import StatusUpdate from './StatusUpdate'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
@@ -26,23 +23,16 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
                 {teams.map((team, idx) => (
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
-
                       <HomeCarouselTeams team={team} displayHeight='40vh' />
-
                     )}
                   </Carousel.Item>
                 ))}
               </Carousel>
               <HomePageScoreCards token={token} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
             </div>
-            {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
             <div className='team-feed-container'>
-              {/* <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed> */}
-              {/* <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo> */}
-
+              <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>
             </div>
-            {/* </div> */}
-
           </div>
         </div>
       )}

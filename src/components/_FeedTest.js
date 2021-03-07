@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed } from '../api'
-import fakeNotifications from './../fakeNotifications'
-import fakeStatusNotifications from './../fakeStatusNotifications'
+import fakeNotifications from '../fakeNotifications'
+import fakeStatusNotifications from '../fakeStatusNotifications'
 
 function Feed ({ token, profileUsername, today, feedPk }) {
   const [message, setMessage] = useState()
