@@ -29,9 +29,9 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
               <HomePageScoreCards teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
             </div>
             {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
-            <div className='team-feed-container'>
+            <div style={{ height: '90vh' }} className='team-feed-container'>
               {/* <Feed token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</Feed> */}
-              <FeedCombo token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>
+              <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>
 
             </div>
             {/* </div> */}
