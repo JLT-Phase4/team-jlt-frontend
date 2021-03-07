@@ -181,13 +181,13 @@ function App () {
 
   return (
     <Router>
-      <nav className='navbar navbar-inverse chore-wars-nav'>
+      <div className='chore-wars-nav'>
         <div className='container-fluid chore-wars-bar'>
           {/* <span className='header-bar banner' style={{ backgroundImage: `url(${walkingDogImage})` }} />
           <span className='header-bar banner' style={{ backgroundImage: `url(${laundryImage})` }} /> */}
 
-          <div className='navbar-header'>
-            <Link className='navbar-brand' to='/'>
+          <div className=''>
+            <Link className='' to='/'>
 
               {/* <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} /> */}
               {/* <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} /> */}
@@ -195,19 +195,22 @@ function App () {
 
             <Link to='/' className='banner'>Chore Wars</Link>
           </div>
-          <ul className='nav-bar-links flex'>
-            <li className='nav-bar-link active'><Link to='/'>Pod</Link></li>
-            <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>Team</Link></li>
-            <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
-            {isCaptain === false &&
-              <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>Profile</Link></li>}
-            {isCaptain === true &&
-              <li className='nav-bar-link'><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
-
+          {token && (
+            <ul className='nav-bar-links flex'>
+              <li className='nav-bar-link'><Link to='/'>Pod</Link></li>
+              <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>Team</Link></li>
+              <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
+              {isCaptain === false &&
+                <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>Profile</Link></li>}
+              {isCaptain === true &&
+                <li className='nav-bar-link'><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
+            </ul>
+          )}
+          <ul>
             {isLoggedIn
               ? (
                 <span><div className='nav-bar-link logout' onClick={() => handleLogout()}>Logout</div></span>
-                // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
+            // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
               : (
                 <span>
@@ -237,7 +240,7 @@ function App () {
             </li>
           </ul>
         </div>
-      </nav>
+      </div>
 
       <Switch>
 
