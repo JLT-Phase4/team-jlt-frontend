@@ -15,7 +15,6 @@ function Feed ({ token, profileUsername, today, feedPk }) {
   console.log(myNotifications, 'my initial notifications')
 
   function compare (a, b) {
-    // Use toUpperCase() to ignore character casing
     const timeA = a.time
     const timeB = b.time
 
@@ -30,9 +29,7 @@ function Feed ({ token, profileUsername, today, feedPk }) {
 
   const mySortedNotifications = myNotifications.sort(compare)
 
-  console.log(mySortedNotifications, 'my sorted notifications')
   const allSortedNotifications = allNotifications.sort(compare)
-  console.log(allSortedNotifications, 'all sorted notifications')
 
   // function handleSubmit (event) {
   //   event.preventDefault()

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getTeam, postNotification, getFeed } from './../api'
 import Feed from './Feed'
+import FeedCombo from './FeedCombo'
 import ScoreBoard from './ScoreBoard'
 
 const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatingTeam, setIsCreatingTeam, isCaptain }) => {
