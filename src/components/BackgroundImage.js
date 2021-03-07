@@ -31,7 +31,7 @@ const BackgroundImage = ({ token, setBackgroundImage }) => {
   return (
     <div className='card-detail-all'>
       <div className='create-card-section'>
-        <div className='create-card-header'>Search Images</div>
+        <div className='create-card-header'>Step 3: Search Images for Family Banner</div>
         <label className='image-label' htmlFor='image'>Search Term</label>
         <input type='text' id='image' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
         <button type='submit' className='log-reg-button' onClick={() => startImageSearch(searchTerm)}>Get Image</button>

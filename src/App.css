@@ -397,7 +397,7 @@ label {
   width: 345px;
   /* height: 345px; */
   overflow-y: scroll;
-  height: 82vh;
+  height: 75vh;
   padding: 10px;
   padding-left: 25px;
   margin: 10px;
@@ -609,9 +609,9 @@ margin-right: 5px;
     background-size: cover;
     border-radius: 25px;
     padding: 10px;
-    width: 350px;
+    width: 310px;
     margin: 5px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 

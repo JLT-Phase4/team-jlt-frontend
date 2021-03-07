@@ -21,7 +21,7 @@ const MusicSearch = ({ token, setMusicTrack }) => {
   return (
     <div className='card-detail-all'>
       <div className='create-card-section'>
-        <div className='create-card-header'>Search for Tracks</div>
+        <div className='create-card-header'>Step 4: Search Music Tracks for Family Theme Song</div>
         <label className='track-label' htmlFor='track'>Search Term</label>
         <input type='text' id='track' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
         <button type='submit' className='log-reg-button' onClick={() => startMusicSearch(searchTerm)}>Get Music</button>

@@ -23,7 +23,7 @@ const HomePageScoreCards = ({ token, teams, isCaptain, profileUsername }) => {
   // }
 
   return (
-    <div className='home-header flex'>
+    <div style={{ minHeight: '33vh', overflow: 'scroll' }} className='home-header flex-nowrap'>
       {teams.map((team, idx) => (
         <div key={idx}>
           {(team) && (

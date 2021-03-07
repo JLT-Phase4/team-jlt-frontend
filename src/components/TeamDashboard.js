@@ -55,19 +55,19 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
             <div>
               <div className='flex-nowrap home-page-container'>
                 <div className='flex-col' style={{ width: '800px' }}>
-                  <div className='carousel-team-dashboard-container' style={{ height: '50vh', backgroundImage: `url(${team.background_image}` }}>
+                  <div className='carousel-team-dashboard-container' style={{ height: '40vh', backgroundImage: `url(${team.background_image}` }}>
                     {/* <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
                 <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!</div>
                 <audio controls src={team.theme_song} /> */}
                   </div>
                   <div>
                     {team.members.length > 0
-                      ? <div style={{ minHeight: '30vh' }} className='flex-sa home-header'>
+                      ? <div style={{ minHeight: '33vh' }} className='flex-sa home-header'>
                         <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
                           {team.members.map(member => (
                             <ScoreBoard team={team} member={member} key={member.username} />
                           ))}
-                          {isCaptain === true &&
+                          {isCaptain === true && team.captain === profileUsername &&
                             <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
                         </div>
                         <div className='flex-col' style={{ justifyContent: 'space-around' }}>
@@ -76,12 +76,12 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           <audio controls src={team.theme_song} />
                         </div>
                         {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button> */}
-                      </div>
+                        </div>
                       : <div style={{ minHeight: '30vh' }} className='flex home-header'>
                         <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
                         </div>
-                      </div>}
+                        </div>}
 
                   </div>
                 </div>

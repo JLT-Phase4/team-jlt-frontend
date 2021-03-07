@@ -51,6 +51,8 @@ function App () {
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
+
+
   function setAuth (username, token) {
     setUsername(username)
     setToken(token)
@@ -110,6 +112,9 @@ function App () {
                   }
                 }
               }
+              if (!myTeam) {
+                setIsLoading(false)
+              }
               // if (team.pk === myTeam) {
               //   setTeams(pod.teams)
               // } else {
@@ -119,11 +124,6 @@ function App () {
           }
         }
       })
-      // .then(setTimeout(function () { setIsLoading(false) }, 3000))
-    // setTimeout((setIsLoading(false)), 5000)
-    // if (token && myPod && teams) {
-    //   setIsLoading(false)
-    // }
   }
 
   useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
@@ -177,6 +177,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+
   }
 
   return (
@@ -291,12 +292,15 @@ function App () {
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          {token && !isLoading &&
+          {token &&
             <div>
-              {teams && myPod
+              {(teams && myPod)
                 ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
 
-                : <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
+                : <div>{(!isLoading) &&
+                  <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
+
+                </div>}
 
             </div>}
           {/* : <Welcome /> */}
