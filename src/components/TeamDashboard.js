@@ -76,19 +76,19 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           <audio controls src={team.theme_song} />
                         </div>
                         {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button> */}
-                        </div>
+                      </div>
                       : <div style={{ minHeight: '30vh' }} className='flex home-header'>
                         <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
                         </div>
-                        </div>}
+                      </div>}
 
                   </div>
                 </div>
                 {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
                 {feedPk &&
                   <div className='team-feed-container'>
-                    <FeedComboTeamLevel token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} team={team} className='footer-feed'>Latest Notification Feed</FeedComboTeamLevel>
+                    {/* <FeedComboTeamLevel token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} team={team} className='footer-feed'>Latest Notification Feed</FeedComboTeamLevel> */}
                   </div>}
                 {/* </div> */}
 
