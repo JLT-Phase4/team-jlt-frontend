@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, deleteAssignment, updateAssignment } from '../api'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Redirect } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
 
@@ -43,6 +43,10 @@ function ChoreSummary ({ token, today, todayIndex }) {
   useEffect(updateTeam, [token, teamPk, isUpdating])
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))
+  }
+
+  if (!token) {
+    return <Redirect to='/register' />
   }
 
   function handleDragStart (event, { assignment, day, member }) {

@@ -1,6 +1,6 @@
 
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
 import TeamDashboard from './components/TeamDashboard'
@@ -49,8 +49,9 @@ function App () {
   const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
-  const [isLoading, setIsLoading] = useState(true) // not working right now.
-  const history = useHistory()
+  const [isLoading, setIsLoading] = useState(true)
+
+
 
   function setAuth (username, token) {
     setUsername(username)
@@ -123,13 +124,6 @@ function App () {
           }
         }
       })
-      // .then(updateTeamScores)
-      // .then(setTimeout(function () { setIsLoading(false) }, 3000))
-
-    // setTimeout((setIsLoading(false)), 5000)
-    // if (token && myPod && teams) {
-    //   setIsLoading(false)
-    // }
   }
 
   useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
@@ -183,9 +177,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
-    // const path = '/register'
-    // history.push(path)
-    // return <Redirect to='/register' />
+
   }
 
   return (

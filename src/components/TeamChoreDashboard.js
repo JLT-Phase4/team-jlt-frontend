@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Redirect } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getTeam, createChore, getChores } from './../api'
 import { Card } from 'react-bootstrap'
@@ -41,6 +41,10 @@ const TeamChoreDashboard = ({ token, teams, myTeam, myTeamName }) => {
         setIsAdding(true)
       )
     }
+  }
+
+  if (!token) {
+    return <Redirect to='/register' />
   }
 
   return (

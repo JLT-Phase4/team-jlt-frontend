@@ -41,6 +41,10 @@ const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
     countStep(step - 1)
   }
 
+  if (!token) {
+    return <Redirect to='/register' />
+  }
+
   return (
     <div>
       <div>

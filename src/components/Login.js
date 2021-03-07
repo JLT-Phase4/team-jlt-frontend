@@ -12,13 +12,6 @@ function Login ({ isLoggedIn, setAuth }) {
     return <Redirect to='/' />
   }
 
-  // change above if to a conditional
-  // if (isLoggedIn) and a team pk exists {
-  //   return <Redirect to='/' />
-  // } else if (isLoggedIn) {
-  //   return <Redirect to='/create-team' />
-  // }
-
   function handleSubmit (event, isLoggedIn) {
     event.preventDefault()
     login(username, password)

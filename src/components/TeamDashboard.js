@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, Redirect } from 'react-router-dom'
 import { getTeam, postNotification, getFeed } from './../api'
 import Feed from './Feed'
 import FeedComboTeamLevel from './FeedComboTeamLevel'
@@ -41,6 +41,10 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
       setNotPosted(false)
     }
     )
+  }
+
+  if (!token) {
+    return <Redirect to='/register' />
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, Redirect } from 'react-router-dom'
 import { addMember, createUser, getTeam } from './../api'
 import { useState, useEffect } from 'react'
 
@@ -42,6 +42,10 @@ const CreateTeamMembers = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
       .catch(error => {
         setErrors(error.message)
       })
+  }
+
+  if (!token) {
+    return <Redirect to='/register' />
   }
 
   return (
