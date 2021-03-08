@@ -3,7 +3,7 @@ import Carousel from 'react-bootstrap/Carousel'
 
 const Welcome = (props) => {
   return (
-    <div className='flex-col'>
+    <div style={{ marginTop: '30px' }} className='flex-col'>
       <h2>Welcome to Chore Wars!</h2>
       <div className='flex'>
         <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />

@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { register } from '../api'
 import Welcome from './Welcome'
-import Carousel from 'react-bootstrap/Carousel'
-import PodView from './../images/PodView.jpg'
-import ProfileView from './../images/ProfileView.jpg'
-import TeamView from './../images/TeamView.jpg'
-import ChoreAssignmentView from './../images/ChoreAssignmentView.jpg'
-import ChoreManagementView from './../images/ChoreManagementView.jpg'
+import ManageChoresView from './../images/ManageChoresView.jpg'
+import CreateTeamView from './../images/CreateTeamView.jpg'
+import AssignChoresView from './../images/AssignChoresView.jpg'
+import ProfileLevelView from './../images/ProfileLevelView.jpg'
+import PodLevelView from './../images/PodLevelView.jpg'
+import TeamLevelView from './../images/TeamLevelView.jpg'
 
 function Register ({ isLoggedIn, setAuth }) {
   const [username, setUsername] = useState('')
@@ -38,7 +38,7 @@ function Register ({ isLoggedIn, setAuth }) {
     <div style={{ marginLeft: '50px' }} className='flex-col-center'>
       <div className='flex-col'>
         {/* <h2 className='log-reg-header'>Register or <Link to='/login'>Login</Link></h2> */}
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <form className='flex' onSubmit={handleSubmit}>
             <h2>Register or <Link to='/login'>Login</Link></h2>
             {errors && (
@@ -70,15 +70,14 @@ function Register ({ isLoggedIn, setAuth }) {
         <Welcome />
 
       </div>
-      <Carousel>
-        <Carousel.Item style={{ width: '1250px', height: '70vh', backgroundSize: 'cover', backgroundImage: `url(${PodView})` }} className='carousel-holder' />
-        <Carousel.Item style={{ width: '1250px', height: '70vh', backgroundSize: 'cover', backgroundImage: `url(${ProfileView})` }} className='carousel-holder' />
-        <Carousel.Item style={{ width: '1250px', height: '70vh', backgroundSize: 'cover', backgroundImage: `url(${TeamView})` }} className='carousel-holder' />
-        <Carousel.Item style={{ width: '1250px', height: '70vh', backgroundSize: 'cover', backgroundImage: `url(${ChoreAssignmentView})` }} className='carousel-holder' />
-        <Carousel.Item style={{ width: '1250px', height: '70vh', backgroundSize: 'cover', backgroundImage: `url(${ChoreManagementView})` }} className='carousel-holder' />
-
-      </Carousel>
-
+      <div className='flex'>
+        <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
+        <a href={CreateTeamView}><img className='welcome-page-card' src={CreateTeamView} /></a>
+        <a href={ManageChoresView}><img className='welcome-page-card' src={ManageChoresView} /></a>
+        <a href={AssignChoresView}><img className='welcome-page-card' src={AssignChoresView} /></a>
+        <a href={ProfileLevelView}><img className='welcome-page-card' src={ProfileLevelView} /></a>
+        <a href={TeamLevelView}><img className='welcome-page-card' src={TeamLevelView} /></a>
+      </div>
     </div>
   )
 }

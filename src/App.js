@@ -60,8 +60,8 @@ function App () {
   const isLoggedIn = (username && token)
 
   const [totalPoints, setTotalPoints] = useState()
-  useEffect(updateTeamScores, [token, teams, userProfile, setTeams])
-  function updateTeamScores () {
+  // useEffect(updateTeamScores, [token, teams, userProfile, setTeams, today])
+  function updateTeamScores (teams) {
     const teamsTotalPoints = []
     for (const team of teams) {
       let teamTotalPoints = 0
@@ -86,6 +86,7 @@ function App () {
             for (const team of pod.teams) {
               if (username === team.captain) {
                 setCaptain(true)
+                updateTeamScores(pod.teams)
                 setMyTeam(team.pk)
                 if (team.feed[0]) {
                   setMyTeamFeedPk(team.feed[0].pk)
@@ -98,8 +99,10 @@ function App () {
               }
               for (const member of team.members) {
                 if (username === member.username) {
+                  updateTeamScores(pod.teams)
                   setMyTeam(team.pk)
                   setMyTeamName(team.name)
+
                   if (team.feed[0]) {
                     setMyTeamFeedPk(team.feed[0].pk)
                   }
@@ -182,17 +185,12 @@ function App () {
   return (
     <Router>
       <div className='chore-wars-nav'>
-        <div className='flex chore-wars-bar'>
-          {/* <span className='header-bar banner' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-          <span className='header-bar banner' style={{ backgroundImage: `url(${laundryImage})` }} /> */}
-
+        <div style={{ justifyContent: 'space-between' }} className='flex chore-wars-bar'>
           <div className='flex'>
             <Link to='/' className='banner'>Chore Wars</Link>
-            {/* <div style={{ width: '40px', backgroundSize: 'cover', marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} /> */}
-
           </div>
           {token && (
-            <ul className='flex'>
+            <ul style={{ paddingTop: '10px' }} className='flex'>
               <li className=''><Link to='/'>Pod</Link></li>
               <li className=''><Link to={`/team/${myTeam}`}>Team</Link></li>
               <li className=''><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
@@ -202,38 +200,40 @@ function App () {
                 <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
             </ul>
           )}
-          <div>
+          <div style={{ paddingTop: '10px' }}>
             {isLoggedIn
               ? (
-                <span><div className='logout' onClick={() => handleLogout()}>Logout</div></span>
+                <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+
             // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
-              : (
-
-                <span>
-                  <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
-                </span>
+              : (null
+                // <span>
+                //   <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
+                // </span>
                 )}
           </div>
+          {token && (
+            <div className='flex'>
 
-          <div className='flex'>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <div className='d-none d-md-inline'>Day</div>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu right>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
+                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
 
-            <MDBDropdown>
-              <MDBDropdownToggle nav caret>
-                <div className='d-none d-md-inline'>Day</div>
-              </MDBDropdownToggle>
-              <MDBDropdownMenu right>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
-                <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
+            </div>
+          )}
 
-              </MDBDropdownMenu>
-            </MDBDropdown>
-          </div>
         </div>
       </div>
 
