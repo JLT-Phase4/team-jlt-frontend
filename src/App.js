@@ -50,7 +50,6 @@ function App () {
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [isRedirecting, setIsRedirecting] = useState(false)
 
   function setAuth (username, token) {
     setUsername(username)
@@ -179,7 +178,6 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
-    setIsRedirecting(true)
   }
 
   return (
@@ -207,10 +205,10 @@ function App () {
 
             // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
-              : (null
-                // <span>
-                //   <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
-                // </span>
+              : (
+                <span>
+                  <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
+                </span>
                 )}
           </div>
           {token && (
@@ -289,17 +287,22 @@ function App () {
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
-          {token &&
-            <div>
-              {(teams && myPod)
-                ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} isRedirecting={isRedirecting} />
+          {token
+            ? (
+              <div>
+                {(teams && myPod)
+                  ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
 
-                : <div>{(!isLoading) &&
-                  <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
+                  : <div>{(!isLoading) &&
+                    <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
-                </div>}
+                  </div>}
 
-            </div>}
+              </div>
+              )
+            : (
+              <Register />
+              )}
           {/* : <Welcome /> */}
 
         </Route>

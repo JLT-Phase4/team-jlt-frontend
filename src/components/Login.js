@@ -35,11 +35,17 @@ function Login ({ isLoggedIn, setAuth }) {
 
   return (
 
-    <div style={{ marginLeft: '50px' }} className='flex-col-center'>
-      <div className='flex-col'>
+    <div className='login'>
+      <div className='login-page-container'>
+        <h1>Welcome back!</h1>
+        <div className='login-message'>
+          <p>Log in to complete tasks</p>
+          <p> and rack up points </p>
+          <p> for your team.</p>
+        </div>
         <div style={{ marginTop: '10px' }}>
-          <form className='flex' onSubmit={handleSubmit}>
-            <h2><Link to='/register'>Register</Link> or Login</h2>
+          <form className='' onSubmit={handleSubmit}>
+            <h2 className='login-header'>Login</h2>
             {errors && (
               <div className='errors'>{errors}</div>
             )}
@@ -54,7 +60,7 @@ function Login ({ isLoggedIn, setAuth }) {
               />
             </div>
             <div>
-              <label htmlFor='password'>Password</label>
+              <label className='login-password-label' htmlFor='password'>Password</label>
               <input
                 type='password'
                 id='password'
@@ -63,20 +69,13 @@ function Login ({ isLoggedIn, setAuth }) {
                 onChange={event => setPassword(event.target.value)}
               />
             </div>
-            <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Register</button>
+            <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Login</button>
           </form>
         </div>
-        <Welcome />
+        <p className='route-to-reg'>Not a Chore Wars member? <Link to='/register'>Click here to register.</Link></p>
 
       </div>
-      <div className='flex'>
-        <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
-        <a href={CreateTeamView}><img className='welcome-page-card' src={CreateTeamView} /></a>
-        <a href={ManageChoresView}><img className='welcome-page-card' src={ManageChoresView} /></a>
-        <a href={AssignChoresView}><img className='welcome-page-card' src={AssignChoresView} /></a>
-        <a href={ProfileLevelView}><img className='welcome-page-card' src={ProfileLevelView} /></a>
-        <a href={TeamLevelView}><img className='welcome-page-card' src={TeamLevelView} /></a>
-      </div>
+
     </div>
   )
 }
