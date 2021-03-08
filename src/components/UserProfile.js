@@ -183,17 +183,17 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
       {userProfile && team && (
         <div className='flex-col-center'>
           <div className='flex-col'>
-            <div style={{ marginTop: '20px', width: '1100px', marginLeft: '70px' }} className='flex'>
+            <div style={{ marginTop: '20px', width: '1400px' }} className='flex-sb'>
               <div>
-                <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
+                <div className='avatar-image-profile' style={{ backgroundImage: `url(${avatar})` }} />
                 <div style={{ marginTop: '20px' }} className='flex-col'>
-                  <div style={{ fontSize: '30px' }}>{userProfile.username}'s page!</div>
+                  <div style={{ fontSize: '30px', textAlign: 'center' }}>{userProfile.username}</div>
                   {/* <Link to='/'>Go to pod</Link> */}
-                  {userProfile === username &&
+                  {userProfile.username === username &&
                     <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>}
                 </div>
               </div>
-              <div style={{ width: '400px' }} className='flex-col user-profile-mini-container'><span style={{ marginBottom: '30px', color: `${team.dashboard_style}`, fontSize: '24px' }}>Score Summary</span>
+              <div style={{ width: '600px' }} className='flex-col user-profile-mini-container'><span style={{ marginBottom: '30px', color: `${team.dashboard_style}`, fontSize: '24px' }}>Score Summary</span>
                 <ScoreChart today={today} todayIndex={todayIndex} userProfile={userProfile} />
               </div>
               <div className='flex-col user-profile-mini-container'><Link to={`/team/${teamPk}`}><span style={{ color: `${team.dashboard_style}`, fontSize: '24px' }}>{team.name}</span> </Link>
@@ -208,10 +208,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
           <div className=' member-dashboard-container'>
 
             {(!isUpdating)
-              ? <div style={{ minWidth: '100%', width: '1200px' }}>
+              ? <div style={{ minWidth: '100%', width: '1400px' }}>
                 <div className='flex'>
                   <div style={{ marginTop: '20px', marginBottom: '20px' }} className='flex-col'>
-                    <div className='flex-sa'>
+                    <div style={{ width: '1400px' }} className='flex-sb'>
 
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -291,11 +291,19 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                 </div>))}
                             </div>
                             </div>}
+
                       </div>
+                      {userProfile &&
+                        <div
+                          style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
+                          onDrop={(event) => { handleDropInComplete(event, { today, userProfile }) }}
+                          onDragOver={handleDragOver}
+                        >Summary of Some Kind
+                        </div>}
                     </div>
                   </div>
                   {showSummary && userProfile.assignments.length > 0
-                    ? <div key={userProfile.pk} style={{ marginLeft: '50px', width: '1100px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
+                    ? <div key={userProfile.pk} style={{ width: '1400px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
                       <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${userProfile.username}/`} className={`${userProfile.username} flex`}>
                         <div>
                           <div className='avatar-holder-medium' style={(userProfile.avatar === undefined || userProfile.avatar === '' || userProfile.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${userProfile.avatar})` }} />
