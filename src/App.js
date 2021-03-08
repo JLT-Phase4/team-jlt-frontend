@@ -15,6 +15,7 @@ import ChoreSummaryMobile from './components/ChoreSummaryMobile'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
+// import Navigation from './components/Navigation'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
 import { getTeams, getPods, getUserProfile, getAssignments, updateAssignment, updatePod } from './api'
@@ -48,8 +49,8 @@ function App () {
   const [myPodFeedPk, setMyPodFeedPk] = useState()
   const [myTeamFeedPk, setMyTeamFeedPk] = useState()
   const [myTeamName, setMyTeamName] = useState()
-  const [userProfile, setUserProfile] = useState()
-  const [isCaptainStatus, setCaptainStatus] = useState(false)
+  // const [userProfile, setUserProfile] = useState()
+  // const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
@@ -58,13 +59,9 @@ function App () {
     setUsername(username)
     setToken(token)
   }
-
-  // if (!token) {
-  //   return <Redirect to='/login' />
-  // }
   const isLoggedIn = (username && token)
 
-  const [totalPoints, setTotalPoints] = useState()
+  // const [totalPoints, setTotalPoints] = useState()
   // useEffect(updateTeamScores, [token, teams, userProfile, setTeams, today])
   function updateTeamScores (teams) {
     const teamsTotalPoints = []
@@ -75,7 +72,7 @@ function App () {
       }
       team.teamTotalPoints = teamTotalPoints
       teamsTotalPoints.push(team.teamTotalPoints)
-      setTotalPoints(team.teamTotalPoints)
+      // setTotalPoints(team.teamTotalPoints)
     }
     teams.teamTotalPoints = teamsTotalPoints
   }
@@ -127,55 +124,8 @@ function App () {
       )
     }
   }
-  // useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
-  // function updatePods () {
-  //   getPods(token)
-  //     .then(pods => {
-  //       for (const pod of pods) {
-  //         if (pod.teams) {
-  //           for (const team of pod.teams) {
-  //             if (username === team.captain) {
-  //               setCaptain(true)
-  //               updateTeamScores(pod.teams)
-  //               setMyTeam(team.pk)
-  //               setTeam(team)
-  //               if (team.feed[0]) {
-  //                 setMyTeamFeedPk(team.feed[0].pk)
-  //               } setMyTeamName(team.name)
-  //               setTeams(pod.teams)
-  //               setMyPod(pod.pk)
-  //               if (pod.feed[0]) {
-  //                 setMyPodFeedPk(pod.feed[0].pk)
-  //               }
-  //             }
-  //             for (const member of team.members) {
-  //               if (username === member.username) {
-  //                 updateTeamScores(pod.teams)
-  //                 setMyTeam(team.pk)
-  //                 setTeam(team)
-  //                 setMyTeamName(team.name)
 
-  //                 if (team.feed[0]) {
-  //                   setMyTeamFeedPk(team.feed[0].pk)
-  //                 }
-
-  //                 setTeams(pod.teams)
-  //                 setMyPod(pod.pk)
-  //                 if (pod.feed[0]) {
-  //                   setMyPodFeedPk(pod.feed[0].pk)
-  //                 }
-  //               }
-  //             }
-  //             if (!myTeam) {
-  //               setIsLoading(false)
-  //             }
-  //           }
-  //         }
-  //       }
-  //     })
-  // }
-
-  useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
+  // useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
     { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
 
@@ -194,15 +144,15 @@ function App () {
     })
   }
 
-  function updateProfile () {
-    getUserProfile(token, username).then(profile => {
-      setUserProfile(profile)
-      if (profile.user_type === 1) {
-        setCaptainStatus(true)
-        console.log('I have captain status')
-      }
-    })
-  }
+  // function updateProfile () {
+  //   getUserProfile(token, username).then(profile => {
+  //     setUserProfile(profile)
+  //     if (profile.user_type === 1) {
+  //       setCaptainStatus(true)
+  //       console.log('I have captain status')
+  //     }
+  //   })
+  // }
 
   function handleTime (e) {
     setToday(e.target.value)
@@ -231,6 +181,7 @@ function App () {
 
   return (
     <Router>
+      {/* <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime}></Navigation> */}
       <div className='chore-wars-nav'>
         <div style={{ justifyContent: 'space-between' }} className='flex chore-wars-bar'>
           <div className='flex'>
@@ -352,7 +303,7 @@ function App () {
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
-                  </div>}
+                    </div>}
 
               </div>
               )
