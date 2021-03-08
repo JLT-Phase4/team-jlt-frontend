@@ -26,6 +26,8 @@ import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
 import Welcome from './components/Welcome'
+import AltHomepage from './components/AltHomepage'
+import About from './components/About'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -244,6 +246,7 @@ function App () {
                 <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
             </ul>
           )}
+          <div className=''><Link to='/about'>About</Link></div>
           <div style={{ paddingTop: '10px' }}>
             {isLoggedIn
               ? (
@@ -282,6 +285,10 @@ function App () {
       </div>
 
       <Switch>
+
+        <Route path='/about'>
+          <About />
+        </Route>
 
         {/* CAPTAIN REG AND LOGIN */}
         <Route path='/login'>
@@ -348,7 +355,7 @@ function App () {
               </div>
               )
             : (
-              <Register />
+              <AltHomepage />
               )}
           {/* : <Welcome /> */}
 

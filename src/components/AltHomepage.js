@@ -8,9 +8,8 @@ import AssignChoresView from './../images/AssignChoresView.jpg'
 import ProfileLevelView from './../images/ProfileLevelView.jpg'
 import PodLevelView from './../images/PodLevelView.jpg'
 import TeamLevelView from './../images/TeamLevelView.jpg'
-import washingDishesImage from './../images/washing-dishes.png'
 
-function Register ({ isLoggedIn, setAuth }) {
+function AltHomepage ({ isLoggedIn, setAuth }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState()
@@ -38,7 +37,7 @@ function Register ({ isLoggedIn, setAuth }) {
   return (
     <div style={{ marginLeft: '50px' }} className='flex-col'>
       <div className=''>
-        <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
+        <Welcome />
       </div>
       <form className='reg' onSubmit={handleSubmit}>
         <h2>Register</h2>
@@ -82,4 +81,4 @@ function Register ({ isLoggedIn, setAuth }) {
   )
 }
 
-export default Register
+export default AltHomepage
