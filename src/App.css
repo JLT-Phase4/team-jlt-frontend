@@ -138,7 +138,8 @@ body {
 }
 
 .header-bar {
-  width: 40px;
+  width: 200px;
+  height: 200px;
   background-size: contain;
   background-repeat:no-repeat;
 }
