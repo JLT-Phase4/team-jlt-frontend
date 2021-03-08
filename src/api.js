@@ -109,9 +109,9 @@ export function addMember (token, username, teamPk) {
     .then(console.log(teamPk, username))
 }
 
-export function getTeams (token) {
+export function getTeams (token, podPk) {
   return API
-    .get('team-list/', {
+    .get(`pod-detail/${podPk}`, {
       headers: {
         Authorization: `Token ${token}`
       }

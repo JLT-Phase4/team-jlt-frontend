@@ -17,7 +17,7 @@ import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
 import HomePageScoreCards from './components/HomePageScoreCards'
 import { useEffect, useState } from 'react'
-import { getTeams, getPods, getUserProfile, getAssignments, updateAssignment } from './api'
+import { getTeams, getPods, getUserProfile, getAssignments, updateAssignment, updatePod } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -41,6 +41,7 @@ function App () {
   const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
+  const [team, setTeam] = useState()
   const [myPod, setMyPod] = useState()
   const [myPodFeedPk, setMyPodFeedPk] = useState()
   const [myTeamFeedPk, setMyTeamFeedPk] = useState()
@@ -56,6 +57,9 @@ function App () {
     setToken(token)
   }
 
+  // if (!token) {
+  //   return <Redirect to='/login' />
+  // }
   const isLoggedIn = (username && token)
 
   const [totalPoints, setTotalPoints] = useState()
@@ -73,59 +77,101 @@ function App () {
     }
     teams.teamTotalPoints = teamsTotalPoints
   }
+  // react context
+  useEffect(updatePod, [token, username, setMyPod, setMyPodFeedPk, setIsLoading])
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, myPodFeedPk, setMyPodFeedPk, setIsLoading])
-  function updatePods () {
-    // setIsLoading(true)
+  function updatePod () {
     getPods(token)
       .then(pods => {
-        // setTeams(pod.teams)
         for (const pod of pods) {
           if (pod.teams) {
             for (const team of pod.teams) {
               if (username === team.captain) {
-                setCaptain(true)
-                updateTeamScores(pod.teams)
-                setMyTeam(team.pk)
-                if (team.feed[0]) {
-                  setMyTeamFeedPk(team.feed[0].pk)
-                } setMyTeamName(team.name)
-                setTeams(pod.teams)
                 setMyPod(pod.pk)
+                setCaptain(true)
                 if (pod.feed[0]) {
                   setMyPodFeedPk(pod.feed[0].pk)
                 }
+                setMyTeam(team.pk)
+                setTeam(team)
               }
               for (const member of team.members) {
                 if (username === member.username) {
-                  updateTeamScores(pod.teams)
-                  setMyTeam(team.pk)
-                  setMyTeamName(team.name)
-
-                  if (team.feed[0]) {
-                    setMyTeamFeedPk(team.feed[0].pk)
-                  }
-
-                  setTeams(pod.teams)
                   setMyPod(pod.pk)
                   if (pod.feed[0]) {
                     setMyPodFeedPk(pod.feed[0].pk)
                   }
+                  setMyTeam(team.pk)
+                  setTeam(team)
                 }
               }
               if (!myTeam) {
                 setIsLoading(false)
               }
-              // if (team.pk === myTeam) {
-              //   setTeams(pod.teams)
-              // } else {
-              //   console.log('You are not in this pod')
-              // }
             }
           }
         }
       })
   }
+
+  useEffect(updateTeams, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
+  function updateTeams () {
+    if (myPod) {
+      getTeams(token, myPod).then(pod => {
+        console.log(pod.teams)
+        updateTeamScores(pod.teams)
+        setTeams(pod.teams)
+      }
+      )
+    }
+  }
+  // useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
+  // function updatePods () {
+  //   getPods(token)
+  //     .then(pods => {
+  //       for (const pod of pods) {
+  //         if (pod.teams) {
+  //           for (const team of pod.teams) {
+  //             if (username === team.captain) {
+  //               setCaptain(true)
+  //               updateTeamScores(pod.teams)
+  //               setMyTeam(team.pk)
+  //               setTeam(team)
+  //               if (team.feed[0]) {
+  //                 setMyTeamFeedPk(team.feed[0].pk)
+  //               } setMyTeamName(team.name)
+  //               setTeams(pod.teams)
+  //               setMyPod(pod.pk)
+  //               if (pod.feed[0]) {
+  //                 setMyPodFeedPk(pod.feed[0].pk)
+  //               }
+  //             }
+  //             for (const member of team.members) {
+  //               if (username === member.username) {
+  //                 updateTeamScores(pod.teams)
+  //                 setMyTeam(team.pk)
+  //                 setTeam(team)
+  //                 setMyTeamName(team.name)
+
+  //                 if (team.feed[0]) {
+  //                   setMyTeamFeedPk(team.feed[0].pk)
+  //                 }
+
+  //                 setTeams(pod.teams)
+  //                 setMyPod(pod.pk)
+  //                 if (pod.feed[0]) {
+  //                   setMyPodFeedPk(pod.feed[0].pk)
+  //                 }
+  //               }
+  //             }
+  //             if (!myTeam) {
+  //               setIsLoading(false)
+  //             }
+  //           }
+  //         }
+  //       }
+  //     })
+  // }
 
   useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
   const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
@@ -280,13 +326,14 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} />
+          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} team={team} setTeam={setTeam} teams={teams} setTeams={setTeams} podPk={myPod} updateTeamScores={updateTeamScores} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
           {/* Turn all of this into a component to see if it handles re-rendering issues */}
+
           {token
             ? (
               <div>

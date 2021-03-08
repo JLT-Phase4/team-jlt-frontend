@@ -1,20 +1,20 @@
 import { useState, useEffect, useRef } from 'react'
 import { Card } from 'react-bootstrap'
 import { useParams, Link, Redirect } from 'react-router-dom'
-import { getTeam, getUserProfile, updateUserProfile, updateAssignment, getPoints, getPointsByDay } from '../api'
+import { getTeam, getTeams, getUserProfile, updateUserProfile, updateAssignment, getPoints, getPointsByDay } from '../api'
 import AvatarImage from './AvatarImage'
 import { MDBProgress, MDBContainer } from 'mdbreact'
 import { Line } from 'react-chartjs-2'
 import ScoreBoard from './ScoreBoard'
 import ScoreChart from './ScoreChart'
 
-const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam }) => {
+const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam, team, setTeam, teams, setTeams, podPk, updateTeamScores }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
   const [isUpdatingAssignment, setIsUpdatingAssignment] = useState(false)
   const [avatar, setAvatar] = useState('')
-  const [team, setTeam] = useState()
+  // const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
   const [showSummary, setShowSummary] = useState(true)
   const [dragging, setDragging] = useState(false)
@@ -24,7 +24,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
-  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment, feedPk])
+  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment, feedPk, setAvatar])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -82,10 +82,22 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
     }
   }
 
-  useEffect(updateTeam, [token, teamPk, isUpdatingAssignment])
+  useEffect(updateTeam, [token, teamPk, isUpdatingAssignment, setAvatar, avatar])
   function updateTeam () {
     if (teamPk !== '') {
-      getTeam(token, teamPk).then(team => setTeam(team))
+      getTeam(token, teamPk).then(team => {
+        setTeam(team)
+      })
+    }
+  }
+
+  useEffect(updateTeams, [token, podPk, isUpdatingAssignment, setAvatar, avatar])
+  function updateTeams () {
+    if (podPk !== '') {
+      getTeams(token, podPk).then(pod => {
+        updateTeamScores(pod.teams)
+        setTeams(pod.teams)
+      })
     }
   }
 
@@ -108,7 +120,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   }
 
   function handleDragStart (event, { assignment, today, userProfile }) {
-    console.log('drag is starting baby!', assignment.pk, assignment.chore.name, today, userProfile.username)
+    // console.log('drag is starting baby!', assignment.pk, assignment.chore.name, today, userProfile.username)
     dragItem.current = assignment // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
     dropNode.current = event.target
     dropNode.current.addEventListener('dragend', handleDragEnd)
@@ -118,7 +130,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   }
 
   function handleDragEnd () {
-    console.log('drag ends when I release my mouse')
+    // console.log('drag ends when I release my mouse')
     setDragging(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
@@ -128,21 +140,21 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
   function handleDragOver (event) {
     event.preventDefault()
-    console.log('handleDragOver is firing')
+    // console.log('handleDragOver is firing')
     event.dataTransfer.dropEffect = 'move' // make a copy instead of moving chore
   }
 
   function handleDropComplete (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    console.log('this is the day param', member)
+    // console.log('this is the day param', member)
     const newData = document.createElement('div')
     newData.className = 'chore-card'
-    console.log('this is the data transfer', data)
+    // console.log('this is the data transfer', data)
     const assignmentArray = data.split('???')
     // newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
-    console.log('this is the drop zone where assignpk just landed', assignmentPk)
+    // console.log('this is the drop zone where assignpk just landed', assignmentPk)
     // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdatingAssignment(true)
@@ -152,14 +164,14 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   function handleDropInComplete (event, { day, member }) {
     event.preventDefault()
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    console.log('this is the day param', member)
+    // console.log('this is the day param', member)
     const newData = document.createElement('div')
     newData.className = 'chore-card'
-    console.log('this is the data transfer', data)
+    // console.log('this is the data transfer', data)
     const assignmentArray = data.split('???')
     // newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[1]
-    console.log('this is the drop zone where assignpk just landed', assignmentPk)
+    // console.log('this is the drop zone where assignpk just landed', assignmentPk)
     // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdatingAssignment(true)
@@ -176,8 +188,9 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                 <div className='avatar-image' style={{ backgroundImage: `url(${avatar})` }} />
                 <div style={{ marginTop: '20px' }} className='flex-col'>
                   <div style={{ fontSize: '30px' }}>{userProfile.username}'s page!</div>
-                  <Link to='/'>Go to pod</Link>
-                  <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>
+                  {/* <Link to='/'>Go to pod</Link> */}
+                  {userProfile === username &&
+                    <button onClick={() => setIsUpdating(true)} style={{ fontSize: '18px' }} className='log-reg-button'>Update Profile</button>}
                 </div>
               </div>
               <div style={{ width: '400px' }} className='flex-col user-profile-mini-container'><span style={{ marginBottom: '30px', color: `${team.dashboard_style}`, fontSize: '24px' }}>Score Summary</span>
@@ -322,7 +335,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                    : <div onClick={() => toggleSummary()} className='flex-col-center' style={{ fontSize: '25px', color: 'yellowgreen', marginBottom: '20px', marginTop: '50px' }}>Show Summary</div>}
+                    : null}
                   {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
                     {feedPk && (myTeam === teamPk) && (
                       <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
@@ -333,7 +346,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
               </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
-                <button style={{ width: '150px', marginLeft: '100px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
+                <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
               </div>}
           </div>
         </div>
