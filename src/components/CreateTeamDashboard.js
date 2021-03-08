@@ -17,8 +17,8 @@ const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
   const [teamSlogan, setTeamSlogan] = useState('')
   const [teamDashboardStyle, setTeamDashboardStyle] = useState('dodgerblue')
   // const [pod, setPod] = useState('')
-  const pod = 'Pod B'
-  const podPk = 2
+  const pod = 'Pod C'
+  const podPk = 4
 
   function handleCreateTeam () {
     createTeam(token, teamName, teamSlogan, musicTrack, backgroundImage, teamDashboardStyle).then(team => setTeam(team))
