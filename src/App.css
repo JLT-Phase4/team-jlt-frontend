@@ -173,12 +173,38 @@ a {
 }
 
 .reg{
-  margin-left: 260px;
-  margin-top: 170px;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  
+  font-size: x-large;
+}
+
+.login-header{
+ margin-bottom: 15px;
+}
+
+.login-password-label {
+  margin-right: 8px;
+}
+
+.login-page {
+  font-size: x-large;
+  margin-top: 100px;
+  margin-left: 50px;
+}
+.username-label {
+  margin-left: 20px;
+}
+
+.password-label {
+  margin-left: 10px;
+}
+
+.route-to-reg {
+  margin-top: 70px;
 }
 
 .logo-image{
