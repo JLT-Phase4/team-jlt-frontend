@@ -6,14 +6,12 @@ import CreateTeamDashboard from './CreateTeamDashboard'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
-const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today, isRedirecting }) => {
-  if (isRedirecting) {
-    console.log('isRedirecting')
-    setTimeout(function () {
-      if (!token) {
-        return <Redirect to='/login' />
-      }
-    }, 3000)
+const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today}) => {
+
+  if (!token) {
+    return <Redirect to='/login' />
+  }
+  
   }
 
   return (
