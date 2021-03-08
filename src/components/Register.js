@@ -66,6 +66,9 @@ function Register ({ isLoggedIn, setAuth }) {
         </div>
         <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Register</button>
       </form>
+      <div>
+        <p className='route-to-reg'>Already a Chore Wars member? <Link to='/login'>Click here to log in.</Link></p>
+      </div>
       <div className='flex'>
         <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
         <a href={CreateTeamView}><img className='welcome-page-card' src={CreateTeamView} /></a>

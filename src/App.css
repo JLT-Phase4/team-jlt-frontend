@@ -190,6 +190,7 @@ a {
   margin-right: 8px;
 }
 
+
 .login-page-container {
   font-size: x-large;
   margin-top: 100px;
@@ -202,7 +203,15 @@ a {
   background-color: rgba(204, 224, 240, 0.964);
   box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
   width: 50vh;
+  line-height: 1;
+  padding: 50px;
 }
+
+.login-message{
+  margin-top: 20px;
+  text-align: center;
+}
+
 .username-label {
   margin-left: 20px;
 }
