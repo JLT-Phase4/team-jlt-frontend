@@ -59,9 +59,9 @@ function App () {
 
   const isLoggedIn = (username && token)
 
-  const [totalPoints, setTotalPoints] = useState(0)
-  useEffect(updateTeamScores, [token, teams, userProfile, setTeams])
-  function updateTeamScores () {
+  const [totalPoints, setTotalPoints] = useState()
+  // useEffect(updateTeamScores, [token, teams, userProfile, setTeams, today])
+  function updateTeamScores (teams) {
     const teamsTotalPoints = []
     for (const team of teams) {
       let teamTotalPoints = 0
@@ -86,6 +86,7 @@ function App () {
             for (const team of pod.teams) {
               if (username === team.captain) {
                 setCaptain(true)
+                updateTeamScores(pod.teams)
                 setMyTeam(team.pk)
                 if (team.feed[0]) {
                   setMyTeamFeedPk(team.feed[0].pk)
@@ -98,8 +99,10 @@ function App () {
               }
               for (const member of team.members) {
                 if (username === member.username) {
+                  updateTeamScores(pod.teams)
                   setMyTeam(team.pk)
                   setMyTeamName(team.name)
+
                   if (team.feed[0]) {
                     setMyTeamFeedPk(team.feed[0].pk)
                   }
@@ -182,46 +185,37 @@ function App () {
   return (
     <Router>
       <div className='chore-wars-nav'>
-        <div className='container-fluid chore-wars-bar'>
-          {/* <span className='header-bar banner' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-          <span className='header-bar banner' style={{ backgroundImage: `url(${laundryImage})` }} /> */}
-
-          <div className=''>
-            <Link className='' to='/'>
-
-              {/* <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} /> */}
-              {/* <div className='header-bar' style={{ marginTop: '10px', backgroundImage: `url(${lawnMowingImage})` }} /> */}
-            </Link>
-
+        <div style={{ justifyContent: 'space-between' }} className='flex chore-wars-bar'>
+          <div className='flex'>
             <Link to='/' className='banner'>Chore Wars</Link>
           </div>
           {token && (
-            <ul className='nav-bar-links flex'>
-              <li className='nav-bar-link'><Link to='/'>Pod</Link></li>
-              <li className='nav-bar-link'><Link to={`/team/${myTeam}`}>Team</Link></li>
-              <li className='nav-bar-link'><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
+            <ul style={{ paddingTop: '10px' }} className='flex'>
+              <li className=''><Link to='/'>Pod</Link></li>
+              <li className=''><Link to={`/team/${myTeam}`}>Team</Link></li>
+              <li className=''><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
               {isCaptain === false &&
-                <li className='nav-bar-link'><Link to={`/user-profile/${username}`}>Profile</Link></li>}
+                <li className=''><Link to={`/user-profile/${username}`}>Profile</Link></li>}
               {isCaptain === true &&
-                <li className='nav-bar-link'><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
+                <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
             </ul>
           )}
-          <ul>
+          <div style={{ paddingTop: '10px' }}>
             {isLoggedIn
               ? (
-                <span><div className='nav-bar-link logout' onClick={() => handleLogout()}>Logout</div></span>
+                <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+
             // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
                 )
-              : (
-                <span>
-                  <Link className='nav-bar-link' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
-                </span>
+              : (null
+                // <span>
+                //   <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
+                // </span>
                 )}
-          </ul>
+          </div>
+          {token && (
+            <div className='flex'>
 
-          <ul className='nav-bar-links flex'>
-
-            <li>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
                   <div className='d-none d-md-inline'>Day</div>
@@ -237,8 +231,9 @@ function App () {
 
                 </MDBDropdownMenu>
               </MDBDropdown>
-            </li>
-          </ul>
+            </div>
+          )}
+
         </div>
       </div>
 

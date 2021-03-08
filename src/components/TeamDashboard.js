@@ -10,11 +10,25 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
   const [notPosted, setNotPosted] = useState(false)
   // const [feed, setFeed] = useState()
   // const [feedPk, setFeedPk] = useState()
+  const [totalPoints, setTotalPoints] = useState()
 
+  function updateTeamScore (team) {
+    let teamTotalPoints = 0
+    for (const member of team.members) {
+      teamTotalPoints += member.earned_chore_points.chore__points__sum
+    }
+    team.teamTotalPoints = teamTotalPoints
+    setTotalPoints(team.teamTotalPoints)
+
+    team.teamTotalPoints = teamTotalPoints
+  }
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
 
   function updateTeam () {
-    getTeam(token, teamPk).then(team => setTeam(team))
+    getTeam(token, teamPk).then(team => {
+      updateTeamScore(team)
+      setTeam(team)
+    })
   }
 
   function handleCreate () {
@@ -66,6 +80,8 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           {team.members.map(member => (
                             <ScoreBoard team={team} member={member} key={member.username} />
                           ))}
+                          <div>Total Points: {team.teamTotalPoints}</div>
+
                           {isCaptain === true && team.captain === profileUsername &&
                             <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
                         </div>
@@ -75,12 +91,12 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           <audio controls src={team.theme_song} />
                         </div>
                         {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button> */}
-                      </div>
+                        </div>
                       : <div style={{ minHeight: '33vh' }} className='flex home-header'>
                         <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
                         </div>
-                      </div>}
+                        </div>}
 
                   </div>
                 </div>
