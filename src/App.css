@@ -111,6 +111,11 @@ body {
   flex-direction: column;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .flex-col-center {
   display: flex;
   flex-direction: column;
@@ -172,12 +177,15 @@ a {
   
 }
 
+.center-containers {
+  
+}
 .reg{
   margin-left: 20px;
   margin-top: 50px;
   margin-bottom: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   font-size: x-large;
 }
@@ -188,6 +196,10 @@ a {
 
 .login-password-label {
   margin-right: 8px;
+}
+
+.register-password-label { 
+  margin-right: 7px;
 }
 
 
@@ -247,10 +259,12 @@ a {
   padding-bottom: 30px;
   padding-top: 30px;
   font-size: x-large;
+  text-align: center;
 }
 
 .welcome-text2 {
   font-size: x-large;
+  text-align: center;
 }
 
 .log-reg-button {
@@ -999,6 +1013,10 @@ ul {
   font-size: 21px;
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.about-link {
+  margin-right: 10px;
 }
 
 .banner {

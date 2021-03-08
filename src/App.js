@@ -26,6 +26,8 @@ import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
 import Welcome from './components/Welcome'
+import AltHomepage from './components/AltHomepage'
+import About from './components/About'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -224,6 +226,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+    setTeams([])
   }
 
   return (
@@ -244,7 +247,9 @@ function App () {
                 <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
             </ul>
           )}
-          <div style={{ paddingTop: '10px' }}>
+
+          <div className='flex-row' style={{ paddingTop: '10px' }}>
+            <div className='about-link'><Link to='/about'>About</Link></div>
             {isLoggedIn
               ? (
                 <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
@@ -282,6 +287,10 @@ function App () {
       </div>
 
       <Switch>
+
+        <Route path='/about'>
+          <About />
+        </Route>
 
         {/* CAPTAIN REG AND LOGIN */}
         <Route path='/login'>
@@ -348,7 +357,7 @@ function App () {
               </div>
               )
             : (
-              <Register />
+              <AltHomepage />
               )}
           {/* : <Welcome /> */}
 
