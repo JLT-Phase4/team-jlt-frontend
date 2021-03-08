@@ -226,6 +226,7 @@ function App () {
   function handleLogout () {
     setToken(null)
     setUsername(null)
+    setTeams([])
   }
 
   return (
@@ -246,8 +247,9 @@ function App () {
                 <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
             </ul>
           )}
-          <div className=''><Link to='/about'>About</Link></div>
-          <div style={{ paddingTop: '10px' }}>
+
+          <div className='flex-row' style={{ paddingTop: '10px' }}>
+            <div className='about-link'><Link to='/about'>About</Link></div>
             {isLoggedIn
               ? (
                 <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
