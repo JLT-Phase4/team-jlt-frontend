@@ -21,8 +21,10 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
         item.username = title[0]
         item.message_update = title[1]
         item.message_day = title[2].slice(0, 3)
-        const action = title[3].split(' ')[1]
+        const action = title[4].split(' ')[1]
         item.message_change = action
+        item.points = parseInt(title[3])
+        console.log(item.points)
       }
       setStatusUpdates(myUpdates)
     }
@@ -98,12 +100,17 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
               {notification.title && podMemberUsers.includes(notification.username) &&
                 <div>
                   {podMembers.map((member, idx) => (
-                    <div clasName='message-container' key={idx}>
+                    <div className='message-container' key={idx}>
                       {member.username === notification.username &&
                         <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
                           <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
                           <p className='message-username'>{notification.username}</p>
-                          <p><span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>{notification.message_change} <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}</p>
+                          <p>
+                            <span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>
+                            <span>{notification.message_change}</span>
+                            <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
+                            {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
+                          </p>
 
                         </div>}
                     </div>

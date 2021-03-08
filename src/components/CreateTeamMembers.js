@@ -49,68 +49,77 @@ const CreateTeamMembers = ({ token, isCreatingTeam, setIsCreatingTeam }) => {
   }
 
   return (
-    <div style={{ marginTop: '30px' }} className='page-container'>
-      <h2 style={{ marginLeft: '50px' }}>Add New Team Member to <span style={{ color: 'yellowgreen' }}>{teamName}</span></h2>
-      <div style={{ marginLeft: '50px' }} className='log-reg-header'>Please write down their username and password for later.</div>
+    <div>
+      {team && (
+        <div style={{ marginTop: '30px' }} className='page-container'>
+          <h2 style={{ marginLeft: '50px' }}>Add New Team Member to <span style={{ color: `${team.dashboard_style}` }}>{teamName}</span></h2>
+          <div style={{ marginLeft: '50px' }} className='log-reg-header'>Please write down their username and password for later.</div>
 
-      <div className='flex-sa'>
+          <div className='flex-sa'>
 
-        <form className='log-reg-header-form' onSubmit={handleSubmit}>
-          {errors && (
-            <div className='errors'>{errors}</div>
-          )}
-          <div style={{ color: 'yellowgreen', fontSize: '25px' }}>Choose a Username and Password</div>
+            <form className='log-reg-header-form' onSubmit={handleSubmit}>
+              {errors && (
+                <div className='errors'>{errors}</div>
+              )}
+              <div style={{ color: `${team.dashboard_style}`, fontSize: '25px' }}>Choose a Username and Password</div>
 
-          <div>
-            <label htmlFor='username'>Username</label>
-            <input
-              type='text'
-              id='username'
-              required
-              value={username}
-              onChange={event => setUsername(event.target.value)}
-            />
-          </div>
+              <div>
+                <label htmlFor='username'>Username</label>
+                <input
+                  type='text'
+                  id='username'
+                  required
+                  value={username}
+                  onChange={event => setUsername(event.target.value)}
+                />
+              </div>
 
-          <div>
-            <label htmlFor='password'>Password</label>
-            <input
-              type='password'
-              id='password'
-              required
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-            />
-          </div>
-          <button className='log-reg-button' type='submit'>Create New User</button>
-        </form>
-        {team && (
-          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-scoreblock flex-col'><span style={{ color: 'yellowgreen', fontSize: '25px' }}>Current Team Members</span>
-            <div className='flex'>
-              {team.members.map(member => (
-                <Link key={member.username} style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div className='avatar-holder-medium' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
-                    <span>{member.username}</span>
+              <div>
+                <label htmlFor='password'>Password</label>
+                <input
+                  type='password'
+                  id='password'
+                  required
+                  value={password}
+                  onChange={event => setPassword(event.target.value)}
+                />
+              </div>
+              <button className='log-reg-button' type='submit'>Create New User</button>
+            </form>
+            <div style={{ width: '500px' }} className='flex-col'>
+              {team && (
+                <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-scoreblock flex-col'><span style={{ color: `${team.dashboard_style}`, fontSize: '25px' }}>Current Team Members</span>
+                  <div className='flex-sa'>
+                    {team.members.map(member => (
+                      <Link key={member.username} style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
+                        <div style={{ textAlign: 'center' }}>
+                          <div className='avatar-holder-medium' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
+                          <span>{member.username}</span>
+                        </div>
+                      </Link>
+
+                      // <ul key={member.username}>
+                      //   <li>{member.username}</li>
+                      // </ul>
+                    ))}
                   </div>
-                </Link>
-
-                // <ul key={member.username}>
-                //   <li>{member.username}</li>
-                // </ul>
-              ))}
+                  {(newMember !== '')
+                    ? <>
+                      <div style={{ color: `${team.dashboard_style}`, fontSize: '20px' }}>{newMember} has been added to {team.name}</div>
+                      <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Done Adding Members</button></Link>
+                    </>
+                    : <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Return to Team Dashboard</button></Link>}
+                </div>
+              )}
             </div>
-            {(newMember !== '')
-              ? <>
-                <div style={{ color: 'yellowgreen', fontSize: '20px' }}>{newMember} has been added to {team.name}</div>
-                <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Done Adding Members</button></Link>
-                </>
-              : <Link to={`/team/${team.pk}`}><button onClick={setIsCreatingTeam(false)} className='log-reg-button' type='submit'>Return to Team Dashboard</button></Link>}
-          </div>
-        )}
 
-      </div>
+          </div>
+        </div>
+
+      )}
+
     </div>
+
   )
 }
 

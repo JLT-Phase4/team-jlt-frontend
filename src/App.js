@@ -41,6 +41,7 @@ function App () {
   const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
+  const [team, setTeam] = useState()
   const [myPod, setMyPod] = useState()
   const [myPodFeedPk, setMyPodFeedPk] = useState()
   const [myTeamFeedPk, setMyTeamFeedPk] = useState()
@@ -57,6 +58,9 @@ function App () {
     setToken(token)
   }
 
+  // if (!token) {
+  //   return <Redirect to='/login' />
+  // }
   const isLoggedIn = (username && token)
 
   const [totalPoints, setTotalPoints] = useState()
@@ -74,8 +78,9 @@ function App () {
     }
     teams.teamTotalPoints = teamsTotalPoints
   }
+  // react context
 
-  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, myPodFeedPk, setMyPodFeedPk, setIsLoading])
+  useEffect(updatePods, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
   function updatePods () {
     // setIsLoading(true)
     getPods(token)
@@ -88,6 +93,7 @@ function App () {
                 setCaptain(true)
                 updateTeamScores(pod.teams)
                 setMyTeam(team.pk)
+                setTeam(team)
                 if (team.feed[0]) {
                   setMyTeamFeedPk(team.feed[0].pk)
                 } setMyTeamName(team.name)
@@ -101,6 +107,7 @@ function App () {
                 if (username === member.username) {
                   updateTeamScores(pod.teams)
                   setMyTeam(team.pk)
+                  setTeam(team)
                   setMyTeamName(team.name)
 
                   if (team.feed[0]) {
@@ -282,7 +289,7 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} />
+          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} team={team} setTeam={setTeam} teams={teams} setTeams={setTeams} podPk={myPod} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
@@ -297,7 +304,7 @@ function App () {
                 : <div>{(!isLoading) &&
                   <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
 
-                </div>}
+                  </div>}
 
             </div>}
           {/* : <Welcome /> */}

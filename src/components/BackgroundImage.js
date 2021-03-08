@@ -45,12 +45,12 @@ const BackgroundImage = ({ token, setBackgroundImage }) => {
                 </div>
               ))}
               {(pageNumber === 1) && (
-                <button className='log-reg-button' onClick={() => pageForward(searchTerm, pageNumber)}><span>Next</span></button>
+                <button style={{ backgroundColor: '#ffffff24', border: '2px solid black', borderRadius: '10px', width: '180px', height: '105px' }} onClick={() => pageForward(searchTerm, pageNumber)}><span>Next</span></button>
               )}
               {(pageNumber > 1) && (
                 <>
-                  <button className='log-reg-button' onClick={() => pageBack(searchTerm, pageNumber)}><span>Previous</span></button>
-                  <button className='log-reg-button' onClick={() => pageForward(searchTerm, pageNumber)}><span>Next</span></button>
+                  <button style={{ backgroundColor: '#ffffff24', border: '2px solid black', borderRadius: '10px', width: '180px', height: '105px' }} onClick={() => pageBack(searchTerm, pageNumber)}><span>Previous</span></button>
+                  <button style={{ backgroundColor: '#ffffff24', border: '2px solid black', borderRadius: '10px', width: '180px', height: '105px' }} onClick={() => pageForward(searchTerm, pageNumber)}><span>Next</span></button>
                 </>
               )}
             </div>

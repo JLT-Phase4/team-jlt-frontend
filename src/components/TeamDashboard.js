@@ -85,7 +85,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           {isCaptain === true && team.captain === profileUsername &&
                             <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
                         </div>
-                        <div className='flex-col' style={{ justifyContent: 'space-around' }}>
+                        <div className='flex-col' style={{ width: '340px', alignItems: 'center', justifyContent: 'space-around' }}>
                           <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
                           <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
                           <audio controls src={team.theme_song} />
@@ -95,6 +95,11 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                       : <div style={{ minHeight: '33vh' }} className='flex home-header'>
                         <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
+                        </div>
+                        <div className='flex-col' style={{ width: '340px', alignItems: 'center', justifyContent: 'space-around' }}>
+                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
+                          <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
+                          <audio controls src={team.theme_song} />
                         </div>
                         </div>}
 

@@ -29,9 +29,9 @@ const MusicSearch = ({ token, setMusicTrack }) => {
           <div className='search-results-container'>Search Results
             <div className='flex'>
               {tracks.map(track => (
-                <div style={{ width: '120px', height: '130px' }} track={track} key={track.trackId}>
+                <div style={{ width: '120px' }} track={track} key={track.trackId}>
                   <div className='track-thumbnail' onClick={() => setMusicTrack(track.previewUrl)} style={{ backgroundImage: `url(${track.artworkUrl100})` }} />
-                  <div className='flex-col' style={{ justifyContent: 'center', alignItems: 'center' }}>{track.trackName}</div>
+                  <div className='flex-col' style={{ fontSize: '12px', justifyContent: 'center', alignItems: 'center' }}>{track.trackName}</div>
                 </div>
               ))}
             </div>

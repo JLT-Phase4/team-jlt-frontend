@@ -20,7 +20,7 @@ const AvatarImage = ({ token, setAvatar }) => {
 
   return (
     <div style={{ width: '1200px' }} className='card-detail-all'>
-      <div style={{ marginLeft: '50px' }} className='create-card-section'>
+      <div className='create-card-section'>
         <div className='create-card-header'>Search Images</div>
         <label className='image-label' htmlFor='image'>Search Term</label>
         <input type='text' id='image' required value={searchTerm} onClick={evt => setSearchTerm('')} onChange={evt => setSearchTerm(evt.target.value)} />
