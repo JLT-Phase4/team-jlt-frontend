@@ -26,7 +26,6 @@ import lawnMowingImage from './images/lawn-mowing.png'
 import walkingDogImage from './images/walking-dog.png'
 import washingDishesImage from './images/washing-dishes.png'
 import Welcome from './components/Welcome'
-import AltHomepage from './components/AltHompage'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
@@ -302,7 +301,7 @@ function App () {
               </div>
               )
             : (
-              <AltHomepage />
+              <Register />
               )}
           {/* : <Welcome /> */}
 

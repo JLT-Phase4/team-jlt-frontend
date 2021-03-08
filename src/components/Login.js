@@ -35,8 +35,9 @@ function Login ({ isLoggedIn, setAuth }) {
 
   return (
 
-    <div style={{ marginLeft: '50px' }} className='login-page'>
-      <div className=''>
+    <div className=''>
+      <div className='login-page-container'>
+        <h1>Welcome back.</h1>
         <div style={{ marginTop: '10px' }}>
           <form className='' onSubmit={handleSubmit}>
             <h2 className='login-header'>Login</h2>
