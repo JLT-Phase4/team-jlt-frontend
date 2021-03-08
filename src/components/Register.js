@@ -35,40 +35,39 @@ function Register ({ isLoggedIn, setAuth }) {
   }
 
   return (
-    <div style={{ marginLeft: '50px' }} className='flex-col-center'>
-      <div className='flex-col'>
-        {/* <h2 className='log-reg-header'>Register or <Link to='/login'>Login</Link></h2> */}
-        <div style={{ marginTop: '10px' }}>
-          <form className='flex' onSubmit={handleSubmit}>
-            <h2>Register or <Link to='/login'>Login</Link></h2>
-            {errors && (
-              <div className='errors'>{errors}</div>
-            )}
-            <div>
-              <label htmlFor='username'>Username</label>
-              <input
-                type='text'
-                id='username'
-                required
-                value={username}
-                onChange={event => setUsername(event.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor='password'>Password</label>
-              <input
-                type='password'
-                id='password'
-                required
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-              />
-            </div>
-            <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Register</button>
-          </form>
-        </div>
+    <div style={{ marginLeft: '50px' }} className='flex-col'>
+      <div className=''>
         <Welcome />
-
+      </div>
+      <form className='reg' onSubmit={handleSubmit}>
+        <h2>Register</h2>
+        {errors && (
+          <div className='errors'>{errors}</div>
+        )}
+        <div>
+          <label className='username-label' htmlFor='username'>Username</label>
+          <input
+            type='text'
+            id='username'
+            required
+            value={username}
+            onChange={event => setUsername(event.target.value)}
+          />
+        </div>
+        <div>
+          <label className='password-label' htmlFor='password'>Password</label>
+          <input
+            type='password'
+            id='password'
+            required
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
+        </div>
+        <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Register</button>
+      </form>
+      <div>
+        <p className='route-to-reg'>Already a Chore Wars member? <Link to='/login'>Click here to log in.</Link></p>
       </div>
       <div className='flex'>
         <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
