@@ -16,7 +16,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
       {token && teams && myPod && feedPk && (
         <div>
           <div className='flex-nowrap home-page-container'>
-            <div className='flex-col' style={{ width: '800px' }}>
+            <div className='flex-col' style={{ width: '1000px' }}>
               <Carousel>
                 {teams.map((team, idx) => (
                   <Carousel.Item key={idx} className='carousel-holder'>

@@ -166,7 +166,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
     <div>
       {team && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='chore-list-container flex-col'><span style={{ fontSize: '25px' }}>Chores</span>
+          <div style={{ marginLeft: '20px', paddingLeft: '20px', width: '1400px' }} className='chore-list-container flex-col'><span style={{ fontSize: '25px' }}>Chores</span>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
@@ -187,7 +187,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
             <div>
               {team.members.map((member) => (
                 <div key={member.pk} className='flex-nowrap'>
-                  <div style={{ minWidth: '850px' }} className='team-member-container-list'>
+                  <div style={{ minWidth: '850px', width: '1150px' }} className='team-member-container-list'>
                     <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${member.username}/`} className={`${member.username} flex`}>
                       <div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
                       <span>{member.username}</span>
@@ -216,7 +216,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
                                     className='chore-card-container'
                                   >
                                     {(assignment.complete === true)
-                                      ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
+                                      ? <Card.Body className='chore-card' style={{ color: 'white', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
 
                                       // ? <Card.Body style={{ width: '100%', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body>
                                       : <Card.Body className='chore-card' style={(index < todayIndex) ? { border: `2px solid ${team.dashboard_style}`, backgroundColor: '#e4e4e882' } : { border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>}

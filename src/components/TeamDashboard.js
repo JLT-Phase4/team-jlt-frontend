@@ -67,7 +67,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
           <div>
             <div>
               <div className='flex-nowrap home-page-container'>
-                <div className='flex-col' style={{ width: '800px' }}>
+                <div className='flex-col' style={{ width: '1000px' }}>
                   <div className='carousel-team-dashboard-container' style={{ height: '40vh', backgroundImage: `url(${team.background_image}` }}>
                     {/* <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
                 <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!</div>
@@ -75,17 +75,22 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                   </div>
                   <div>
                     {team.members.length > 0
-                      ? <div style={{ minHeight: '33vh' }} className='flex-sa home-header'>
-                        <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
-                          {team.members.map(member => (
-                            <ScoreBoard team={team} member={member} key={member.username} />
-                          ))}
-                          <div>Total Points: {team.teamTotalPoints}</div>
+                      ? <div style={{ minHeight: '40vh' }} className='flex-sa home-header'>
+                        <div>
+                          <div style={{ width: '400px', minHeight: '25vh' }} className='flex team-scoreboard-container-home'>
+                            {team.members.map(member => (
+                              <ScoreBoard team={team} member={member} key={member.username} />
+                            ))}
 
-                          {isCaptain === true && team.captain === profileUsername &&
-                            <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
+                            {isCaptain === true && team.captain === profileUsername &&
+                              <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
+                          </div>
+                          <div className='flex-col-center'>Some kind of Summary
+                            <div>Total Points: {team.teamTotalPoints}</div>
+
+                          </div>
                         </div>
-                        <div className='flex-col' style={{ width: '340px', alignItems: 'center', justifyContent: 'space-around' }}>
+                        <div className='flex-col' style={{ width: '400px', height: '20vh', marginTop: '30px', alignItems: 'center', justifyContent: 'space-around' }}>
                           <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
                           <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
                           <audio controls src={team.theme_song} />
