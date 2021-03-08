@@ -26,7 +26,7 @@ function Register ({ isLoggedIn, setAuth }) {
   }
 
   return (
-    <div className=''>
+    <div className='center-containers'>
       <div style={{ marginLeft: '50px' }} className='flex-col'>
         <div className='login-page-container'>
           <h1>Welcome to Chore Wars!</h1>

@@ -28,30 +28,32 @@ function Login ({ isLoggedIn, setAuth }) {
   }
 
   return (
-    <div className='login'>
-      <div className='login-page-container'>
-        <h1>Welcome back!</h1>
-        <div className=''>
-          <div className='header-bar' style={{ backgroundImage: `url(${lawnMowingImage})` }} />
+    <div className='center-containers'>
+      <div className='login'>
+        <div className='login-page-container'>
+          <h1>Welcome back!</h1>
+          <div className=''>
+            <div className='header-bar' style={{ backgroundImage: `url(${lawnMowingImage})` }} />
+          </div>
+          <div style={{ marginTop: '10px' }}>
+            <form className='' onSubmit={handleSubmit}>
+              <h2 className='login-header'>Login</h2>
+              {errors && (
+                <div className='errors'>{errors}</div>
+              )}
+              <div>
+                <label htmlFor='username'>Username</label>
+                <input type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
+              </div>
+              <div>
+                <label className='login-password-label' htmlFor='password'>Password</label>
+                <input type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
+              </div>
+              <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Login</button>
+            </form>
+          </div>
+          <p className='route-to-reg'>Not a Chore Wars member? <Link to='/register'>Click here to register.</Link></p>
         </div>
-        <div style={{ marginTop: '10px' }}>
-          <form className='' onSubmit={handleSubmit}>
-            <h2 className='login-header'>Login</h2>
-            {errors && (
-              <div className='errors'>{errors}</div>
-            )}
-            <div>
-              <label htmlFor='username'>Username</label>
-              <input type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
-            </div>
-            <div>
-              <label className='login-password-label' htmlFor='password'>Password</label>
-              <input type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
-            </div>
-            <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Login</button>
-          </form>
-        </div>
-        <p className='route-to-reg'>Not a Chore Wars member? <Link to='/register'>Click here to register.</Link></p>
       </div>
     </div>
   )
