@@ -3,12 +3,10 @@ import { Card } from 'react-bootstrap'
 import { useParams, Link, Redirect } from 'react-router-dom'
 import { getTeam, getTeams, getUserProfile, updateUserProfile, updateAssignment, getPoints, getPointsByDay } from '../api'
 import AvatarImage from './AvatarImage'
-import { MDBProgress, MDBContainer } from 'mdbreact'
-import { Line } from 'react-chartjs-2'
 import ScoreBoard from './ScoreBoard'
 import ScoreChart from './ScoreChart'
 
-const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam, team, setTeam, teams, setTeams, podPk, updateTeamScores }) => {
+const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam, teams, setTeams, podPk, updateTeamScores }) => {
   const { username } = useParams()
   const [userProfile, setUserProfile] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
@@ -24,7 +22,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
-  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment, feedPk, setAvatar])
+  useEffect(updateProfile, [token, username, isUpdating, isUpdatingAssignment, setAvatar])
 
   function updateProfile () {
     getUserProfile(token, username).then(profile => {
@@ -38,37 +36,37 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
     })
   }
 
-  let mondayScore = 0
-  let mondayPossible = 0
-  let tuesdayScore = 0
-  let tuesdayPossible = 0
-  let wednesdayScore = 0
-  let wednesdayPossible = 0
-  let thursdayScore = 0
-  let thursdayPossible = 0
-  let fridayScore = 0
-  let fridayPossible = 0
-  let saturdayScore = 0
-  let saturdayPossible = 0
-  let sundayScore = 0
-  let sundayPossible = 0
+  // let mondayScore = 0
+  // let mondayPossible = 0
+  // let tuesdayScore = 0
+  // let tuesdayPossible = 0
+  // let wednesdayScore = 0
+  // let wednesdayPossible = 0
+  // let thursdayScore = 0
+  // let thursdayPossible = 0
+  // let fridayScore = 0
+  // let fridayPossible = 0
+  // let saturdayScore = 0
+  // let saturdayPossible = 0
+  // let sundayScore = 0
+  // let sundayPossible = 0
 
-  if (userProfile) {
-    mondayScore = userProfile.monday_chore_points.chore__points__sum
-    mondayPossible = userProfile.monday_possible_points.chore__points__sum
-    tuesdayScore = mondayScore + userProfile.tuesday_chore_points.chore__points__sum
-    tuesdayPossible = mondayPossible + userProfile.tuesday_possible_points.chore__points__sum
-    wednesdayScore = tuesdayScore + userProfile.wednesday_chore_points.chore__points__sum
-    wednesdayPossible = tuesdayPossible + userProfile.wednesday_possible_points.chore__points__sum
-    thursdayScore = wednesdayScore + userProfile.thursday_chore_points.chore__points__sum
-    thursdayPossible = wednesdayPossible + userProfile.thursday_possible_points.chore__points__sum
-    fridayScore = thursdayScore + userProfile.friday_chore_points.chore__points__sum
-    fridayPossible = thursdayPossible + userProfile.friday_possible_points.chore__points__sum
-    saturdayScore = fridayScore + userProfile.saturday_chore_points.chore__points__sum
-    saturdayPossible = fridayPossible + userProfile.saturday_possible_points.chore__points__sum
-    sundayScore = saturdayScore + userProfile.sunday_chore_points.chore__points__sum
-    sundayPossible = saturdayPossible + userProfile.sunday_possible_points.chore__points__sum
-  }
+  // if (userProfile) {
+  //   mondayScore = userProfile.monday_chore_points.chore__points__sum
+  //   mondayPossible = userProfile.monday_possible_points.chore__points__sum
+  //   tuesdayScore = mondayScore + userProfile.tuesday_chore_points.chore__points__sum
+  //   tuesdayPossible = mondayPossible + userProfile.tuesday_possible_points.chore__points__sum
+  //   wednesdayScore = tuesdayScore + userProfile.wednesday_chore_points.chore__points__sum
+  //   wednesdayPossible = tuesdayPossible + userProfile.wednesday_possible_points.chore__points__sum
+  //   thursdayScore = wednesdayScore + userProfile.thursday_chore_points.chore__points__sum
+  //   thursdayPossible = wednesdayPossible + userProfile.thursday_possible_points.chore__points__sum
+  //   fridayScore = thursdayScore + userProfile.friday_chore_points.chore__points__sum
+  //   fridayPossible = thursdayPossible + userProfile.friday_possible_points.chore__points__sum
+  //   saturdayScore = fridayScore + userProfile.saturday_chore_points.chore__points__sum
+  //   saturdayPossible = fridayPossible + userProfile.saturday_possible_points.chore__points__sum
+  //   sundayScore = saturdayScore + userProfile.sunday_chore_points.chore__points__sum
+  //   sundayPossible = saturdayPossible + userProfile.sunday_possible_points.chore__points__sum
+  // }
 
   function updateAvatar () {
     updateUserProfile(token, username, avatar).then(profile => setUserProfile(profile))
@@ -235,7 +233,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
 
                           : <div className='flex-sb'>
                             <div>{today}'s Chores
@@ -249,7 +247,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -273,7 +271,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
                           : <div className='flex-sb'>
                             <div>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -290,7 +288,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
 
                       </div>
                       {userProfile &&
@@ -341,7 +339,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
 
                       </div>
 
-                      </div>
+                    </div>
 
                     : null}
                   {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -351,11 +349,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, feedPk, myTeam
                     {/* add condition that userpfoile matches somehow */}
                   {/* </div> } */}
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </div>
 
