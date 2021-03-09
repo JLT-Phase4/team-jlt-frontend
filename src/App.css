@@ -16,9 +16,15 @@
 
 body {
   background-color: rgb(227, 230, 236);
+  /* font-family: 'Grandstander', cursive; */
+  /* font-family: 'Oxanium', cursive; */
+  /* font-family: 'Red Rose', cursive; */
   /* background: linear-gradient(#d1dae4, #c6c9cc); */
-
+  /* font-family: 'RocknRoll One', sans-serif; */
   color: rgb(23, 23, 23);
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Lato', sans-serif;
+
 }
 .banner {
   display: flex;
@@ -47,10 +53,6 @@ body {
 
 
 .chore-detail-container {
-  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    transition: all 0.2s ease-in-out;
   border-radius: 25px;
   margin: 10px;
   border: 5px solid #c2dbe769;
@@ -498,7 +500,7 @@ label {
   width: 400px;
   /* height: 345px; */
   overflow-y: scroll;
-  height: 82vh;
+  height: 78vh;
   padding: 10px;
   margin: 10px;
   border: 5px solid #c2dbe769;
@@ -702,7 +704,7 @@ margin-right: 5px;
   /* max-width: 400px; */
 }
 
-.team-scoreboard-container-home {
+.team-scoreboard-container-home, .team-score-indicator {
   display: flex;
   flex-direction: column;
   background-size: cover;
@@ -711,6 +713,14 @@ margin-right: 5px;
   width: 310px;
   margin-left: 10px;
 }
+
+.team-score-indicator {
+  background-color: #ecf1f5;
+  /* padding: 20px; */
+  padding: 5px;
+  border-radius: 15px;
+}
+
 
 .team-scoreboard-container-home:hover {
   background-color: rgba(255, 255, 255, 0.272);
@@ -734,7 +744,8 @@ margin-right: 5px;
   margin-bottom: 10px;
   background-color: rgba(0, 0, 0, 0.491);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 15px;
+  padding: 8px;
 }
 .team-scoreblock {
   padding: 10px;
@@ -969,7 +980,7 @@ ul {
 } */
 .members {
   margin:16px;
-  margin-left: 45px;
+  margin-left: 40px;
   margin-bottom: 0px;
 }
 .member {
@@ -996,17 +1007,30 @@ ul {
   border-radius: 10px;
   text-align: center;
   font-size: 16px;
-}
 
+}
+.chore-card {
+  font-family: 'Grandstander', cursive;
+}
+.chore-card-detail {
+  width: 200px;
+  margin: 7px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: 'Grandstander', cursive;
+  background-color: #e2e6eb;
+
+}
 .day-of-week-card {
   border: solid 2px black;
   background-color: rgb(15, 82, 152);
   background-color: rgb(78, 84, 90);
-
+  background-color: rgb(44 49 55 / 83%);
   font-weight: 300;
   border-bottom: solid 2px rgb(58, 57, 57);
-  font-size: 14px;
-  color: rgb(227, 230, 236);
+  font-size: 16px;
+  color: rgb(236, 240, 246);
 }
 
 .chore-card-container {

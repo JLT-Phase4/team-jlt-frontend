@@ -163,10 +163,10 @@ function ChoreSummary ({ token, today, todayIndex }) {
   }
 
   return (
-    <div>
+    <div className='flex-col-center'>
       {team && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px', width: '1400px' }} className='chore-list-container flex-col'><span style={{ fontSize: '25px' }}>Chores</span>
+          <div style={{ marginLeft: '20px', paddingLeft: '20px', width: '1400px' }} className='chore-list-container flex-col'><h2>Chores</h2>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
@@ -182,7 +182,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
             </div>
           </div>
 
-          <div className='members' style={{ fontSize: '25px' }}>Chore Assignments</div>
+          <h2 className='members'>Chore Assignments for <span style={{ color: `${team.dashboard_style}` }}>{team.name}</span></h2>
           <div style={{ marginLeft: '20px', paddingLeft: '20px' }} className='team-member-container flex-row'>
             <div>
               {team.members.map((member) => (

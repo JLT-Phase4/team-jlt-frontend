@@ -12,7 +12,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
   const [isUpdating, setIsUpdating] = useState(false)
   const [isUpdatingAssignment, setIsUpdatingAssignment] = useState(false)
   const [avatar, setAvatar] = useState('')
-  // const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
@@ -46,38 +45,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
       }
     })
   }
-
-  // let mondayScore = 0
-  // let mondayPossible = 0
-  // let tuesdayScore = 0
-  // let tuesdayPossible = 0
-  // let wednesdayScore = 0
-  // let wednesdayPossible = 0
-  // let thursdayScore = 0
-  // let thursdayPossible = 0
-  // let fridayScore = 0
-  // let fridayPossible = 0
-  // let saturdayScore = 0
-  // let saturdayPossible = 0
-  // let sundayScore = 0
-  // let sundayPossible = 0
-
-  // if (userProfile) {
-  //   mondayScore = userProfile.monday_chore_points.chore__points__sum
-  //   mondayPossible = userProfile.monday_possible_points.chore__points__sum
-  //   tuesdayScore = mondayScore + userProfile.tuesday_chore_points.chore__points__sum
-  //   tuesdayPossible = mondayPossible + userProfile.tuesday_possible_points.chore__points__sum
-  //   wednesdayScore = tuesdayScore + userProfile.wednesday_chore_points.chore__points__sum
-  //   wednesdayPossible = tuesdayPossible + userProfile.wednesday_possible_points.chore__points__sum
-  //   thursdayScore = wednesdayScore + userProfile.thursday_chore_points.chore__points__sum
-  //   thursdayPossible = wednesdayPossible + userProfile.thursday_possible_points.chore__points__sum
-  //   fridayScore = thursdayScore + userProfile.friday_chore_points.chore__points__sum
-  //   fridayPossible = thursdayPossible + userProfile.friday_possible_points.chore__points__sum
-  //   saturdayScore = fridayScore + userProfile.saturday_chore_points.chore__points__sum
-  //   saturdayPossible = fridayPossible + userProfile.saturday_possible_points.chore__points__sum
-  //   sundayScore = saturdayScore + userProfile.sunday_chore_points.chore__points__sum
-  //   sundayPossible = saturdayPossible + userProfile.sunday_possible_points.chore__points__sum
-  // }
 
   function updateAvatar () {
     updateUserProfile(token, username, avatar).then(profile => setUserProfile(profile))
@@ -230,7 +197,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
 
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
@@ -244,7 +211,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -268,7 +235,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -285,7 +252,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
 
                       </div>
                       {userProfile &&
@@ -338,21 +305,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : null}
-                  {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-                    {feedPk && (myTeam === teamPk) && (
-                      <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
-                    )}
-                    {/* add condition that userpfoile matches somehow */}
-                  {/* </div> } */}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </div>
 
