@@ -30,7 +30,7 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
               )
             : (
               <span>
-                <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
+                <Link className='login-link' to='/login'>Login</Link>or<Link className='nav-bar-link' to='/register'>Register</Link>
               </span>
               )}
         </div>

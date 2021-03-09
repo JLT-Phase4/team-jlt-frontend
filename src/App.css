@@ -198,6 +198,12 @@ a {
   flex-direction: column;
   align-items: flex-start;
   font-size: x-large;
+  line-height: 2;
+}
+
+.input {
+  border-radius: 10px;
+  margin: 10px;
 }
 
 .login-header{
@@ -215,12 +221,12 @@ a {
 
 .login-page-container {
   font-size: x-large;
-  margin-top: 100px;
   margin-left: 50px;
+  margin-bottom: 100px;
+  margin-right: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* text-align: center; */
   border: 4px solid #b0afaf42;
   background-color: rgba(204, 224, 240, 0.964);
   box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
@@ -229,6 +235,18 @@ a {
   padding: 50px;
 }
 
+.althome-page-container {
+  font-size: x-large;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 4px solid #b0afaf42;
+  background-color: rgba(204, 224, 240, 0.964);
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+  line-height: 1;
+  padding: 50px;
+  margin: 50px;
+}
 .login-message{
   margin-top: 20px;
   text-align: center;
@@ -280,6 +298,7 @@ a {
 .log-reg-button {
   margin: 20px;
   margin-left: 0px;
+  margin-top: 25px;
   padding: 6px;
   border-radius: 8px;
   /* background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117)); */
@@ -1026,6 +1045,10 @@ ul {
 
 .about-link {
   margin-right: 10px;
+}
+
+.login-link {
+  margin-right: 11px;
 }
 
 .banner {
