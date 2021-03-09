@@ -81,40 +81,51 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
       {team &&
         (
           <div>
-            <div>
+            <div className='flex-col-center'>
               <div className='flex-nowrap home-page-container'>
                 <div className='flex-col' style={{ width: '1000px' }}>
+
                   <div className='carousel-team-dashboard-container' style={{ height: '38vh', backgroundImage: `url(${team.background_image}` }} />
-                  <div>
+                  <div style={{ minHeight: '38vh' }} className='flex-col home-header'>
+                    {/* <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div> */}
+
                     {team.members.length > 0
-                      ? <div style={{ minHeight: '38vh' }} className='flex-sa home-header'>
-
-                        <div className='flex-col' style={{ width: '400px', marginTop: '20px', alignItems: 'center', justifyContent: 'space-around' }}>
-                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
-                          <div style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}` }} className='team-slogan'>{team.slogan}!</div>
-                          <audio controls src={team.theme_song} />
-                          <div style={{ backgroundColor: `${team.dashboard_style}`, color: 'white', marginBottom: '5px', alignItems: 'center' }} className='team-score-indicator'>
-                            <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}% as of {today}
-
-                            </div>
+                      // ? <div style={{ minHeight: '38vh' }} className='flex-sa home-header'>
+                      ? <div style={{ height: '100%' }} className='flex-sa'>
+                        <div className='flex-col' style={{ width: '400px', marginTop: '30px', marginBottom: '30px', alignItems: 'center', justifyContent: 'space-around' }}>
+                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!
+                            <span> {isCaptain === true && team.captain === profileUsername &&
+                              <Link to={`/create-team-members/${team.pk}/${team.name}`}>
+                                <span onClick={() => handleCreate()} style={{ marginTop: '0' }} className='material-icons'>add_circle</span>
+                              </Link>}
+                            </span>
                           </div>
+
+                          <div style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}`, opacity: '.8' }} className='team-slogan'>{team.slogan}!</div>
+                          <audio controls src={team.theme_song} />
+                          {/* <div style={{ marginTop: '20px', alignItems: 'center', opacity: '.8', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
+                            <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
+                            </div>
+                          </div> */}
                         </div>
-                        <div style={{ justifyContent: 'space-around' }} className='flex-col'>
-                          <div style={{ width: '400px', marginTop: '1px', marginBottom: '4px', paddingTop: '0', paddingBottom: '0', justifyContent: 'center' }} className='flex team-scoreboard-container-home'>
+                        <div style={{ width: '400px', alignItems: 'center', justifyContent: 'space-around' }} className='flex-col'>
+                          <div style={{ width: '380px', marginTop: '1px', marginBottom: '4px', paddingTop: '0', paddingBottom: '0', justifyContent: 'center' }} className='flex team-scoreboard-container-home'>
                             {team.members.map(member => (
                               <ScoreBoard team={team} member={member} key={member.username} />
                             ))}
-
                           </div>
-                          {isCaptain === true && team.captain === profileUsername &&
-                            <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} style={{ marginTop: '0' }} className='log-reg-button'>Add Team Members</button></Link>}
-
+                          <div style={{ width: '360px', marginTop: '20px', alignItems: 'center', opacity: '.8', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
+                            <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}% as of {today}
+                            </div>
+                          </div>
+                          {/* {isCaptain === true && team.captain === profileUsername &&
+                            <Link to={`/create-team-members/${team.pk}/${team.name}`}><span onClick={() => handleCreate()} style={{ marginTop: '0' }} className='material-icons'>add_circle</span></Link>} */}
                         </div>
-                      </div>
-                      : <div style={{ minHeight: '40vh' }} className='flex home-header'>
-                        <div className='flex-col' style={{ width: '400px', alignItems: 'center', justifyContent: 'space-around' }}>
-                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
-                          <div className='team-slogan' style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}` }}>{team.slogan}!</div>
+                        </div>
+                      : <div style={{ height: '100%' }} className='flex'>
+                        <div className='flex-col' style={{ width: '400px', marginTop: '30px', marginBottom: '30px', alignItems: 'center', justifyContent: 'space-around' }}>
+                          {/* <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div> */}
+                          <div className='team-slogan' style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}`, opacity: '.8' }}>{team.slogan}!</div>
                           <audio controls src={team.theme_song} />
                         </div>
                         <div style={{ width: '400px' }} className='flex team-scoreboard-container-home'>

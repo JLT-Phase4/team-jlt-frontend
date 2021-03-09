@@ -86,20 +86,20 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
                 : <Card className='flex'>
                   {isCaptain
-                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}`, width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
                     : null}
-                  </Card>}
+                </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>
                 <h2 style={{ paddingLeft: '20px', margin: '20px', marginTop: '50px' }}>Chore Detail and Points</h2>
                 <div style={{ padding: '20px', width: '1350px', marginLeft: '40px', marginRight: '40px' }} className='flex chore-detail-container'>
                   {teamChores.map((chore, idx) => (
-                    <div className='chore-card-detail chore-detail-container flex-col' key={idx}>
-                      <div className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }}>{chore.name}</div>
+                    <div style={{ border: `2px solid ${team.dashboard_style}` }} className='chore-card-detail chore-detail-container flex-col' key={idx}>
+                      <div className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}` }}>{chore.name}</div>
                       <div style={{ padding: '5px' }}>Details: {chore.detail}</div>
                       <div style={{ color: `${team.dashboard_style}`, padding: '5px' }}>Points: {chore.points}</div>
                     </div>

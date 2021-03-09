@@ -12,7 +12,7 @@ const Homepage = ({ token, myTeam, teams, myPod, profileUsername, isCaptain, isC
   return (
     <div>
       {token && teams && myPod && feedPk && (
-        <div>
+        <div className='flex-col-center'>
           <div className='flex-nowrap home-page-container'>
             <div className='flex-col' style={{ width: '1000px' }}>
               <Carousel>

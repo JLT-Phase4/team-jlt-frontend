@@ -143,13 +143,13 @@ function App () {
   //   getAssignments(token).then(assignments => {
   //     setAssignments(assignments)
   //     // this is the rewind code for reseeding the data quickly
-  //     // for (const day of dayDict) {
-  //     //   for (const assignment of assignments) {
-  //     //     if (assignment.assignment_type === day.day && todayIndex < day.index) {
-  //     //       updateAssignment(token, assignment.pk, false).then(updateProfile())
-  //     //     }
-  //     //   }
-  //     // }
+  //     for (const day of dayDict) {
+  //       for (const assignment of assignments) {
+  //         if (assignment.assignment_type === day.day && todayIndex <= day.index) {
+  //           updateAssignment(token, assignment.pk, false).then(updateTeams())
+  //         }
+  //       }
+  //     }
   //   })
   // }
 
@@ -245,7 +245,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                    </div>}
+                  </div>}
 
               </div>
               )
