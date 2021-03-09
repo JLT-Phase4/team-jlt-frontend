@@ -19,7 +19,7 @@ const Homepage = ({ token, myTeam, teams, myPod, profileUsername, isCaptain, isC
                 {teams.map((team, idx) => (
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
-                      <HomeCarouselTeams team={team} displayHeight='40vh' />
+                      <HomeCarouselTeams team={team} displayHeight='38vh' />
                     )}
                   </Carousel.Item>
                 ))}
