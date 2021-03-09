@@ -36,6 +36,8 @@ function App () {
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  const [avatar, setAvatar] = useState('')
+  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
   function setAuth (username, token) {
     setUsername(username)
@@ -114,6 +116,24 @@ function App () {
     }
   }
 
+  useEffect(getAvatar, [team, setAvatar, avatar])
+  function getAvatar () {
+    if (team) {
+      for (const member of team.members) {
+        if (username) {
+          if (username === member.username) {
+            // setAvatar(member.avatar)
+            if (member.avatar !== null && member.avatar !== undefined && member.avatar !== '') {
+              setAvatar(member.avatar)
+            } else {
+              setAvatar(AVATAR)
+            }
+          }
+        }
+      }
+    }
+  }
+
   // KEEP THIS HERE IF WE NEED IT TO QUICKLY RESET LATER
   // const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
   //   { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
@@ -157,11 +177,12 @@ function App () {
     setUsername(null)
     setTeams([])
     setCaptain(false)
+    setAvatar('')
   }
 
   return (
     <Router>
-      <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime} handleLogout={handleLogout} isLoggedIn={isLoggedIn} />
+      <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime} handleLogout={handleLogout} isLoggedIn={isLoggedIn} avatar={avatar} />
       <Switch>
 
         <Route path='/about'>

@@ -7,7 +7,7 @@ const About = (props) => {
     <div className='center-containers'>
       <div style={{ marginTop: '30px' }} className='flex-col login-page-container'>
         <h2>About Us</h2>
-        <div className='flex-col-center'>
+        <div className='flex-row'>
           <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
           {/* <img className='logo-image' width='200' height='200' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqBhhVt6J7_Um29hkn98B85xfFHkDnT5TB2w&usqp=CAU' alt='' /> */}
           <div style={{ width: '80%' }} className='welcome-text1'>

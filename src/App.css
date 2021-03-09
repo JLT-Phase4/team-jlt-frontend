@@ -79,15 +79,6 @@ body {
   font-size: 30px;
 }
 
-.nav-bar-links {
-  margin-top: 25px;
-}
-
-.nav-bar-link {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 .flex {
   display: flex;
   flex-wrap: wrap;
@@ -794,6 +785,14 @@ margin-right: 5px;
   background-size: cover;
   margin: 10px;
   padding-left: 30px;
+}
+
+.avatar-image-nav {
+  width: 25px;
+  height: 25px;
+  border-radius: 150px;
+  background-size: cover;
+  padding: 0;
 }
 
 /* why isnt this working? */
