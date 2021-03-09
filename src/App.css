@@ -179,7 +179,7 @@ a {
 
 .logout:hover {
   color:rgb(33, 86, 139);
-  text-decoration: underline;
+  /* text-decoration: underline; */
   
 }
 
