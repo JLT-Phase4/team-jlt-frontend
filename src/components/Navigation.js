@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle } from 'mdbreact'
 
-const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogout, isLoggedIn, team }) => {
-  const [avatar, setAvatar] = useState('')
-  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
+const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogout, isLoggedIn, avatar }) => {
+  // const [avatar, setAvatar] = useState('')
+  // const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
-  useEffect(getAvatar, [team, setAvatar, avatar])
-  function getAvatar () {
-    if (team) {
-      for (const member of team.members) {
-        if (username) {
-          if (username === member.username) {
-            // setAvatar(member.avatar)
-            if (member.avatar !== null && member.avatar !== undefined && member.avatar !== '') {
-              setAvatar(member.avatar)
-            } else {
-              setAvatar(AVATAR)
-            }
-          }
-        }
-      }
-    }
-  }
+  // useEffect(getAvatar, [team, setAvatar, avatar])
+  // function getAvatar () {
+  //   if (team) {
+  //     for (const member of team.members) {
+  //       if (username) {
+  //         if (username === member.username) {
+  //           // setAvatar(member.avatar)
+  //           if (member.avatar !== null && member.avatar !== undefined && member.avatar !== '') {
+  //             setAvatar(member.avatar)
+  //           } else {
+  //             setAvatar(AVATAR)
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <div className='chore-wars-nav'>
