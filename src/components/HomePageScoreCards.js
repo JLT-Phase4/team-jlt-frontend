@@ -58,9 +58,9 @@ const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }
           {(team) && (
 
             <div>
-              <div style={(team.pk === myTeam) ? { backgroundColor: '#fff9c4', height: '30vh' } : { backgroundColor: '#dde4dd17', height: '30vh' }} className='team-scoreboard-container-home'>
+              <div style={{ height: '30vh' }} className='team-scoreboard-container-home'>
                 <Link to={`/team/${team.pk}`} style={{ fontSize: '25px', fontWeight: '600' }}>
-                  {team.isLeader ? <span style={{ color: 'fuchsia' }}>{team.name}</span> : <span>{team.name}</span>}
+                  {(team.pk === myTeam) ? <span style={{ color: `${team.dashboard_style}` }}>{team.name}</span> : <span>{team.name}</span>}
                 </Link>
                 {team.members.map(member => (
                   <div key={member.username}>
@@ -70,7 +70,7 @@ const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }
                   // <ScoreBoard team={team} member={member} key={member.username} />
                 ))}
               </div>
-              <div style={team.isLeader ? { backgroundColor: '#fff9c4', height: '10vh', alignItems: 'center' } : { backgroundColor: '#dde4dd17', height: '10vh', alignItems: 'center' }} className='team-scoreboard-container-home'>
+              <div style={team.isLeader ? { backgroundColor: '#fff9c4', height: '8vh', alignItems: 'center' } : { backgroundColor: '#dde4dd17', height: '10vh', alignItems: 'center' }} className='team-scoreboard-container-home'>
                 {/* <div>Total Points: {team.teamTotalPoints}</div>
                 <div>Possible Points: {team.teamPossiblePoints}</div> */}
                 {/* <div>Team Percentage: {(100 * team.teamTotalPoints / team.teamPossiblePoints).toFixed(1)}</div> */}
