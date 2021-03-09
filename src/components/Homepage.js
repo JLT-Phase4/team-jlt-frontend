@@ -1,8 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel'
-import Card from 'react-bootstrap/Card'
 import HomeCarouselTeams from './HomeCarouselTeams'
 import HomePageScoreCards from './HomePageScoreCards'
-import CreateTeamDashboard from './CreateTeamDashboard'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
