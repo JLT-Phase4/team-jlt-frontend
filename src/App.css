@@ -1076,5 +1076,13 @@ ul {
 
 
 .emoji-show {
-  margin-right: 10px;
+  margin-left: -35px;
+  margin-top: -10px;
+  border: none;
+  background-color: white;
+  outline: none!important;
+}
+
+.emoji-show:hover {
+ color: blue;
 }

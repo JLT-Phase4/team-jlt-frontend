@@ -6,7 +6,7 @@ import EmojiPicker from 'emoji-picker-react';
 
 function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [statusUpdates, setStatusUpdates] = useState()
-  const [message, setMessage] = useState(" ")
+  const [message, setMessage] = useState([])
   const [feed, setFeed] = useState()
   const [allNotifications, setAllNotifications] = useState()
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
@@ -14,16 +14,24 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
   
-  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [chosenEmoji, setChosenEmoji] = useState([]);
+  const [spaceEmoji, setSpaceEmoji] = useState([""]);
   
-  const onEmojiClick = (event, emojiObject, message) => {
+  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
     console.log(message, "this is our message")
     setMessage(message+emojiObject.emoji);
     setChosenEmoji(emojiObject.emoji);
     console.log(emojiObject.emoji)
 
-
   }
+
+  // const onEmojiClick = (event, emojiObject, spaceEmoji) => {
+  //   console.log(message, "this is our message")
+  //   setMessage(emojiObject.emoji);
+  //   setChosenEmoji(emojiObject.emoji);
+  //   console.log(emojiObject.emoji)
+
+  // }
   
     
  
@@ -71,7 +79,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     })
   }
 
-  useEffect(updateAllNotifications, [token, setPodMembers, teams, feed, statusUpdates, setFeed, setStatusUpdates, setAllNotifications])
+  useEffect(updateAllNotifications, [token, setPodMembers, feed, statusUpdates, setFeed, setStatusUpdates, setAllNotifications])
   function updateAllNotifications () {
     if (feed && statusUpdates) {
       const myNotifications = feed.concat(statusUpdates)
@@ -79,6 +87,13 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
       setAllNotifications(allSortedNotifications)
     }
   }
+  function handleClear() {
+    setMessage('')
+    setChosenEmoji('')
+    setSpaceEmoji('')
+
+  }
+
 
   function handleSubmit (event) {
     event.preventDefault()
@@ -86,6 +101,8 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
       .then((response) => {
         updateFeed()
         setMessage('')
+        setChosenEmoji('')
+        setSpaceEmoji('')
       })
   }
   function compare (a, b) {
@@ -141,7 +158,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
                             <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
                             {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
                           </p>
-
+                          
                         </div>}
                     </div>
                   ))}
@@ -152,13 +169,17 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         </div>
       )}
       <div>
+      
         <form className='comment-box' onSubmit={handleSubmit}>
-          <input className='comment-input' type='text' placeholder='Write a comment...' value={[message+chosenEmoji]} onChange={event => setMessage(event.target.value)} />
-          <button className='emoji-show' onClick={(event) => showEmojis(event)}>B</button>
+          <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
+          
           <button className='comment-submit-button' type='submit'>Send</button>
+          <button className='emoji-show' onClick={(event) => showEmojis(event)}>☺</button>
+
         </form>
-      </div>
-      <div id="hide-emoji">
+        
+        <div id="hide-emoji">
+        
         {chosenEmoji ? (
           <span>You chose: {chosenEmoji.emoji}</span>
         ) : (
@@ -166,6 +187,9 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         )}
         <Picker onEmojiClick={onEmojiClick} />
       </div>
+        
+      </div>
+      
     </div>
   )
 }
