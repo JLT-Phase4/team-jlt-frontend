@@ -133,6 +133,14 @@ body {
   align-items: center;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
+.center{
+  justify-content: center;
+}
+
 .App-header {
   background-color: #282c34;
   display: flex;
@@ -178,8 +186,10 @@ a {
 }
 
 .center-containers {
-  
+  display: flex;
+  justify-content: center;
 }
+
 .reg{
   margin-left: 20px;
   margin-top: 50px;
@@ -214,7 +224,7 @@ a {
   border: 4px solid #b0afaf42;
   background-color: rgba(204, 224, 240, 0.964);
   box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
-  width: 50vh;
+  width: 100%;
   line-height: 1;
   padding: 50px;
 }
@@ -334,6 +344,9 @@ label {
   background-size: cover;
   border-radius: 25px;
   margin: 10px;
+}
+.homepage-carousel {
+  width: 480px;
 }
 
 .carousel-team-scoreblock {
@@ -779,10 +792,6 @@ ul {
   background-color: #eef0f300;
   border: none;
   /* background-color: none; */
-}
-
-.carousel-holder {
-  /* margin-top: 50px; */
 }
 
 .dashboard-scroll-holder{
