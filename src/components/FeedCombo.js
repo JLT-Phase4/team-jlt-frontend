@@ -1,16 +1,30 @@
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed, getStatusUpdate } from '../api'
 
+import Picker from 'emoji-picker-react';
+import EmojiPicker from 'emoji-picker-react';
+
 function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [statusUpdates, setStatusUpdates] = useState()
-  const [message, setMessage] = useState()
+  const [message, setMessage] = useState(" ")
   const [feed, setFeed] = useState()
   const [allNotifications, setAllNotifications] = useState()
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
+  
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  
+  const onEmojiClick = (event, emojiObject, message) => {
+    console.log(message, "this is our message")
+    setMessage(message+emojiObject.emoji);
+    setChosenEmoji(emojiObject.emoji);
+    console.log(emojiObject.emoji)
 
+  }
+  
+    
   useEffect(updateStatus, [token])
   function updateStatus () {
     getStatusUpdate(token).then(feed => {
@@ -82,6 +96,18 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     }
     return comparison
   }
+  function showEmojis (event) {
+    
+      var x = document.getElementById("hide-emoji");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  
+    
+  
 
   return (
     <div>
@@ -123,11 +149,19 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
       )}
       <div>
         <form className='comment-box' onSubmit={handleSubmit}>
-          <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
+          <input className='comment-input' type='text' placeholder='Write a comment...' value={[message+chosenEmoji]} onChange={event => setMessage(event.target.value)} />
+          <button className='emoji-show' onClick={(event) => showEmojis(event)}>B</button>
           <button className='comment-submit-button' type='submit'>Send</button>
         </form>
       </div>
-
+      <div id="hide-emoji">
+        {chosenEmoji ? (
+          <span>You chose: {chosenEmoji.emoji}</span>
+        ) : (
+          <span>No emoji Chosen</span>
+        )}
+        <Picker onEmojiClick={onEmojiClick} />
+      </div>
     </div>
   )
 }
