@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap'
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
 import ScoreBoard from './ScoreBoard'
 
-const TeamChoreDashboard = ({ token, teams, myTeam }) => {
+const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isCreating, setIsCreating] = useState(false)
@@ -48,12 +48,12 @@ const TeamChoreDashboard = ({ token, teams, myTeam }) => {
   }
 
   return (
-    <div>
+    <div className='flex-col-center'>
       {(team && teamChores) && (
         <div>
           <div className='flex-col'>
-            <h2 style={{ paddingLeft: '20px', margin: '20px' }}>Chores for <span style={{ color: 'yellowgreen' }}>{team.name}</span></h2>
-            <div style={{ marginLeft: '40px', marginRight: '40px' }} className='chore-detail-container flex-col'>
+            <h2 style={{ paddingLeft: '20px', marginTop: '20px', marginBottom: '10px', marginLeft: '20px' }}>Chores for <span style={{ color: `${team.dashboard_style}` }}>{team.name}</span></h2>
+            <div style={{ width: '1350px', marginRight: '40px', marginLeft: '40px' }} className='chore-detail-container flex-col'>
               {teamChores.length > 0 &&
                 <div className='flex'>
                   {/* style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }}  */}
@@ -77,30 +77,31 @@ const TeamChoreDashboard = ({ token, teams, myTeam }) => {
                 ? <Card>
                   <Card.Body>
                     <form onSubmit={(e) => handleCreate(e)}>
-                      <label className='chore-detail' htmlFor='chore-title'>Chore Title</label>
+                      <label style={{ color: `${team.dashboard_style}` }} className='chore-detail' htmlFor='chore-title'>Chore Title</label>
                       <input type='text' id='chore-title' required value={choreName} onClick={event => setChoreName('')} onChange={evt => setChoreName(evt.target.value)} />
-                      <label className='chore-detail' htmlFor='chore-detail'>Chore Detail</label>
+                      <label style={{ color: `${team.dashboard_style}` }} className='chore-detail' htmlFor='chore-detail'>Chore Detail</label>
                       <input style={{ width: '300px' }} type='textarea' id='chore-detail' required value={choreDetail} onClick={event => setChoreDetail('')} onChange={evt => setChoreDetail(evt.target.value)} />
-                      <label className='chore-detail' htmlFor='point-detail'>Chore Point Value</label>
+                      <label style={{ color: `${team.dashboard_style}` }} className='chore-detail' htmlFor='point-detail'>Chore Point Value</label>
                       <input style={{ width: '50px', marginRight: '5px' }} type='number' id='point-value' required value={chorePoints} onChange={event => setChorePoints(event.target.value)} />
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
                 </Card>
                 : <Card className='flex'>
-                  <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                </Card>}
+                  {isCaptain
+                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}`, width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                    : null}
+                  </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>
-                <h2 style={{ paddingLeft: '20px', margin: '20px' }}>Chore Detail and Points</h2>
-                <div style={{ marginLeft: '40px', marginRight: '40px' }} className='chore-detail-container'>
+                <h2 style={{ paddingLeft: '20px', margin: '20px', marginTop: '50px' }}>Chore Detail and Points</h2>
+                <div style={{ padding: '20px', width: '1350px', marginLeft: '40px', marginRight: '40px' }} className='flex chore-detail-container'>
                   {teamChores.map((chore, idx) => (
-                    <div className='flex' key={idx}>
-                      <div className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{chore.name}</div>
-                      <div className='chore-card' style={{ textAlign: 'left', width: '50%', border: `2px solid ${team.dashboard_style}` }}>{chore.detail}</div>
-                      <div className='chore-card' style={{ width: '10%', border: '2px solid yellowgreen' }}>{chore.points}</div>
-
+                    <div className='chore-card-detail chore-detail-container flex-col' key={idx}>
+                      <div className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }}>{chore.name}</div>
+                      <div style={{ padding: '5px' }}>Details: {chore.detail}</div>
+                      <div style={{ color: `${team.dashboard_style}`, padding: '5px' }}>Points: {chore.points}</div>
                     </div>
                     // <MDBPopover trigger='hover' style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }} key={chore.pk} size='lg' color='black' placement='right' dismiss btnChildren={chore.name}>
                     //   <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>

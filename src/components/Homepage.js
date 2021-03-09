@@ -1,8 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel'
-import Card from 'react-bootstrap/Card'
 import HomeCarouselTeams from './HomeCarouselTeams'
 import HomePageScoreCards from './HomePageScoreCards'
-import CreateTeamDashboard from './CreateTeamDashboard'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
@@ -21,7 +19,7 @@ const Homepage = ({ token, myTeam, teams, myPod, profileUsername, isCaptain, isC
                 {teams.map((team, idx) => (
                   <Carousel.Item key={idx} className='carousel-holder'>
                     {team && (
-                      <HomeCarouselTeams team={team} displayHeight='40vh' />
+                      <HomeCarouselTeams team={team} displayHeight='38vh' />
                     )}
                   </Carousel.Item>
                 ))}

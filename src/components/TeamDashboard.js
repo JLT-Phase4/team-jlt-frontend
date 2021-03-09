@@ -10,18 +10,34 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
   const [notPosted, setNotPosted] = useState(false)
   // const [feed, setFeed] = useState()
   // const [feedPk, setFeedPk] = useState()
-  const [totalPoints, setTotalPoints] = useState()
+  // const [totalPoints, setTotalPoints] = useState()
 
   function updateTeamScore (team) {
     let teamTotalPoints = 0
+    let teamPossiblePoints = 0
+
     for (const member of team.members) {
       teamTotalPoints += member.earned_chore_points.chore__points__sum
+      teamPossiblePoints += member.possible_chore_points.chore__points__sum
     }
     team.teamTotalPoints = teamTotalPoints
-    setTotalPoints(team.teamTotalPoints)
-
-    team.teamTotalPoints = teamTotalPoints
+    team.teamPossiblePoints = teamPossiblePoints
+    if (teamPossiblePoints > 0) {
+      team.teamPercentage = teamTotalPoints / teamPossiblePoints
+    } else {
+      team.teamPercentage = 0
+    }
   }
+  // function updateTeamScore (team) {
+  //   let teamTotalPoints = 0
+  //   for (const member of team.members) {
+  //     teamTotalPoints += member.earned_chore_points.chore__points__sum
+  //   }
+  //   team.teamTotalPoints = teamTotalPoints
+  //   setTotalPoints(team.teamTotalPoints)
+
+  //   team.teamTotalPoints = teamTotalPoints
+  // }
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
 
   function updateTeam () {
@@ -68,45 +84,44 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
             <div>
               <div className='flex-nowrap home-page-container'>
                 <div className='flex-col' style={{ width: '1000px' }}>
-                  <div className='carousel-team-dashboard-container' style={{ height: '40vh', backgroundImage: `url(${team.background_image}` }}>
-                    {/* <div style={{color: 'rgb(227, 230, 236)'}} className='carousel-team-title' >{team.name}!</div>
-                <div style={{color: 'rgb(227, 230, 236)'}} className='team-slogan'>{team.slogan}!</div>
-                <audio controls src={team.theme_song} /> */}
-                  </div>
+                  <div className='carousel-team-dashboard-container' style={{ height: '38vh', backgroundImage: `url(${team.background_image}` }} />
                   <div>
                     {team.members.length > 0
-                      ? <div style={{ minHeight: '40vh' }} className='flex-sa home-header'>
-                        <div>
-                          <div style={{ width: '400px', height: '30vh', justifyContent: 'center' }} className='flex team-scoreboard-container-home'>
+                      ? <div style={{ minHeight: '38vh' }} className='flex-sa home-header'>
+
+                        <div className='flex-col' style={{ width: '400px', marginTop: '20px', alignItems: 'center', justifyContent: 'space-around' }}>
+                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
+                          <div style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}` }} className='team-slogan'>{team.slogan}!</div>
+                          <audio controls src={team.theme_song} />
+                          <div style={{ backgroundColor: `${team.dashboard_style}`, color: 'white', marginBottom: '5px', alignItems: 'center' }} className='team-score-indicator'>
+                            <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}% as of {today}
+
+                            </div>
+                          </div>
+                        </div>
+                        <div style={{ justifyContent: 'space-around' }} className='flex-col'>
+                          <div style={{ width: '400px', marginTop: '1px', marginBottom: '4px', paddingTop: '0', paddingBottom: '0', justifyContent: 'center' }} className='flex team-scoreboard-container-home'>
                             {team.members.map(member => (
                               <ScoreBoard team={team} member={member} key={member.username} />
                             ))}
 
-                            {isCaptain === true && team.captain === profileUsername &&
-                              <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>}
                           </div>
-                          <div className='flex-col-center'>Some kind of Summary
-                            <div>Total Points: {team.teamTotalPoints}</div>
+                          {isCaptain === true && team.captain === profileUsername &&
+                            <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} style={{ marginTop: '0' }} className='log-reg-button'>Add Team Members</button></Link>}
 
-                          </div>
                         </div>
-                        <div className='flex-col' style={{ width: '400px', height: '20vh', marginTop: '30px', alignItems: 'center', justifyContent: 'space-around' }}>
+                      </div>
+                      : <div style={{ minHeight: '40vh' }} className='flex home-header'>
+                        <div className='flex-col' style={{ width: '400px', alignItems: 'center', justifyContent: 'space-around' }}>
                           <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
-                          <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
+                          <div className='team-slogan' style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}` }}>{team.slogan}!</div>
                           <audio controls src={team.theme_song} />
                         </div>
-                        {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button> */}
-                        </div>
-                      : <div style={{ minHeight: '33vh' }} className='flex home-header'>
-                        <div style={{ width: '340px' }} className='flex team-scoreboard-container-home'>
+                        <div style={{ width: '400px' }} className='flex team-scoreboard-container-home'>
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
                         </div>
-                        <div className='flex-col' style={{ width: '340px', alignItems: 'center', justifyContent: 'space-around' }}>
-                          <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div>
-                          <div style={{ color: 'rgb(227, 230, 236)' }} className='team-slogan'>{team.slogan}!</div>
-                          <audio controls src={team.theme_song} />
-                        </div>
-                        </div>}
+
+                      </div>}
 
                   </div>
                 </div>

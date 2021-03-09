@@ -156,6 +156,7 @@ function App () {
     setToken(null)
     setUsername(null)
     setTeams([])
+    setCaptain(false)
   }
 
   return (
@@ -184,7 +185,7 @@ function App () {
 
         <Route path='/team-chores/:teamPk'>
           <div className='App' />
-          <TeamChoreDashboard token={token} teams={teams} myTeam={myTeam} />
+          <TeamChoreDashboard token={token} teams={teams} myTeam={myTeam} isCaptain={isCaptain} />
         </Route>
 
         <Route path='/create-team-dashboard'>
