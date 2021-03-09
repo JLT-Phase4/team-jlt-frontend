@@ -13,11 +13,11 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
           <ul style={{ paddingTop: '10px' }} className='flex'>
             <li className=''><Link to='/'>Pod</Link></li>
             <li className=''><Link to={`/team/${myTeam}`}>Team</Link></li>
-            <li className=''><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
+            {isCaptain === true &&
+              <li className=''><Link to={`/chore-assignment/${myTeam}/`}>Assign Chores</Link></li>}
             {isCaptain === false &&
               <li className=''><Link to={`/user-profile/${username}`}>Profile</Link></li>}
-            {isCaptain === true &&
-              <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
+            <li className=''><Link to={`/team-chores/${myTeam}`}>{isCaptain ? 'Manage Chores' : 'Chores'}</Link></li>
           </ul>
         )}
 
@@ -25,7 +25,8 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
           <div className='about-link'><Link to='/about'>About</Link></div>
           {isLoggedIn
             ? (
-              <span><div><span>Logged in as {username} <span className='logout' style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+              <span><div><span>Welcome, {username} <span className='logout' style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+
           // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
               )
             : (

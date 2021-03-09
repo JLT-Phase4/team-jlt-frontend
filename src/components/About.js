@@ -13,7 +13,7 @@ const About = (props) => {
           <div style={{ width: '80%' }} className='welcome-text1'>
             <p>
               <span>Chore Wars is a free app that helps your family </span>
-              <span>achieve individual goals by gamifying everyday tasks. </span>
+              <span>achieve goals by gamifying everyday tasks. </span>
               <span>Create a team to assign chores </span>
               <span> to members of your household. </span>
               <span> Track individual and team progress </span>

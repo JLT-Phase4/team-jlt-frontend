@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap'
 import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
 import ScoreBoard from './ScoreBoard'
 
-const TeamChoreDashboard = ({ token, teams, myTeam }) => {
+const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
   const [isCreating, setIsCreating] = useState(false)
@@ -86,9 +86,11 @@ const TeamChoreDashboard = ({ token, teams, myTeam }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                </Card>
+                  </Card>
                 : <Card className='flex'>
-                  <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                  {isCaptain
+                    ? <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                    : null}
                 </Card>}
             </div>
             {teamChores.length > 0 &&
