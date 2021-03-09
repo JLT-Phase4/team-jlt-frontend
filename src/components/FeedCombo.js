@@ -11,7 +11,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
 
-  useEffect(updateStatus, [token])
+  useEffect(updateStatus, [token, teams, feedPk, setStatusUpdates, profileUsername, setFeed])
   function updateStatus () {
     getStatusUpdate(token).then(feed => {
       const myUpdates = feed.items
@@ -29,7 +29,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     )
   }
 
-  useEffect(identifyPodMembers, [token])
+  useEffect(identifyPodMembers, [token, setPodMembers, setPodMemberUsers])
   function identifyPodMembers () {
     const myPodMembersUsernames = []
     const myPodMembers = []
@@ -45,7 +45,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     setPodMembers(myPodMembers)
   }
 
-  useEffect(updateFeed, [token])
+  useEffect(updateFeed, [token, setFeed])
   function updateFeed () {
     getFeed(token, feedPk).then(feed => {
       const myFeed = feed.notifications
@@ -53,7 +53,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     })
   }
 
-  useEffect(updateAllNotifications, [token, feed, statusUpdates])
+  useEffect(updateAllNotifications, [token, setPodMembers, teams, feed, statusUpdates, setFeed, setStatusUpdates, setAllNotifications])
   function updateAllNotifications () {
     if (feed && statusUpdates) {
       const myNotifications = feed.concat(statusUpdates)

@@ -25,7 +25,7 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
           <div className='about-link'><Link to='/about'>About</Link></div>
           {isLoggedIn
             ? (
-              <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+              <span><div><span>Logged in as {username} <span className='logout' style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
           // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
               )
             : (
