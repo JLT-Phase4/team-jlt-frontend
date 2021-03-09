@@ -198,6 +198,12 @@ a {
   flex-direction: column;
   align-items: flex-start;
   font-size: x-large;
+  line-height: 2;
+}
+
+.input {
+  border-radius: 10px;
+  margin: 10px;
 }
 
 .login-header{
@@ -292,6 +298,7 @@ a {
 .log-reg-button {
   margin: 20px;
   margin-left: 0px;
+  margin-top: 25px;
   padding: 6px;
   border-radius: 8px;
   /* background: linear-gradient(rgb(58, 147, 235), rgb(5, 32, 117)); */

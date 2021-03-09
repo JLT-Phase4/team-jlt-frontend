@@ -27,7 +27,7 @@ function Register ({ isLoggedIn, setAuth }) {
 
   return (
     <div className='center-containers'>
-      <div style={{ marginLeft: '50px' }} className='flex-col'>
+      <div className='flex-col'>
         <div className='login-page-container'>
           <h1>Welcome to Chore Wars!</h1>
           <div className=''>
@@ -39,14 +39,14 @@ function Register ({ isLoggedIn, setAuth }) {
               <div className='errors'>{errors}</div>
             )}
             <div>
-              <label htmlFor='username'>Username</label>
-              <input type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
+              {/* <label htmlFor='username'>Username</label> */}
+              <input className='input' placeholder='Username' type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
             </div>
             <div>
-              <label className='register-password-label' htmlFor='password'>Password</label>
-              <input type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
+              {/* <label className='register-password-label' htmlFor='password'>Password</label> */}
+              <input className='input' placeholder='Password' type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
             </div>
-            <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Register</button>
+            <button className='log-reg-button' type='submit'>Register</button>
           </form>
           <div>
             <p className='route-to-reg'>Already a Chore Wars member? <Link to='/login'>Click here to log in.</Link></p>

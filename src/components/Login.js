@@ -36,20 +36,20 @@ function Login ({ isLoggedIn, setAuth }) {
             <div className='header-bar' style={{ backgroundImage: `url(${lawnMowingImage})` }} />
           </div>
           <div style={{ marginTop: '10px' }}>
-            <form className='' onSubmit={handleSubmit}>
+            <form className='reg' onSubmit={handleSubmit}>
               <h2 className='login-header'>Login</h2>
               {errors && (
                 <div className='errors'>{errors}</div>
               )}
               <div>
-                <label htmlFor='username'>Username</label>
-                <input type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
+                {/* <label htmlFor='username'>Username</label> */}
+                <input className='input' placeholder='Username' type='text' id='username' required value={username} onChange={event => setUsername(event.target.value)} />
               </div>
               <div>
-                <label className='login-password-label' htmlFor='password'>Password</label>
-                <input type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
+                {/* <label className='login-password-label' htmlFor='password'>Password</label> */}
+                <input className='input' placeholder='Password' type='password' id='password' required value={password} onChange={event => setPassword(event.target.value)} />
               </div>
-              <button style={{ margin: '0' }} className='log-reg-button' type='submit'>Login</button>
+              <button className='log-reg-button' type='submit'>Login</button>
             </form>
           </div>
           <p className='route-to-reg'>Not a Chore Wars member? <Link to='/register'>Click here to register.</Link></p>
