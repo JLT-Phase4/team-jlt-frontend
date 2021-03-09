@@ -10,7 +10,7 @@ import walkingDogImage from './../images/walking-dog.png'
 
 function AltHomepage () {
   return (
-    <div className='login-page-container'>
+    <div className='althome-page-container'>
       <div className='text-align-center'>
         <h1 className='welcome-header'>Welcome to Chore Wars!</h1>
         <div>
