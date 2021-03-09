@@ -1100,11 +1100,17 @@ ul {
 
 
 .emoji-show {
-  margin-left: -35px;
+  margin-left: -39px;
   margin-top: -10px;
   border: none;
   background-color: white;
   outline: none!important;
+  font-size: 23px;
+  color: #4A90E2;
+}
+
+.emoji-show:hover {
+  color: black;
 }
 
 .scroll-effect {
@@ -1138,4 +1144,9 @@ ul {
 
 .individual-member:hover {
   background-color: rgba(129, 132, 132, 0.295);
+}
+
+#hide-emoji {
+  margin-left: 45px;
+  margin-top: 5px;
 }

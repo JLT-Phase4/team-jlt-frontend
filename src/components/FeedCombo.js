@@ -120,6 +120,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   function showEmojis (event) {
     
       var x = document.getElementById("hide-emoji");
+      
       if (x.style.display === "none") {
         x.style.display = "block";
       } else {
@@ -178,12 +179,12 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
 
         </form>
         
-        <div id="hide-emoji">
+        <div id="hide-emoji" style={{display: 'none'}}>
         
         {chosenEmoji ? (
-          <span>You chose: {chosenEmoji.emoji}</span>
+          <span> {chosenEmoji.emoji}</span>
         ) : (
-          <span>No emoji Chosen</span>
+          <span></span>
         )}
         <Picker onEmojiClick={onEmojiClick} />
       </div>
