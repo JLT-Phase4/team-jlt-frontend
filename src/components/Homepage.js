@@ -26,7 +26,7 @@ const Homepage = ({ token, myTeam, teams, myPod, profileUsername, isCaptain, isC
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <HomePageScoreCards token={token} myTeam={myTeam} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
+              <HomePageScoreCards token={token} today={today} myTeam={myTeam} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
             </div>
             <div className='team-feed-container'>
               <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>

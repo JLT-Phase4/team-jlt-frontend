@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ScoreBoard from './ScoreBoard'
 import { MDBProgress } from 'mdbreact'
 
-const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }) => {
+const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUsername }) => {
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
   const [newTeams, setNewTeams] = useState([])
@@ -38,10 +38,10 @@ const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }
 
   return (
     <div style={{ minHeight: '40vh', overflow: 'scroll' }} className='home-header flex-nowrap'>
+
       {newTeams.map((team, idx) => (
         <div key={idx}>
           {(team) && (
-
             <div>
               <div style={{ height: '30vh' }} className='team-scoreboard-container-home'>
                 <Link to={`/team/${team.pk}`} style={{ fontSize: '25px', fontWeight: '600' }}>
@@ -57,7 +57,7 @@ const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }
                   // <ScoreBoard team={team} member={member} key={member.username} />
                 ))}
               </div>
-              <div style={team.isLeader ? { backgroundColor: '#ffeb3b73', height: '8vh', alignItems: 'center' } : { backgroundColor: '#dde4dd17', height: '10vh', alignItems: 'center' }} className='team-scoreboard-container-home'>
+              <div style={team.isLeader ? { backgroundColor: '#ffeb3b73', height: '6vh', alignItems: 'center' } : { backgroundColor: '#dde4dd17', height: '10vh', alignItems: 'center' }} className='team-scoreboard-container-home'>
                 {/* <div>Total Points: {team.teamTotalPoints}</div>
                 <div>Possible Points: {team.teamPossiblePoints}</div> */}
                 {/* <div>Team Percentage: {(100 * team.teamTotalPoints / team.teamPossiblePoints).toFixed(1)}</div> */}
@@ -67,10 +67,10 @@ const HomePageScoreCards = ({ token, myTeam, teams, isCaptain, profileUsername }
               </div>
             </div>
           )}
-
         </div>
       ))}
     </div>
+
   )
 }
 
