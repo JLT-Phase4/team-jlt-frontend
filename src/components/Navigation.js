@@ -53,7 +53,7 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
               )
             : (
               <span>
-                <Link style={{ textDecoration: 'none' }} className='login-link' to='/login'>Login</Link>or<Link className='nav-bar-link' to='/register'>Register</Link>
+                <Link style={{ textDecoration: 'none' }} className='login-link' to='/login'>Login</Link>or<Link className='nav-bar-link' style={{ textDecoration: 'none', marginLeft: '10px' }} to='/register'>Register</Link>
               </span>
               )}
         </div>
