@@ -161,7 +161,7 @@ function App () {
 
   return (
     <Router>
-      <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime} handleLogout={handleLogout} isLoggedIn={isLoggedIn} />
+      <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime} handleLogout={handleLogout} isLoggedIn={isLoggedIn} team={team} />
       <Switch>
 
         <Route path='/about'>
@@ -224,7 +224,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                    </div>}
+                  </div>}
 
               </div>
               )

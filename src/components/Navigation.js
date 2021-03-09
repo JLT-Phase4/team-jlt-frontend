@@ -1,8 +1,27 @@
-
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle } from 'mdbreact'
 
-const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogout, isLoggedIn }) => {
+const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogout, isLoggedIn, team }) => {
+  const [avatar, setAvatar] = useState('')
+  const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
+
+  useEffect(getAvatar, [team, setAvatar, avatar])
+  function getAvatar () {
+    if (team) {
+      console.log(team.members)
+      for (const member of team.members) {
+        if (username) {
+          if (username === member.username) {
+            console.log(member.username)
+            setAvatar(member.avatar)
+            console.log(avatar)
+          }
+        }
+      }
+    }
+  }
+
   return (
     <div className='chore-wars-nav'>
       <div style={{ justifyContent: 'space-between' }} className='flex chore-wars-bar'>
