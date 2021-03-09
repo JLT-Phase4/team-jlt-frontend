@@ -75,7 +75,7 @@ const ScoreChart = ({ userProfile, today, todayIndex }) => {
         {
           label: 'Scores',
           // fill: true,
-          lineTension: 0.8,
+          lineTension: 0.5,
           backgroundColor: 'rgba(225, 204,230, .3)',
           borderColor: 'rgb(205, 130, 158)',
           borderCapStyle: 'butt',

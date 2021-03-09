@@ -45,18 +45,28 @@ function App () {
 
   function updateTeamScores (teams) {
     const teamsTotalPoints = []
+    const teamsPossiblePoints = []
+    const teamsPercentage = []
     for (const team of teams) {
       let teamTotalPoints = 0
+      let teamPossiblePoints = 0
       for (const member of team.members) {
         teamTotalPoints += member.earned_chore_points.chore__points__sum
+        teamPossiblePoints += member.possible_chore_points.chore__points__sum
       }
       team.teamTotalPoints = teamTotalPoints
+      team.teamPossiblePoints = teamPossiblePoints
+      team.teamPercentage = teamTotalPoints / teamPossiblePoints
+      teamsPossiblePoints.push(team.teamPossiblePoints)
       teamsTotalPoints.push(team.teamTotalPoints)
+      teamsPercentage.push(team.teamPercentage)
     }
     teams.teamTotalPoints = teamsTotalPoints
+    teams.teamsPossiblePoints = teamsPossiblePoints
+    teams.teamsPercentage = teamsPercentage
   }
   // react context
-  useEffect(updatePod, [token, username, setMyPod, setMyPodFeedPk, setIsLoading])
+  useEffect(updatePod, [token, username, setTeam, setCaptain, setMyPod, setMyPodFeedPk, setIsLoading])
 
   function updatePod () {
     getPods(token)
@@ -211,10 +221,10 @@ function App () {
             ? (
               <div>
                 {(teams && myPod)
-                  ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
+                  ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                  </div>}
+                    </div>}
 
               </div>
               )
