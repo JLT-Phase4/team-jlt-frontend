@@ -785,6 +785,14 @@ margin-right: 5px;
   padding-left: 30px;
 }
 
+.avatar-image-nav {
+  width: 50px;
+  height: 50px;
+  border-radius: 150px;
+  background-size: cover;
+  margin: 10px;
+}
+
 /* why isnt this working? */
 @media only screen and (max-width:900px) {
   .team-dash-button {
