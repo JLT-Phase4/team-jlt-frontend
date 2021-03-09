@@ -73,7 +73,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                     // </MDBPopover>
                   ))}
                 </div>}
-              {isCreating && isCaptain
+              {isCreating
                 ? <Card>
                   <Card.Body>
                     <form onSubmit={(e) => handleCreate(e)}>
@@ -88,8 +88,10 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                   </Card.Body>
                   </Card>
                 : <Card className='flex'>
-                  <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
-                  </Card>}
+                  {isCaptain
+                    ? <Card.Body className='chore-card' style={{ border: '2px solid yellowgreen ', width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                    : null}
+                </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>
