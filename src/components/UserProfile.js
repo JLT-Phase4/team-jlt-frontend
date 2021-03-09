@@ -170,6 +170,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
     handleAssignmentUpdate(assignmentPk, false, userProfile.username, today)
   }
 
+  function titleCase (string) {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase()
+  }
+
   return (
     <div>
       {userProfile && team && (
@@ -213,7 +217,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                         {userProfile.assignments.length > 0 && userProfile.username === profileUsername
                           ? <div className='flex-sb'>
-                            <div>{today}'s Chores
+                            <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div key={idx}>
                                   {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
@@ -229,7 +233,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                             </div>
 
                           : <div className='flex-sb'>
-                            <div>{today}'s Chores
+                            <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div key={idx}>
                                   {(assignment.assignment_type.includes(today) && assignment.complete === false) && (
@@ -249,7 +253,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                       >
                         {userProfile.assignments.length > 0 && userProfile.username === profileUsername
                           ? <div className='flex-sb'>
-                            <div>Drag to Mark Complete
+                            <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div
                                   key={idx}
@@ -266,7 +270,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                             </div>
                             </div>
                           : <div className='flex-sb'>
-                            <div>Drag to Mark Complete
+                            <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
                                 <div
                                   key={idx}
@@ -287,8 +291,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                       {userProfile &&
                         <div
                           style={{ fontSize: '30px', backgroundColor: '#ffffff12' }} className='flex-col user-profile-mini-container'
-                        >{today}
-                          <div style={{ fontSize: '30px' }}>{userProfile.numberComplete} of {userProfile.numberAssignments} complete</div>
+                        >{titleCase(today)}'s Status
+                          <div style={{ marginLeft: '50px', marginTop: '30px', fontSize: '30px' }}>
+                            {userProfile.numberComplete} of {userProfile.numberAssignments} complete {userProfile.numberComplete === userProfile.numberAssignments && <span style={{ fontSize: '40px', color: `${team.dashboard_style}` }} className='material-icons'>star</span>}
+                          </div>
                         </div>}
                     </div>
                   </div>
