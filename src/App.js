@@ -146,6 +146,7 @@ function App () {
     setToken(null)
     setUsername(null)
     setTeams([])
+    setCaptain(false)
   }
 
   return (
@@ -213,7 +214,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                    </div>}
+                  </div>}
 
               </div>
               )
