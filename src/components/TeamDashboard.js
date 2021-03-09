@@ -77,7 +77,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                     {team.members.length > 0
                       ? <div style={{ minHeight: '40vh' }} className='flex-sa home-header'>
                         <div>
-                          <div style={{ width: '400px', minHeight: '25vh' }} className='flex team-scoreboard-container-home'>
+                          <div style={{ width: '400px', height: '30vh', justifyContent: 'center' }} className='flex team-scoreboard-container-home'>
                             {team.members.map(member => (
                               <ScoreBoard team={team} member={member} key={member.username} />
                             ))}
