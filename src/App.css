@@ -133,6 +133,14 @@ body {
   align-items: center;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
+.center{
+  justify-content: center;
+}
+
 .App-header {
   background-color: #282c34;
   display: flex;
@@ -337,20 +345,10 @@ label {
   border-radius: 25px;
   margin: 10px;
 }
-
-/* .homepage-carousel {
-  height: 100%;
-  width: 100%;
-} */
-
-.carousel-inner > .item > img, .carousel-inner > .item > a > img {
-  width: 100%;
+.homepage-carousel {
+  width: 480px;
 }
 
-/* .w-100 {
-  width: 100% !important;
-  height: 75vh;
-} */
 .carousel-team-scoreblock {
   display: flex;
   flex-direction: row;
