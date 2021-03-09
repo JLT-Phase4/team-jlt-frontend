@@ -1,56 +1,38 @@
 
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdownMenu, MDBDropdown, MDBDropdownItem, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBView, MDBMask } from 'mdbreact'
 
 import TeamDashboard from './components/TeamDashboard'
 import TeamChoreDashboard from './components/TeamChoreDashboard'
-import HomeCarouselTeams from './components/HomeCarouselTeams'
 import Homepage from './components/Homepage'
-import Carousel from 'react-bootstrap/Carousel'
-import Card from 'react-bootstrap/Card'
-// import ChoreDashboard from './components/ChoreDashboard'
 import ChoreSummary from './components/ChoreSummary'
 import ChoreSummaryMobile from './components/ChoreSummaryMobile'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
-// import Navigation from './components/Navigation'
-import HomePageScoreCards from './components/HomePageScoreCards'
+import Navigation from './components/Navigation'
 import { useEffect, useState } from 'react'
-import { getTeams, getPods, getUserProfile, getAssignments, updateAssignment, updatePod } from './api'
+import { getTeams, getPods, getAssignments, updateAssignment } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
-import laundryImage from './images/laundry-basket.png'
-import lawnMowingImage from './images/lawn-mowing.png'
-import walkingDogImage from './images/walking-dog.png'
-import washingDishesImage from './images/washing-dishes.png'
-import Welcome from './components/Welcome'
 import AltHomepage from './components/AltHomepage'
 import About from './components/About'
 
 const useUsername = createPersistedState('username')
 const useToken = createPersistedState('token')
-// const useMyTeam = createPersistedState('myTeam')
-// const useMyTeamName = createPersistedState('myTeamName')
 
 function App () {
   const [teams, setTeams] = useState([])
   const [token, setToken] = useToken()
   const [username, setUsername] = useUsername()
   const [isCaptain, setCaptain] = useState(false)
-  // call this isTeamCaptain
   const [today, setToday] = useState('MONDAY')
   const [todayIndex, setTodayIndex] = useState(0)
   const [myTeam, setMyTeam] = useState()
   const [team, setTeam] = useState()
   const [myPod, setMyPod] = useState()
   const [myPodFeedPk, setMyPodFeedPk] = useState()
-  const [myTeamFeedPk, setMyTeamFeedPk] = useState()
-  const [myTeamName, setMyTeamName] = useState()
-  // const [userProfile, setUserProfile] = useState()
-  // const [isCaptainStatus, setCaptainStatus] = useState(false)
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
   const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
@@ -61,8 +43,6 @@ function App () {
   }
   const isLoggedIn = (username && token)
 
-  // const [totalPoints, setTotalPoints] = useState()
-  // useEffect(updateTeamScores, [token, teams, userProfile, setTeams, today])
   function updateTeamScores (teams) {
     const teamsTotalPoints = []
     for (const team of teams) {
@@ -72,7 +52,6 @@ function App () {
       }
       team.teamTotalPoints = teamTotalPoints
       teamsTotalPoints.push(team.teamTotalPoints)
-      // setTotalPoints(team.teamTotalPoints)
     }
     teams.teamTotalPoints = teamsTotalPoints
   }
@@ -125,32 +104,22 @@ function App () {
     }
   }
 
-  // useEffect(updateProfile, [token, username, myPod, myTeam, myPodFeedPk, setMyPodFeedPk, isCreatingTeam])
-  const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
-    { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
+  // KEEP THIS HERE IF WE NEED IT TO QUICKLY RESET LATER
+  // const dayDict = [{ day: 'MONDAY', index: 0 }, { day: 'TUESDAY', index: 1 }, { day: 'WEDNESDAY', index: 2 },
+  //   { day: 'THURSDAY', index: 3 }, { day: 'FRIDAY', index: 4 }, { day: 'SATURDAY', index: 5 }, { day: 'SUNDAY', index: 6 }]
 
-  useEffect(updateAssignments, [token, today])
-  function updateAssignments () {
-    getAssignments(token).then(assignments => {
-      setAssignments(assignments)
-      // this is the rewind code for reseeding the data quickly
-      // for (const day of dayDict) {
-      //   for (const assignment of assignments) {
-      //     if (assignment.assignment_type === day.day && todayIndex < day.index) {
-      //       updateAssignment(token, assignment.pk, false).then(updateProfile())
-      //     }
-      //   }
-      // }
-    })
-  }
-
-  // function updateProfile () {
-  //   getUserProfile(token, username).then(profile => {
-  //     setUserProfile(profile)
-  //     if (profile.user_type === 1) {
-  //       setCaptainStatus(true)
-  //       console.log('I have captain status')
-  //     }
+  // useEffect(updateAssignments, [token, today])
+  // function updateAssignments () {
+  //   getAssignments(token).then(assignments => {
+  //     setAssignments(assignments)
+  //     // this is the rewind code for reseeding the data quickly
+  //     // for (const day of dayDict) {
+  //     //   for (const assignment of assignments) {
+  //     //     if (assignment.assignment_type === day.day && todayIndex < day.index) {
+  //     //       updateAssignment(token, assignment.pk, false).then(updateProfile())
+  //     //     }
+  //     //   }
+  //     // }
   //   })
   // }
 
@@ -181,62 +150,7 @@ function App () {
 
   return (
     <Router>
-      {/* <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime}></Navigation> */}
-      <div className='chore-wars-nav'>
-        <div style={{ justifyContent: 'space-between' }} className='flex chore-wars-bar'>
-          <div className='flex'>
-            <Link to='/' className='banner'>Chore Wars</Link>
-          </div>
-          {token && (
-            <ul style={{ paddingTop: '10px' }} className='flex'>
-              <li className=''><Link to='/'>Pod</Link></li>
-              <li className=''><Link to={`/team/${myTeam}`}>Team</Link></li>
-              <li className=''><Link to={`/chore-assignment/${myTeam}/`}>{isCaptain ? 'Assign Chores' : 'Chores'}</Link></li>
-              {isCaptain === false &&
-                <li className=''><Link to={`/user-profile/${username}`}>Profile</Link></li>}
-              {isCaptain === true &&
-                <li className=''><Link to={`/team-chores/${myTeam}`}>Manage Chores</Link></li>}
-            </ul>
-          )}
-
-          <div className='flex-row' style={{ paddingTop: '10px' }}>
-            <div className='about-link'><Link to='/about'>About</Link></div>
-            {isLoggedIn
-              ? (
-                <span><div className='logout'><span>Logged in as {username} <span style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
-
-            // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
-                )
-              : (
-                <span>
-                  <Link className='' to='/login'>Login</Link> or<Link className='nav-bar-link' to='/register'>Register</Link>
-                </span>
-                )}
-          </div>
-          {token && (
-            <div className='flex'>
-
-              <MDBDropdown>
-                <MDBDropdownToggle nav caret>
-                  <div className='d-none d-md-inline'>Day</div>
-                </MDBDropdownToggle>
-                <MDBDropdownMenu right>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='MONDAY'>Monday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='TUESDAY'>Tuesday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='WEDNESDAY'>Wednesday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='THURSDAY'>Thursday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='FRIDAY'>Friday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SATURDAY'>Saturday</MDBDropdownItem>
-                  <MDBDropdownItem onClick={(e) => handleTime(e)} value='SUNDAY'>Sunday</MDBDropdownItem>
-
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </div>
-          )}
-
-        </div>
-      </div>
-
+      <Navigation token={token} myTeam={myTeam} isCaptain={isCaptain} username={username} handleTime={handleTime} handleLogout={handleLogout} isLoggedIn={isLoggedIn} />
       <Switch>
 
         <Route path='/about'>
@@ -260,7 +174,7 @@ function App () {
 
         <Route path='/team-chores/:teamPk'>
           <div className='App' />
-          <TeamChoreDashboard token={token} teams={teams} myTeam={myTeam} myTeamName={myTeamName} />
+          <TeamChoreDashboard token={token} teams={teams} myTeam={myTeam} />
         </Route>
 
         <Route path='/create-team-dashboard'>
@@ -286,24 +200,20 @@ function App () {
 
         <Route path='/user-profile/:username'>
           <div className='App' />
-          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} feedPk={myTeamFeedPk} myTeam={myTeam} team={team} setTeam={setTeam} teams={teams} setTeams={setTeams} podPk={myPod} updateTeamScores={updateTeamScores} />
+          <UserProfile token={token} today={today} todayIndex={todayIndex} profileUsername={username} team={team} setTeam={setTeam} teams={teams} setTeams={setTeams} podPk={myPod} updateTeamScores={updateTeamScores} />
         </Route>
 
         {/* {Home Page for User Already on Team} */}
 
         <Route path='/'>
-          {/* Turn all of this into a component to see if it handles re-rendering issues */}
-
           {token
             ? (
               <div>
                 {(teams && myPod)
                   ? <Homepage token={token} teams={teams} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
-
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-
-                    </div>}
+                  </div>}
 
               </div>
               )
