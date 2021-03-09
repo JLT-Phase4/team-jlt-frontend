@@ -6,7 +6,7 @@ import CreateTeamDashboard from './CreateTeamDashboard'
 import FeedCombo from './FeedCombo'
 import { Redirect } from 'react-router-dom'
 
-const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today }) => {
+const Homepage = ({ token, myTeam, teams, myPod, profileUsername, isCaptain, isCreatingTeam, setIsCreatingTeam, feedPk, today }) => {
   if (!token) {
     return <Redirect to='/login' />
   }
@@ -26,7 +26,7 @@ const Homepage = ({ token, teams, myPod, profileUsername, isCaptain, isCreatingT
                   </Carousel.Item>
                 ))}
               </Carousel>
-              <HomePageScoreCards token={token} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
+              <HomePageScoreCards token={token} myTeam={myTeam} teams={teams} isCaptain={isCaptain} profileUsername={profileUsername} />
             </div>
             <div className='team-feed-container'>
               <FeedCombo teams={teams} token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} className='footer-feed'>Latest Notification Feed</FeedCombo>

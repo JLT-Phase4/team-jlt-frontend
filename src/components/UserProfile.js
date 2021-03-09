@@ -14,7 +14,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
   const [avatar, setAvatar] = useState('')
   // const [team, setTeam] = useState()
   const [teamPk, setTeamPk] = useState('')
-  const [showSummary, setShowSummary] = useState(true)
   const [dragging, setDragging] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
@@ -97,10 +96,6 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
         setTeams(pod.teams)
       })
     }
-  }
-
-  function toggleSummary () {
-    setShowSummary(!showSummary)
   }
 
   if (!token) {
@@ -233,7 +228,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
 
                           : <div className='flex-sb'>
                             <div>{today}'s Chores
@@ -247,7 +242,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -271,7 +266,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
                           : <div className='flex-sb'>
                             <div>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -288,7 +283,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
 
                       </div>
                       {userProfile &&
@@ -300,7 +295,8 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                         </div>}
                     </div>
                   </div>
-                  {showSummary && userProfile.assignments.length > 0
+
+                  {userProfile.assignments.length > 0
                     ? <div key={userProfile.pk} style={{ width: '1400px', minWidth: '850px' }} className='team-member-container-list flex-nowrap'>
                       <Link style={{ fontSize: '22px', marginTop: '10px' }} to={`/user-profile/${userProfile.username}/`} className={`${userProfile.username} flex`}>
                         <div>
@@ -339,7 +335,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : null}
                   {/* <div style={{ width: '100%', maxWidth: '1100px', border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
@@ -349,11 +345,11 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                     {/* add condition that userpfoile matches somehow */}
                   {/* </div> } */}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </div>
 

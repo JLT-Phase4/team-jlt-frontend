@@ -236,7 +236,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
                     className='team-member-container-list'
                   >
                     <Card className='chore-card-container'>
-                      <Card.Body className='day-of-week-card'>
+                      <Card.Body style={{ width: '120px' }} className='day-of-week-card'>
                         Delete
                       </Card.Body>
                     </Card>
