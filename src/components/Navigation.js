@@ -12,9 +12,12 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
       for (const member of team.members) {
         if (username) {
           if (username === member.username) {
-            // console.log(member.username)
-            setAvatar(member.avatar)
-            // console.log(avatar)
+            // setAvatar(member.avatar)
+            if (member.avatar !== null && member.avatar !== undefined && member.avatar !== '') {
+              setAvatar(member.avatar)
+            } else {
+              setAvatar(AVATAR)
+            }
           }
         }
       }
@@ -41,9 +44,10 @@ const Navigation = ({ token, myTeam, isCaptain, username, handleTime, handleLogo
 
         <div className='flex-row' style={{ paddingTop: '10px' }}>
           <div className='about-link'><Link to='/about'>About</Link></div>
+          <div className='avatar-image-nav' style={{ backgroundImage: `url(${avatar})` }} />
           {isLoggedIn
             ? (
-              <span><div><span><div className='avatar-image-nav' style={{ backgroundImage: `url(${avatar})` }} />{username} <span className='logout' style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
+              <span><div className='flex-row' style={{ padding: '3px', fontSize: '17px' }}><span>{username} <span className='logout' style={{ marginLeft: '10px' }} onClick={() => handleLogout()}> Logout</span></span></div></span>
 
           // <span><div className='nav-bar-link' onClick={() => setToken(null)}>Log out</div></span>
               )
