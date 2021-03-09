@@ -1113,6 +1113,20 @@ ul {
   color: black;
 }
 
+.emoji-show-team {
+  margin-left: -93px;
+  margin-top: -10px;
+  border: none;
+  background-color: white;
+  outline: none!important;
+  font-size: 23px;
+  color: #4A90E2;
+}
+
+.emoji-show-team:hover {
+  color: black;
+}
+
 .scroll-effect {
 
     overflow: hidden;

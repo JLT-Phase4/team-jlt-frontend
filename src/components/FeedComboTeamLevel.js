@@ -1,16 +1,29 @@
 
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed, getStatusUpdate } from '../api'
+import Picker from 'emoji-picker-react';
+import EmojiPicker from 'emoji-picker-react';
 
 function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
   const [statusUpdates, setStatusUpdates] = useState()
-  const [message, setMessage] = useState()
+  const [message, setMessage] = useState([])
   const [feed, setFeed] = useState()
   const [allNotifications, setAllNotifications] = useState()
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
 
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
+
+  const [chosenEmoji, setChosenEmoji] = useState([]);
+  const [spaceEmoji, setSpaceEmoji] = useState([""]);
+  
+  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
+    console.log(message, "this is our message")
+    setMessage(message+emojiObject.emoji);
+    setChosenEmoji(emojiObject.emoji);
+    console.log(emojiObject.emoji)
+
+  }
 
   useEffect(updateStatus, [token])
   function updateStatus () {
@@ -60,6 +73,12 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
       setAllNotifications(allSortedNotifications)
     }
   }
+  function handleClear() {
+    setMessage('')
+    setChosenEmoji('')
+    setSpaceEmoji('')
+
+  }
 
   function handleSubmit (event) {
     event.preventDefault()
@@ -68,6 +87,8 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
       .then((response) => {
         updateFeed()
         setMessage('')
+        setChosenEmoji('')
+        setSpaceEmoji('')
       })
   }
   function compare (a, b) {
@@ -82,6 +103,17 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
     }
     return comparison
   }
+  
+  function showEmojis (event) {
+    
+    var x = document.getElementById("hide-emoji");
+    
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
 
   return (
     <div style={{ width: '100%' }}>
@@ -95,12 +127,12 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
                   <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
                   <p className='message-username'> {notification.sender.username}</p>
 
-                  <p>{notification.message}</p>
+                  <p style={{ textAlign: 'left' }}>{notification.message}</p>
                 </div>}
               {notification.title && podMemberUsers.includes(notification.username) &&
                 <div>
                   {podMembers.map((member, idx) => (
-                    <div className='message-container' key={idx}>
+                    <div key={idx}>
                       {member.username === notification.username &&
                         <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
                           <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
@@ -126,7 +158,18 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
           <form className='comment-box' onSubmit={handleSubmit}>
             <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
             <button className='comment-submit-button' type='submit'>Send</button>
+            <button className='emoji-show-team' onClick={(event) => showEmojis(event)}>☺</button>
           </form>
+          <div id="hide-emoji" style={{display: 'none'}}>
+        
+        {chosenEmoji ? (
+          <span> {chosenEmoji.emoji}</span>
+        ) : (
+          <span></span>
+        )}
+        <Picker onEmojiClick={onEmojiClick} />
+        </div>
+        
 
         </div>}
 
