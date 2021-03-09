@@ -16,15 +16,36 @@ function AltHomepage () {
       <div>
         <p className='route-to-reg'>Already a Chore Wars member? <Link to='/login'>Click here to log in.</Link></p>
       </div>
-      {/* <Carousel> <Carousel.Item className='carousel-holder'> <div>Here is Carousel</div> </Carousel.Item> </Carousel> */}
-      <div className='flex'>
+      <div className='homepage-carousel'>
+        <Carousel>
+          <Carousel.Item className='carousel-holder'>
+            <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
+          </Carousel.Item>
+          <Carousel.Item className='carousel-holder'>
+            <a href={CreateTeamView}><img className='welcome-page-card' src={CreateTeamView} /></a>
+          </Carousel.Item>
+          <Carousel.Item className='carousel-holder'>
+            <a href={ManageChoresView}><img className='welcome-page-card' src={ManageChoresView} /></a>
+          </Carousel.Item>
+          <Carousel.Item className='carousel-holder'>
+            <a href={AssignChoresView}><img className='welcome-page-card' src={AssignChoresView} /></a>
+          </Carousel.Item>
+          <Carousel.Item className='carousel-holder'>
+            <a href={ProfileLevelView}><img className='welcome-page-card' src={ProfileLevelView} /></a>
+          </Carousel.Item>
+          <Carousel.Item className='carousel-holder'>
+            <a href={TeamLevelView}><img className='welcome-page-card' src={TeamLevelView} /></a>
+          </Carousel.Item>
+        </Carousel>
+      </div>
+      {/* <div className='flex'>
         <a href={PodLevelView}><img className='welcome-page-card' src={PodLevelView} /></a>
         <a href={CreateTeamView}><img className='welcome-page-card' src={CreateTeamView} /></a>
         <a href={ManageChoresView}><img className='welcome-page-card' src={ManageChoresView} /></a>
         <a href={AssignChoresView}><img className='welcome-page-card' src={AssignChoresView} /></a>
         <a href={ProfileLevelView}><img className='welcome-page-card' src={ProfileLevelView} /></a>
         <a href={TeamLevelView}><img className='welcome-page-card' src={TeamLevelView} /></a>
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -18,7 +18,7 @@ const About = (props) => {
               <span> to members of your household. </span>
               <span> Track individual and team progress </span>
               <span>and compare with other teams. </span>
-              <span>It's easy to use, and a whole lot of fun. Register here to get started!</span>
+              <span>It's easy to use, and a whole lot of fun.</span>
             </p>
             <p>
               <span>Sign up <Link to='/register'>here</Link> to get chores done while having fun! </span>

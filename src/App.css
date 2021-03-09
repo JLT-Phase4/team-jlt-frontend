@@ -178,8 +178,10 @@ a {
 }
 
 .center-containers {
-  
+  display: flex;
+  justify-content: center;
 }
+
 .reg{
   margin-left: 20px;
   margin-top: 50px;
@@ -214,7 +216,7 @@ a {
   border: 4px solid #b0afaf42;
   background-color: rgba(204, 224, 240, 0.964);
   box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
-  width: 50vh;
+  width: 100%;
   line-height: 1;
   padding: 50px;
 }
@@ -336,6 +338,19 @@ label {
   margin: 10px;
 }
 
+/* .homepage-carousel {
+  height: 100%;
+  width: 100%;
+} */
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+  width: 100%;
+}
+
+/* .w-100 {
+  width: 100% !important;
+  height: 75vh;
+} */
 .carousel-team-scoreblock {
   display: flex;
   flex-direction: row;
@@ -779,10 +794,6 @@ ul {
   background-color: #eef0f300;
   border: none;
   /* background-color: none; */
-}
-
-.carousel-holder {
-  /* margin-top: 50px; */
 }
 
 .dashboard-scroll-holder{
