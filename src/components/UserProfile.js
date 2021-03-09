@@ -197,7 +197,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
 
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
@@ -211,7 +211,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -235,7 +235,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -252,7 +252,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
 
                       </div>
                       {userProfile &&
@@ -260,7 +260,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                           style={{ fontSize: '30px', backgroundColor: '#ffffff12' }} className='flex-col user-profile-mini-container'
                         >{titleCase(today)}'s Status
                           <div style={{ marginLeft: '50px', marginTop: '30px', fontSize: '30px' }}>
-                            {userProfile.numberComplete} of {userProfile.numberAssignments} complete {userProfile.numberComplete === userProfile.numberAssignments && <span style={{ fontSize: '40px', color: `${team.dashboard_style}` }} className='material-icons'>star</span>}
+                            {userProfile.numberComplete} of {userProfile.numberAssignments} complete {userProfile.numberComplete === userProfile.numberAssignments && updateUserProfile.numberAssignments > 0 && <span style={{ fontSize: '40px', color: `${team.dashboard_style}` }} className='material-icons'>star</span>}
                           </div>
                         </div>}
                     </div>
@@ -305,15 +305,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                       </div>
 
-                      </div>
+                    </div>
 
                     : null}
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </div>
 

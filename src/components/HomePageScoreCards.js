@@ -39,16 +39,16 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
 
   return (
     <div>
-      <div style={{ height: '38vh' }} className='home-header flex-col'>
+      <div style={{ minHeight: '38vh' }} className='home-header flex-col'>
         <div className=' flex'>
           {newTeams.map((team, idx) => (
             <div key={idx}>
               {(team) && (
                 <div>
-                  <div style={{ height: '35vh', paddingTop: '20px' }} className='team-scoreboard-container-home'>
-                    <Link to={`/team/${team.pk}`} style={{ marginBottom: '30px', fontSize: '25px', fontWeight: '600' }}>
+                  <div style={{ minHeight: '30vh', paddingTop: '20px' }} className='team-scoreboard-container-home'>
+                    <Link to={`/team/${team.pk}`} style={{ marginBottom: '10px', fontSize: '25px', fontWeight: '600' }}>
                       {(team.pk === myTeam) ? <span>{team.name}<span className='material-icons'>home</span></span> : <span>{team.name}</span>}
-                      <span style={{ marginLeft: '10px' }}>{(100 * team.teamPercentage).toFixed(0)}%</span>
+                      {/* <span style={{ marginLeft: '10px' }}>{(100 * team.teamPercentage).toFixed(0)}%</span> */}
                     </Link>
                     {team.members.map(member => (
                       <div key={member.username}>
@@ -59,11 +59,11 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
                       </div>
                     ))}
                   </div>
-                  {/* <div style={{ alignItems: 'center' }} className='team-score-indicator'> */}
-                  {/* <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}% */}
-                  {/* {team.isLeader && <span style={{ color: `${team.dashboard_style}`, fontSize: '40px' }} className='material-icons'>emoji_events</span>} */}
-                  {/* </div> */}
-                  {/* </div> */}
+                  <div style={{ marginTop: '20px', alignItems: 'center', opacity: '.8', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
+                    <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
+                      {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
