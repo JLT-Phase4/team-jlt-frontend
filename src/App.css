@@ -1163,6 +1163,10 @@ ul {
   color: black;
 }
 
+.audio-feature {
+  outline: none!important;
+
+}
 .scroll-effect {
 
     overflow: hidden;

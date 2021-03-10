@@ -128,7 +128,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           </div>
 
                           <div style={{ color: 'rgb(227, 230, 236)', backgroundColor: `${team.dashboard_style}` }} className='team-slogan'>{team.slogan}!</div>
-                          <audio controls src={team.theme_song} />
+                          <audio className='audio-feature' controls src={team.theme_song} />
                           {/* <div style={{ marginTop: '20px', alignItems: 'center', opacity: '.8', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
                             <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
                             </div>
@@ -147,7 +147,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           {/* {isCaptain === true && team.captain === profileUsername &&
                             <Link to={`/create-team-members/${team.pk}/${team.name}`}><span onClick={() => handleCreate()} style={{ marginTop: '0' }} className='material-icons'>add_circle</span></Link>} */}
                         </div>
-                      </div>
+                        </div>
                       : <div style={{ height: '100%' }} className='flex'>
                         <div className='flex-col' style={{ width: '400px', marginTop: '30px', marginBottom: '30px', alignItems: 'center', justifyContent: 'space-around' }}>
                           {/* <div style={{ color: 'black', fontSize: '40px' }}>{team.name}!</div> */}
@@ -158,7 +158,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                           <Link to={`/create-team-members/${team.pk}/${team.name}`}><button onClick={() => handleCreate()} className='log-reg-button'>Add Team Members</button></Link>
                         </div>
 
-                        </div>}
+                      </div>}
 
                   </div>
                 </div>

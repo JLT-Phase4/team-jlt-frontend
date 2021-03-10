@@ -54,16 +54,21 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
                         {team.members.map(member => (
                           <div key={member.username}>
                             <div style={{ fontSize: '21px', padding: '5px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
-                            {member.possible_chore_points.chore__points__sum >= 0 && member.earned_chore_points.chore__points__sum >= 0
+                            {member.possible_chore_points.chore__points__sum >= 0 && member.earned_chore_points.chore__points__sum >= 0 && member.possible_chore_points.chore__points__sum !== null
                               ? <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
                               : <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={0} />}
                           </div>
                         ))}
                       </div>
                       <div style={{ marginTop: '20px', alignItems: 'center', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
-                        <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
-                          {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
-                        </div>
+                        {team.teamPercentage !== null && team.teamPercentage !== undefined && team.teamPercentage >= 0
+                          ? <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
+                            {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                          </div>
+                          : <div style={{ padding: '3px', fontSize: '28px' }}>{0}%
+                            {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                          </div>}
+
                       </div>
                     </div>
                   )}

@@ -15,7 +15,7 @@ const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
   const [backgroundImage, setBackgroundImage] = useState('https://images.unsplash.com/photo-1515041219749-89347f83291a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2534&q=80')
   const [teamName, setTeamName] = useState('')
   const [teamSlogan, setTeamSlogan] = useState('')
-  const [teamDashboardStyle, setTeamDashboardStyle] = useState('dodgerblue')
+  const [teamDashboardStyle, setTeamDashboardStyle] = useState('#705091')
   // const [pod, setPod] = useState('')
   const pod = 'Pod C'
   const podPk = 4
@@ -76,9 +76,9 @@ const CreateTeamDashboard = ({ token, setMyPod, setIsCreatingTeam }) => {
                     id='display-color'
                     onSelect={(e) => setTeamDashboardStyle(e)}
                   >
-                    <Dropdown.Item style={{ backgroundColor: 'crimson' }} eventKey='crimson'>Crimson</Dropdown.Item>
-                    <Dropdown.Item style={{ backgroundColor: 'dodgerblue' }} eventKey='dodgerblue'>DodgerBlue</Dropdown.Item>
-                    <Dropdown.Item style={{ backgroundColor: 'purple' }} eventKey='purple'>Purple</Dropdown.Item>
+                    <Dropdown.Item style={{ backgroundColor: '#705091' }} eventKey='#705091'>Purple</Dropdown.Item>
+                    <Dropdown.Item style={{ backgroundColor: '#2278A9' }} eventKey='#2278A9'>Blue</Dropdown.Item>
+                    <Dropdown.Item style={{ backgroundColor: '#4b7273' }} eventKey='#4b7273'>Green</Dropdown.Item>
                   </DropdownButton>
                 </div>
                 {/* <button style={{ border: `3px solid ${teamDashboardStyle}`, backgroundColor: teamDashboardStyle }} className='team-dash-button' onClick={() => handleNextStep()}>Next Step</button> */}
