@@ -238,9 +238,9 @@ a {
 }
 .about-page-container {
   font-size: x-large;
-  margin-left: 500px;
+  margin-left: 300px;
   margin-bottom: 100px;
-  margin-right: 500px;
+  margin-right: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;

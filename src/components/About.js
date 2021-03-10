@@ -21,7 +21,7 @@ const About = (props) => {
               <span>It's easy to use, and a whole lot of fun.</span>
             </p>
             <p>
-              <span>Sign up <Link to='/register'>here</Link> to get chores done while having fun! </span>
+              <span>Sign up <Link style={{ color: 'blue' }} to='/register'>here</Link> to get chores done while having fun! </span>
               <span>Compete against family members, </span>
               <span>neighboring households and friends </span>
               <span>to find out who will be the next Chore Wars champion.</span>
