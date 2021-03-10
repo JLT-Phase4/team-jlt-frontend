@@ -109,7 +109,7 @@ function App () {
   function updateTeams () {
     if (myPod) {
       getTeams(token, myPod).then(pod => {
-        console.log(pod.teams)
+        // console.log(pod.teams)
         updateTeamScores(pod.teams)
         setTeams(pod.teams)
       }
@@ -246,7 +246,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                    </div>}
+                  </div>}
 
               </div>
               )

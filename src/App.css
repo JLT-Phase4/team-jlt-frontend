@@ -238,12 +238,13 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 4px solid #b0afaf42;
+  /* border: 4px solid #b0afaf42;
   background-color: rgba(204, 224, 240, 0.964);
-  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
+  box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418); */
   line-height: 1;
   /* padding: 50px; */
-  margin: 50px;
+  /* margin: 50px; */
+  margin: 20px;
 }
 .login-message{
   margin-top: 20px;
@@ -268,6 +269,9 @@ a {
   box-shadow: -.25rem 0 1rem rgba(0, 0, 0, 0.418);
 }
 
+.welcome-header {
+  line-height: 130px;
+}
 .welcome-page {
   display: flex;
   flex-direction: column;
@@ -1014,6 +1018,10 @@ ul {
 .chore-card {
   font-family: 'Grandstander', cursive;
 }
+
+.chore-card-main:hover {
+  background-color:rgba(255, 255, 255, 0.781);
+}
 .chore-card-detail {
   width: 200px;
   margin: 7px;
@@ -1168,4 +1176,12 @@ ul {
 #hide-emoji {
   margin-left: 45px;
   margin-top: 5px;
+}
+
+.hide-me {
+  display: none;
+}
+
+.instruction-detail {
+  font-size: 20px;
 }

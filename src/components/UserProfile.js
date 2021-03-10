@@ -194,7 +194,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                       onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                       className='chore-card-container'
                                     >
-                                      <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>
+                                      <Card.Body className='chore-card chore-card-main' style={{ border: `2px solid ${team.dashboard_style}` }}>
                                         <MDBPopover data-mdb-trigger='hover' color='black' placement='right' dismiss btnChildren={<span><span style={{ fontSize: '11px' }} className='material-icons'>add</span>{assignment.chore.name}</span>}>
                                           <MDBPopoverHeader style={{ backgroundColor: `${team.dashboard_style}`, color: 'white' }}>{assignment.chore.detail}</MDBPopoverHeader>
                                           <MDBPopoverBody style={{ color: 'black' }}>{assignment.chore.points} points</MDBPopoverBody>
@@ -206,7 +206,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
 
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
@@ -220,7 +220,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -244,7 +244,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>
+                            </div>
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -259,7 +259,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>}
+                          </div>}
 
                       </div>
                       {userProfile &&
@@ -312,15 +312,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                       </div>
 
-                      </div>
+                    </div>
 
                     : null}
                 </div>
-              </div>
+                </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-              </div>}
+                </div>}
           </div>
         </div>
 

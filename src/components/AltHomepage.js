@@ -14,8 +14,7 @@ function AltHomepage () {
       <div>
         <div className='flex'>
           <h1 className='welcome-header'>Welcome to Chore Wars!</h1>
-          <div className=''> <div className='header-bar' style={{ width: '170px', height: '170px', background: 'cover', backgroundImage: `url(${walkingDogImage})` }} />
-          </div>
+          <div className='header-bar' style={{ marginTop: '0', width: '170px', height: '170px', background: 'cover', backgroundImage: `url(${walkingDogImage})` }} />
         </div>
         <div>
           <p><Link to='/login'>Click here to log in.</Link></p>

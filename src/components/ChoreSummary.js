@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { getChores, getTeam, postAssigment, deleteAssignment, updateAssignment } from '../api'
 import { useParams, Link, Redirect } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
+import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
+
 // import { getTargetProfiles } from './../helper/teamScreen'
 
 function ChoreSummary ({ token, today, todayIndex }) {
@@ -16,12 +18,11 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const dragItem = useRef()
   const dropNode = useRef()
   const newData = useRef()
+  const [isShowing, setIsShowing] = useState(false)
   // const { teamPk } = useParams()
   // const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
   const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
   // days.sort()
-
-  console.log(teamPk, 'this is my team pk')
 
   useEffect(updateChores, [token, teamPk])
   function updateChores () {
@@ -51,7 +52,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
   }
 
   function handleDragStart (event, { assignment, day, member }) {
-    console.log('drag is starting baby!', assignment.pk, assignment.chore.name, day, member.username)
     dragItem.current = assignment // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
     // console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
@@ -67,9 +67,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
   }
 
   function handleDragStartCreate (event, { chore }) {
-    console.log('drag is starting baby!', chore, chore.name, chore.pk)
     dragItem.current = chore // params // setting drag item to useRef which keeps will store items in variable we can keep around between rerenders.
-    console.log('what type is chore', typeof (chore))
     dropNode.current = event.target
     dropNode.current.addEventListener('dragend', handleDragEnd)
     const choreTransfer = chore.name + '???' + 'CHORE' + '???' + chore.pk
@@ -83,7 +81,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
   }
 
   function handleDragEnd () {
-    console.log('drag ends when I release my mouse')
     setDragging(false)
     dropNode.current.removeEventListener('dragend', handleDragEnd)
     dragItem.current = null
@@ -93,16 +90,13 @@ function ChoreSummary ({ token, today, todayIndex }) {
 
   function handleDragOver (event) {
     event.preventDefault()
-    console.log('handleDragOver is firing')
     event.dataTransfer.dropEffect = 'move' // make a copy instead of moving chore
   }
 
   function handleAssignmentUpdate (assignPk, status, member, day) {
     if (assignPk) {
-      console.log(assignPk, status, day, member)
       updateAssignment(token, assignPk, status, member, day).then(data => {
         setIsUpdating(false)
-        console.log('here is the output from patch', data)
       }) // .then(updateProfiles())
     }
   }
@@ -110,11 +104,9 @@ function ChoreSummary ({ token, today, todayIndex }) {
   function handleAssignChores (chore, member, day) {
     // event.preventDefault()
     // const dayUpper = dayToUppercase(day)
-    console.log(chore, day, member)
     postAssigment(token, chore, member, day)
       .then(data => {
         setIsUpdating(false)
-        console.log('here is the output from the post', data)
       })
   }
 
@@ -122,7 +114,6 @@ function ChoreSummary ({ token, today, todayIndex }) {
     deleteAssignment(token, assignPk)
       .then(response => {
         setIsUpdating(false)
-        console.log('deleted assignment')
       })
   }
 
@@ -143,16 +134,13 @@ function ChoreSummary ({ token, today, todayIndex }) {
 
   function handleDrop (event, { day, member }) {
     event.preventDefault()
-    console.log('handle Drop is firing')
     const data = event.dataTransfer.getData('text/plain') // Get the id of the target and add the moved element to the target's DOM
-    console.log('this is the day param', day, member.username)
     const newData = document.createElement('div')
     newData.className = 'chore-card'
     const assignmentArray = data.split('???')
     const dropType = assignmentArray[1]
     // newData.innerText = assignmentArray[0]
     const assignmentPk = assignmentArray[2]
-    console.log('this is the drop zone where assignpk just landed', assignmentPk)
     // event.target.appendChild(newData)
     newData.setAttribute('draggable', true)
     setIsUpdating(true)
@@ -167,7 +155,9 @@ function ChoreSummary ({ token, today, todayIndex }) {
     <div className='flex-col-center'>
       {team && chores && (
         <div>
-          <div style={{ marginLeft: '20px', paddingLeft: '20px', width: '1400px' }} className='chore-list-container flex-col'><h2>Chores</h2>
+          <div style={{ marginLeft: '20px', paddingLeft: '20px', width: '1400px' }} className='chore-list-container flex-col'>
+            <h2><Link to={`/team-chores/${team.pk}`}>Chores</Link>
+            </h2>
             <div className='flex'>
               {chores.map(chore => (
                 <div key={chore.pk}>
@@ -176,7 +166,13 @@ function ChoreSummary ({ token, today, todayIndex }) {
                     onDragStart={(event) => { handleDragStartCreate(event, { chore }) }}
                     className='chore-card-container'
                   >
-                    <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{chore.name}</Card.Body>
+                    <Card.Body className='chore-card chore-card-main' style={{ width: '155px', border: `2px solid ${team.dashboard_style}` }}>
+                      <MDBPopover data-mdb-trigger='hover' color='black' placement='right' dismiss btnChildren={<span>{chore.name}</span>}>
+                        <MDBPopoverHeader style={{ backgroundColor: `${team.dashboard_style}`, color: 'white' }}>{chore.detail}</MDBPopoverHeader>
+                        <MDBPopoverBody style={{ color: 'black' }}>{chore.points} points</MDBPopoverBody>
+                      </MDBPopover>
+                      {/* {chore.name} */}
+                    </Card.Body>
                   </Card>
                 </div>
               ))}
