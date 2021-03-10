@@ -98,7 +98,9 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                   <Card.Body className={isShowing ? 'instruction-detail' : 'hide-me'}>
                     <p>Team captains assign chores and determine how many points each chore is worth, on a scale of 1 to 10. </p>
                     <p>A daily chore like "make your bed" might be worth 2 points, while a tougher chore like "wash the car" might be worth 8.</p>
-                    {isCaptain && <p>It's up to you how to assign points and chores for your family! As the week goes on, each family member collects points. Meanwhile, your family can compete with other families based on the percentage of chores you complete. When everyone does all their chores, your family wins!</p>}
+                    {isCaptain && <p>It's up to you how to assign points and chores for your family! As the week goes on, each family member collects points.</p>}
+                    {isCaptain && <p>Meanwhile, your family can compete with other families based on the percentage of chores you complete.</p>}
+                    {isCaptain && <p>The family with the highest percentage of completed chores wins!</p>}
                     {isCaptain && <p>So set up chores and assign them <span><Link style={{ color: `${team.dashboard_style}`, fontWeight: '600' }} to={`/chore-assignment/${team.pk}`}>here, </Link></span>
                       <span>and at the end of the week, you'll see how your family stacks up.</span>
                     </p>}
