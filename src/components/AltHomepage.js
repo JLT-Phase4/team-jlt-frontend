@@ -11,15 +11,19 @@ import walkingDogImage from './../images/walking-dog.png'
 function AltHomepage () {
   return (
     <div className='althome-page-container'>
-      <div className='text-align-center'>
-        <h1 className='welcome-header'>Welcome to Chore Wars!</h1>
+      <div>
+        <div className='flex'>
+          <h1 className='welcome-header'>Welcome to Chore Wars!</h1>
+          <div className=''> <div className='header-bar' style={{ width: '170px', height: '170px', background: 'cover', backgroundImage: `url(${walkingDogImage})` }} />
+          </div>
+        </div>
         <div>
           <p><Link to='/login'>Click here to log in.</Link></p>
         </div>
       </div>
-      <div style={{ marginLeft: '50px' }} className='flex-row center'>
-        <div className=''> <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
-        </div>
+      <div className='flex-row center'>
+        {/* <div className=''> <div className='header-bar' style={{ backgroundImage: `url(${walkingDogImage})` }} />
+        </div> */}
         <div className='homepage-carousel'>
           <Carousel>
             <Carousel.Item className='carousel-holder'>

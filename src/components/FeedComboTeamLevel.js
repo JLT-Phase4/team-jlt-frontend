@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed, getStatusUpdate } from '../api'
-import Picker from 'emoji-picker-react';
-import EmojiPicker from 'emoji-picker-react';
+import Picker from 'emoji-picker-react'
+import EmojiPicker from 'emoji-picker-react'
 
 function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
   const [statusUpdates, setStatusUpdates] = useState()
@@ -14,15 +14,14 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
 
-  const [chosenEmoji, setChosenEmoji] = useState([]);
-  const [spaceEmoji, setSpaceEmoji] = useState([""]);
-  
-  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
-    console.log(message, "this is our message")
-    setMessage(message+emojiObject.emoji);
-    setChosenEmoji(emojiObject.emoji);
-    console.log(emojiObject.emoji)
+  const [chosenEmoji, setChosenEmoji] = useState([])
+  const [spaceEmoji, setSpaceEmoji] = useState([''])
 
+  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
+    // console.log(message, 'this is our message')
+    setMessage(message + emojiObject.emoji)
+    setChosenEmoji(emojiObject.emoji)
+    // console.log(emojiObject.emoji)
   }
 
   useEffect(updateStatus, [token])
@@ -66,6 +65,7 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
   }
 
   useEffect(updateAllNotifications, [token, feed, statusUpdates])
+
   function updateAllNotifications () {
     if (feed && statusUpdates) {
       const myNotifications = feed.concat(statusUpdates)
@@ -73,16 +73,14 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
       setAllNotifications(allSortedNotifications)
     }
   }
-  function handleClear() {
+  function handleClear () {
     setMessage('')
     setChosenEmoji('')
     setSpaceEmoji('')
-
   }
 
   function handleSubmit (event) {
     event.preventDefault()
-    console.log(feedPk)
     postMessage(token, feedPk, profileUsername, message, today)
       .then((response) => {
         updateFeed()
@@ -103,15 +101,14 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
     }
     return comparison
   }
-  
+
   function showEmojis (event) {
-    
-    var x = document.getElementById("hide-emoji");
-    
-    if (x.style.display === "none") {
-      x.style.display = "block";
+    const x = document.getElementById('hide-emoji')
+
+    if (x.style.display === 'none') {
+      x.style.display = 'block'
     } else {
-      x.style.display = "none";
+      x.style.display = 'none'
     }
   }
 
@@ -160,16 +157,15 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
             <button className='comment-submit-button' type='submit'>Send</button>
             <button className='emoji-show-team' onClick={(event) => showEmojis(event)}>☺</button>
           </form>
-          <div id="hide-emoji" style={{display: 'none'}}>
-        
-        {chosenEmoji ? (
-          <span> {chosenEmoji.emoji}</span>
-        ) : (
-          <span></span>
-        )}
-        <Picker onEmojiClick={onEmojiClick} />
-        </div>
-        
+          <div id='hide-emoji' style={{ display: 'none' }}>
+
+            {chosenEmoji ? (
+              <span> {chosenEmoji.emoji}</span>
+            ) : (
+              <span />
+            )}
+            <Picker onEmojiClick={onEmojiClick} />
+          </div>
 
         </div>}
 
