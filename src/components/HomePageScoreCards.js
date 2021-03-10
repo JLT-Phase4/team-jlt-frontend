@@ -73,7 +73,7 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
 
           </div>
           {newTeams.map((team, idx) => (
-            <div key={idx}>
+            <div style={{ marginTop: '50px' }} key={idx}>
               {team.isLeader &&
                 <div className='scroll-effect' style={{ paddingTop: '10px', fontSize: '32px' }}><span>"{team.name}" are in the lead as of {titleCase(today)}</span></div>}
             </div>
