@@ -1,5 +1,4 @@
 
-import scoreSummary from './../fakeTeams'
 import { MDBContainer } from 'mdbreact'
 import { Line } from 'react-chartjs-2'
 

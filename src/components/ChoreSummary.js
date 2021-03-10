@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { getChores, getTeam, postAssigment, getAssignments, getUserProfile, deleteAssignment, updateAssignment } from '../api'
+import { getChores, getTeam, postAssigment, deleteAssignment, updateAssignment } from '../api'
 import { useParams, Link, Redirect } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 // import { getTargetProfiles } from './../helper/teamScreen'
@@ -10,8 +10,8 @@ function ChoreSummary ({ token, today, todayIndex }) {
   const [team, setTeam] = useState()
   const [chores, setChores] = useState([])
   const [dragging, setDragging] = useState(false)
-  const [assignment, setAssignment] = useState()
-  const [assignments, setAssignments] = useState()
+  // const [assignment, setAssignment] = useState()
+  // const [assignments, setAssignments] = useState()
   const [isUpdating, setIsUpdating] = useState(false)
   const dragItem = useRef()
   const dropNode = useRef()
@@ -40,6 +40,7 @@ function ChoreSummary ({ token, today, todayIndex }) {
     )
   }
 
+  // useEffect(updateTeam, [token, teamPk, setIsUpdating])
   useEffect(updateTeam, [token, teamPk, isUpdating])
   function updateTeam () {
     getTeam(token, teamPk).then(team => setTeam(team))

@@ -39,44 +39,49 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
 
   return (
     <div>
-      <div style={{ minHeight: '38vh' }} className='home-header flex-col'>
-        <div className=' flex'>
+      {newTeams && (
+        <div>
+          <div style={{ minHeight: '38vh' }} className='home-header flex-col'>
+            <div className=' flex'>
+              {newTeams.map((team, idx) => (
+                <div key={idx}>
+                  {(team) && (
+                    <div>
+                      <div style={{ minHeight: '30vh', paddingTop: '20px' }} className='team-scoreboard-container-home'>
+                        <Link to={`/team/${team.pk}`} style={{ marginBottom: '10px', fontSize: '25px', fontWeight: '600' }}>
+                          {(team.pk === myTeam) ? <span>{team.name}<span className='material-icons'>home</span></span> : <span>{team.name}</span>}
+                          {/* <span style={{ marginLeft: '10px' }}>{(100 * team.teamPercentage).toFixed(0)}%</span> */}
+                        </Link>
+                        {team.members.map(member => (
+                          <div key={member.username}>
+                            <div style={{ fontSize: '21px', padding: '5px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
+                            {member.possible_chore_points.chore__points__sum >= 0 && member.earned_chore_points.chore__points__sum >= 0
+                              ? <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
+                              : <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={0} />}
+                          </div>
+                        ))}
+                      </div>
+                      <div style={{ marginTop: '20px', alignItems: 'center', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
+                        <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
+                          {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+          </div>
           {newTeams.map((team, idx) => (
             <div key={idx}>
-              {(team) && (
-                <div>
-                  <div style={{ minHeight: '30vh', paddingTop: '20px' }} className='team-scoreboard-container-home'>
-                    <Link to={`/team/${team.pk}`} style={{ marginBottom: '10px', fontSize: '25px', fontWeight: '600' }}>
-                      {(team.pk === myTeam) ? <span>{team.name}<span className='material-icons'>home</span></span> : <span>{team.name}</span>}
-                      {/* <span style={{ marginLeft: '10px' }}>{(100 * team.teamPercentage).toFixed(0)}%</span> */}
-                    </Link>
-                    {team.members.map(member => (
-                      <div key={member.username}>
-                        <div style={{ fontSize: '21px', padding: '5px' }}><Link className='flex-nowrap' to={`/user-profile/${member.username}/`}><div className='avatar-holder' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />{member.username}</Link></div>
-                        {member.possible_chore_points.chore__points__sum >= 0 && member.earned_chore_points.chore__points__sum >= 0
-                          ? <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum}>{(100 * member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum).toFixed(1)}%</MDBProgress>
-                          : <MDBProgress style={{ backgroundColor: `${team.dashboard_style}` }} height='2vh' value={0} />}
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ marginTop: '20px', alignItems: 'center', opacity: '.8', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
-                    <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
-                      {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
-                    </div>
-                  </div>
-                </div>
-              )}
+              {team.isLeader &&
+                <div className='scroll-effect' style={{ paddingTop: '10px', fontSize: '32px' }}><span>"{team.name}" are in the lead as of {titleCase(today)}</span></div>}
             </div>
           ))}
-        </div>
 
-      </div>
-      {newTeams.map((team, idx) => (
-        <div key={idx}>
-          {team.isLeader &&
-            <div className='scroll-effect' style={{ paddingTop: '10px', fontSize: '32px' }}><span>"{team.name}" are in the lead as of {titleCase(today)}</span></div>}
         </div>
-      ))}
+      )}
 
     </div>
 

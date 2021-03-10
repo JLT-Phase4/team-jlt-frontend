@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { postMessage, getFeed, getStatusUpdate } from '../api'
 
-import Picker from 'emoji-picker-react';
-import EmojiPicker from 'emoji-picker-react';
+import Picker from 'emoji-picker-react'
+import EmojiPicker from 'emoji-picker-react'
 
 function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [statusUpdates, setStatusUpdates] = useState()
@@ -13,16 +13,15 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
 
   const [podMemberUsers, setPodMemberUsers] = useState([])
   const [podMembers, setPodMembers] = useState([])
-  
-  const [chosenEmoji, setChosenEmoji] = useState([]);
-  const [spaceEmoji, setSpaceEmoji] = useState([""]);
-  
-  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
-    console.log(message, "this is our message")
-    setMessage(message+emojiObject.emoji);
-    setChosenEmoji(emojiObject.emoji);
-    console.log(emojiObject.emoji)
 
+  const [chosenEmoji, setChosenEmoji] = useState([])
+  const [spaceEmoji, setSpaceEmoji] = useState([''])
+
+  const onEmojiClick = (event, emojiObject, spaceEmoji) => {
+    console.log(message, 'this is our message')
+    setMessage(message + emojiObject.emoji)
+    setChosenEmoji(emojiObject.emoji)
+    console.log(emojiObject.emoji)
   }
 
   // const onEmojiClick = (event, emojiObject, spaceEmoji) => {
@@ -32,9 +31,6 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   //   console.log(emojiObject.emoji)
 
   // }
-  
-    
- 
 
   useEffect(updateStatus, [token, teams, feedPk, setStatusUpdates, profileUsername, setFeed])
 
@@ -79,7 +75,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     })
   }
 
-  useEffect(updateAllNotifications, [token, setPodMembers, feed, statusUpdates, setFeed, setStatusUpdates, setAllNotifications])
+  useEffect(updateAllNotifications, [token, feed, statusUpdates, setAllNotifications])
   function updateAllNotifications () {
     if (feed && statusUpdates) {
       const myNotifications = feed.concat(statusUpdates)
@@ -87,13 +83,11 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
       setAllNotifications(allSortedNotifications)
     }
   }
-  function handleClear() {
+  function handleClear () {
     setMessage('')
     setChosenEmoji('')
     setSpaceEmoji('')
-
   }
-
 
   function handleSubmit (event) {
     event.preventDefault()
@@ -118,18 +112,14 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     return comparison
   }
   function showEmojis (event) {
-    
-      var x = document.getElementById("hide-emoji");
-      
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
+    const x = document.getElementById('hide-emoji')
+
+    if (x.style.display === 'none') {
+      x.style.display = 'block'
+    } else {
+      x.style.display = 'none'
     }
-  
-    
-  
+  }
 
   return (
     <div>
@@ -159,7 +149,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
                             <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
                             {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
                           </p>
-                          
+
                         </div>}
                     </div>
                   ))}
@@ -170,27 +160,27 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         </div>
       )}
       <div>
-      
+
         <form className='comment-box' onSubmit={handleSubmit}>
           <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
-          
+
           <button className='comment-submit-button' type='submit'>Send</button>
           <button className='emoji-show' onClick={(event) => showEmojis(event)}>☺</button>
 
         </form>
-        
-        <div id="hide-emoji" style={{display: 'none'}}>
-        
-        {chosenEmoji ? (
-          <span> {chosenEmoji.emoji}</span>
-        ) : (
-          <span></span>
-        )}
-        <Picker onEmojiClick={onEmojiClick} />
+
+        <div id='hide-emoji' style={{ display: 'none' }}>
+
+          {chosenEmoji ? (
+            <span> {chosenEmoji.emoji}</span>
+          ) : (
+            <span />
+          )}
+          <Picker onEmojiClick={onEmojiClick} />
+        </div>
+
       </div>
-        
-      </div>
-      
+
     </div>
   )
 }

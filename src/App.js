@@ -1,18 +1,17 @@
 
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import TeamDashboard from './components/TeamDashboard'
 import TeamChoreDashboard from './components/TeamChoreDashboard'
 import Homepage from './components/Homepage'
 import ChoreSummary from './components/ChoreSummary'
-import ChoreSummaryMobile from './components/ChoreSummaryMobile'
 import CreateTeamDashboard from './components/CreateTeamDashboard'
 import CreateTeamMembers from './components/CreateTeamMembers'
 import UserProfile from './components/UserProfile'
 import Navigation from './components/Navigation'
 import { useEffect, useState } from 'react'
-import { getTeams, getPods, getAssignments, updateAssignment } from './api'
+import { getTeams, getPods } from './api'
 import createPersistedState from 'use-persisted-state'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -34,7 +33,7 @@ function App () {
   const [myPod, setMyPod] = useState()
   const [myPodFeedPk, setMyPodFeedPk] = useState()
   const [isCreatingTeam, setIsCreatingTeam] = useState(false)
-  const [assignments, setAssignments] = useState()
+  // const [assignments, setAssignments] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [avatar, setAvatar] = useState('')
   const AVATAR = 'https://images.unsplash.com/photo-1563396983906-b3795482a59a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDg5MDF8MHwxfHNlYXJjaHw5fHxyb2JvdHxlbnwwfDB8fA&ixlib=rb-1.2.1&q=80&w=1080'
@@ -104,7 +103,9 @@ function App () {
       })
   }
 
-  useEffect(updateTeams, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
+  useEffect(updateTeams, [token, username, myPod, setTeams])
+
+  // useEffect(updateTeams, [token, username, isCreatingTeam, setIsCreatingTeam, myPod, setMyPod, setMyTeam, setTeams, setTeam, myPodFeedPk, setMyPodFeedPk, setIsLoading])
   function updateTeams () {
     if (myPod) {
       getTeams(token, myPod).then(pod => {
@@ -182,6 +183,7 @@ function App () {
     setTeam()
     setMyPod()
     setMyPodFeedPk()
+    setIsLoading(true)
   }
 
   return (
@@ -224,11 +226,6 @@ function App () {
           <ChoreSummary token={token} today={today} todayIndex={todayIndex} />
         </Route>
 
-        <Route path='/chore-assignment-mobile/:teamPk'>
-          <div className='App' />
-          <ChoreSummaryMobile token={token} today={today} todayIndex={todayIndex} />
-        </Route>
-
         <Route path='/create-team-members/:teamPk/:teamName'>
           <div className='App' />
           <CreateTeamMembers token={token} isCreatingTeam={isCreatingTeam} setIsCreatingTeam={setIsCreatingTeam} />
@@ -249,7 +246,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                  </div>}
+                    </div>}
 
               </div>
               )

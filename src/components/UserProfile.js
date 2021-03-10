@@ -5,6 +5,7 @@ import { getTeam, getTeams, getUserProfile, updateUserProfile, updateAssignment,
 import AvatarImage from './AvatarImage'
 import ScoreBoard from './ScoreBoard'
 import ScoreChart from './ScoreChart'
+import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
 
 const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam, teams, setTeams, podPk, updateTeamScores }) => {
   const { username } = useParams()
@@ -193,11 +194,19 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                       onDragStart={(event) => { handleDragStart(event, { assignment, today, userProfile }) }}
                                       className='chore-card-container'
                                     >
-                                      <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{assignment.chore.name}</Card.Body>
+                                      <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>
+                                        <MDBPopover data-mdb-trigger='hover' color='black' placement='right' dismiss btnChildren={<span><span style={{ fontSize: '11px' }} className='material-icons'>add</span>{assignment.chore.name}</span>}>
+                                          <MDBPopoverHeader style={{ backgroundColor: `${team.dashboard_style}`, color: 'white' }}>{assignment.chore.detail}</MDBPopoverHeader>
+                                          <MDBPopoverBody style={{ color: 'black' }}>{assignment.chore.points} points</MDBPopoverBody>
+                                        </MDBPopover>
+                                        {/* <a href='#' data-mdb-toggle='tooltip' title={assignment.chore.points}>{assignment.chore.name}</a> */}
+                                        {/* {assignment.chore.name} */}
+                                      </Card.Body>
+
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
 
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>{titleCase(today)}'s Chores
@@ -211,7 +220,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
                       </div>
                       <div
                         style={{ backgroundColor: '#ffffff12' }} className='flex user-profile-mini-container' id={today}
@@ -235,7 +244,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                     </Card>)}
                                 </div>))}
                             </div>
-                            </div>
+                          </div>
                           : <div className='flex-sb'>
                             <div style={{ fontSize: '30px' }}>Drag to Mark Complete
                               {userProfile.assignments.map((assignment, idx) => (
@@ -247,12 +256,10 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                                       className='chore-card-container'
                                     >
                                       <Card.Body className='chore-card' style={{ color: 'white', border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}</Card.Body>
-
-                                      {/* <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }}>{assignment.chore.name}<span className='material-icons'>check_box</span></Card.Body> */}
                                     </Card>)}
                                 </div>))}
                             </div>
-                          </div>}
+                            </div>}
 
                       </div>
                       {userProfile &&
@@ -260,7 +267,7 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
                           style={{ fontSize: '30px', backgroundColor: '#ffffff12' }} className='flex-col user-profile-mini-container'
                         >{titleCase(today)}'s Status
                           <div style={{ marginLeft: '50px', marginTop: '30px', fontSize: '30px' }}>
-                            {userProfile.numberComplete} of {userProfile.numberAssignments} complete {userProfile.numberComplete === userProfile.numberAssignments && updateUserProfile.numberAssignments > 0 && <span style={{ fontSize: '40px', color: `${team.dashboard_style}` }} className='material-icons'>star</span>}
+                            {userProfile.numberComplete} of {userProfile.numberAssignments} complete {userProfile.numberComplete === userProfile.numberAssignments && userProfile.numberAssignments > 0 && <span style={{ fontSize: '40px', color: `${team.dashboard_style}` }} className='material-icons'>star</span>}
                           </div>
                         </div>}
                     </div>
@@ -305,15 +312,15 @@ const UserProfile = ({ token, profileUsername, today, todayIndex, team, setTeam,
 
                       </div>
 
-                    </div>
+                      </div>
 
                     : null}
                 </div>
-                </div>
+              </div>
               : <div style={{ marginTop: '30px', marginBottom: '30px', height: '100vh' }} className='flex-col'>
                 <AvatarImage token={token} setAvatar={setAvatar} />
                 <button style={{ width: '150px' }} onClick={() => updateAvatar()} className='log-reg-button'>Done Updating</button>
-                </div>}
+              </div>}
           </div>
         </div>
 
