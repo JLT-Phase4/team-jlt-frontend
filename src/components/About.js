@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const About = (props) => {
   return (
     <div className='center-containers'>
-      <div style={{ marginTop: '30px' }} className='flex-col login-page-container'>
+      <div style={{ marginTop: '30px' }} className='flex-col about-page-container'>
         <h2>About Us</h2>
         <div className='flex-row'>
           <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
