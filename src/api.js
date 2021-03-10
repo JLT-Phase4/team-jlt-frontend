@@ -106,7 +106,6 @@ export function addMember (token, username, teamPk) {
       }
     })
     .then(response => response.data)
-    .then(console.log(teamPk, username))
 }
 
 export function getTeams (token, podPk) {
@@ -203,6 +202,16 @@ export function getChores (token) {
     })
     .then(res => res.data)
 }
+
+export function deleteChore (token, chorePk) {
+  return API
+    .delete(`chore-detail/${chorePk}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(res => res.data)
+}
 export function getMemberChores (token, username) {
   return API
     .get(`users/${username}/assignments`, {
@@ -284,7 +293,6 @@ export function deleteAssignment (token, assignPk) {
 }
 
 export function postAssigment (token, chore, username, assignmentType) {
-  console.log(chore, assignmentType, username)
   return API
     .post('assignment-list/', {
       user: username,

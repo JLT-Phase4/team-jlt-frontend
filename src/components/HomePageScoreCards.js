@@ -10,7 +10,6 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
   useEffect(getNewTeams, [token, teams])
   function getNewTeams () {
     if (teams) {
-      console.log(teams)
       findLeader(teams)
     }
   }

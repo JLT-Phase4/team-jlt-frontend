@@ -1014,6 +1014,10 @@ ul {
 .chore-card {
   font-family: 'Grandstander', cursive;
 }
+
+.chore-card-main:hover {
+  background-color:rgba(255, 255, 255, 0.781);
+}
 .chore-card-detail {
   width: 200px;
   margin: 7px;
@@ -1168,4 +1172,12 @@ ul {
 #hide-emoji {
   margin-left: 45px;
   margin-top: 5px;
+}
+
+.hide-me {
+  display: none;
+}
+
+.instruction-detail {
+  font-size: 20px;
 }

@@ -1,9 +1,7 @@
-import { useParams, Link, Redirect } from 'react-router-dom'
+import { useParams, Redirect, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getTeam, createChore, getChores } from './../api'
+import { getTeam, createChore, getChores, deleteChore } from './../api'
 import { Card } from 'react-bootstrap'
-import { MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit'
-import ScoreBoard from './ScoreBoard'
 
 const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
   const { teamPk } = useParams()
@@ -14,6 +12,7 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
   const [choreDetail, setChoreDetail] = useState('')
   const [chorePoints, setChorePoints] = useState(1)
   const [teamChores, setTeamChores] = useState([])
+  const [isShowing, setIsShowing] = useState(false)
 
   useEffect(updateTeamChores, [token, teamPk, isAdding, setIsAdding, setIsCreating])
 
@@ -43,6 +42,12 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
     }
   }
 
+  function handleDelete (chorePk) {
+    deleteChore(token, chorePk).then(
+      updateTeamChores()
+    )
+  }
+
   if (!token) {
     return <Redirect to='/login' />
   }
@@ -54,25 +59,17 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
           <div className='flex-col'>
             <h2 style={{ paddingLeft: '20px', marginTop: '20px', marginBottom: '10px', marginLeft: '20px' }}>Chores for <span style={{ color: `${team.dashboard_style}` }}>{team.name}</span></h2>
             <div style={{ width: '1350px', marginRight: '40px', marginLeft: '40px' }} className='chore-detail-container flex-col'>
-              {teamChores.length > 0 &&
+              {/* {teamChores.length > 0 &&
                 <div className='flex'>
-                  {/* style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }}  */}
                   {teamChores.map((chore, idx) => (
                     <Card
                       key={idx}
                       className='chore-card-container'
                     >
-
                       <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}` }}>{chore.name}</Card.Body>
-
                     </Card>
-
-                    // <MDBPopover trigger='hover' style={{ border: `2px solid ${team.dashboard_style}` }} className='chore-card' key={chore.pk} size='lg' color='black' placement='right' dismiss btnChildren={chore.name}>
-                    //   <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
-                    //   <MDBPopoverBody>{chore.points}</MDBPopoverBody>
-                    // </MDBPopover>
                   ))}
-                </div>}
+                </div>} */}
               {isCreating
                 ? <Card>
                   <Card.Body>
@@ -86,12 +83,27 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                       <button className='log-reg-button' type='submit'>Complete</button>
                     </form>
                   </Card.Body>
-                  </Card>
+                  <Card.Body onClick={() => setIsCreating(false)}>
+                    Return to Detail View
+                  </Card.Body>
+                </Card>
                 : <Card className='flex'>
                   {isCaptain
-                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}><span onClick={() => setIsCreating(true)}>Create a Chore</span></Card.Body>
+                    ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}>
+                      <span onClick={() => setIsCreating(true)}>Create a Chore</span>
+                      </Card.Body>
                     : null}
-                </Card>}
+                  <Card.Body onClick={() => setIsShowing(!isShowing)} className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}>How it Works
+                  </Card.Body>
+                  <Card.Body className={isShowing ? 'instruction-detail' : 'hide-me'}>
+                    <p>Each chore is worth a certain number of points assigned by the team captain. Points can be between 1 and 10 for a given chore. </p>
+                    <p>Something like 'make your bed' that is done every day might be worth 2 points, while something like 'wash the car' might be worth more. </p>
+                    {isCaptain && <p>You get to choose for your family! Each player collects points as the week goes along and families can compete based on their percentage complete.</p>}
+                    {isCaptain && <p>After chores are set up <span><Link style={{ color: `${team.dashboard_style}`, fontWeight: '600' }} to={`/chore-assignment/${team.pk}`}>assign away </Link></span>
+                      <span>knowing that everyone will be scored on their percent complete!</span>
+                                  </p>}
+                  </Card.Body>
+                  </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>
@@ -102,33 +114,12 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                       <div className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}` }}>{chore.name}</div>
                       <div style={{ padding: '5px' }}>Details: {chore.detail}</div>
                       <div style={{ color: `${team.dashboard_style}`, padding: '5px' }}>Points: {chore.points}</div>
+                      {isCaptain && <span onClick={() => handleDelete(chore.pk)} style={{ color: `${team.dashboard_style}` }} className='material-icons'>delete</span>}
                     </div>
-                    // <MDBPopover trigger='hover' style={{ borderRadius: '10px', margin: '5px', border: `3px solid ${team.dashboard_style}`, color: 'white' }} key={chore.pk} size='lg' color='black' placement='right' dismiss btnChildren={chore.name}>
-                    //   <MDBPopoverHeader>{chore.detail}</MDBPopoverHeader>
-                    //   <MDBPopoverBody>{chore.points}</MDBPopoverBody>
-                    // </MDBPopover>
                   ))}
                 </div>
               </div>}
 
-            {/* <div className='flex'>
-              <div className='team-chore-mini' style={{ backgroundImage: `url(${team.background_image}` }}>
-                <div className='team-title'>{team.name}!</div>
-                <div className='team-slogan'>{team.slogan}!
-                </div>
-                <audio controls src={team.theme_song} />
-              </div>
-              <div className='team-scoreboard-container-dash' style={{ border: `3px solid ${team.dashboard_style}` }}>
-                <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-                  {team.members.map(member => (
-                    <ScoreBoard team={team} member={member} key={member.username} />
-                  ))}
-                </div>
-              </div>
-              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/chore-assignment/${team.pk}`}>Assign Chores</Link></button>
-              <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${myTeam}/${myTeamName}`}>Add Members</Link></button>
-              <button style={{ color: 'white', border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notification</button>
-            </div> */}
           </div>
         </div>
       )}

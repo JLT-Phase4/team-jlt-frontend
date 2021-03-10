@@ -36,7 +36,6 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
         const action = title[4].split(' ')[1]
         item.message_change = action
         item.points = parseInt(title[3])
-        console.log(item.points)
       }
       setStatusUpdates(myUpdates)
     }
@@ -140,7 +139,6 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
                             <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
                             {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
                           </p>
-
                         </div>}
                     </div>
                   ))}
