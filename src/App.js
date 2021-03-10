@@ -132,6 +132,10 @@ function App () {
           }
         }
       }
+      // sets all captains to default av.  Change later.
+      if (username === team.captain) {
+        setAvatar(AVATAR)
+      }
     }
   }
 
@@ -246,7 +250,7 @@ function App () {
                   ? <Homepage token={token} teams={teams} myTeam={myTeam} myPod={myPod} isCreatingTeam={isCreatingTeam} profileUsername={username} isCaptain={isCaptain} feedPk={myPodFeedPk} today={today} />
                   : <div>{(!isLoading) &&
                     <CreateTeamDashboard token={token} profileUsername={username} setMyPod={setMyPod} setIsCreatingTeam={setIsCreatingTeam} />}
-                    </div>}
+                  </div>}
 
               </div>
               )
