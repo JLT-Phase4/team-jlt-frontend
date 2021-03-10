@@ -7,10 +7,8 @@ import ScoreBoard from './ScoreBoard'
 const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatingTeam, setIsCreatingTeam, isCaptain }) => {
   const { teamPk } = useParams()
   const [team, setTeam] = useState()
+  const [newTeam, setNewTeam] = useState()
   const [notPosted, setNotPosted] = useState(false)
-  // const [feed, setFeed] = useState()
-  // const [feedPk, setFeedPk] = useState()
-  // const [totalPoints, setTotalPoints] = useState()
 
   function updateTeamScore (team) {
     let teamTotalPoints = 0
@@ -19,6 +17,11 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
     for (const member of team.members) {
       teamTotalPoints += member.earned_chore_points.chore__points__sum
       teamPossiblePoints += member.possible_chore_points.chore__points__sum
+      if ((member.earned_chore_points.chore__points__sum !== 0) && (member.earned_chore_points.chore__points__sum !== null)) {
+        member.percentageScore = member.earned_chore_points.chore__points__sum / member.possible_chore_points.chore__points__sum
+      } else {
+        member.percentageScore = 0
+      }
     }
     team.teamTotalPoints = teamTotalPoints
     team.teamPossiblePoints = teamPossiblePoints
@@ -28,16 +31,39 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
       team.teamPercentage = 0
     }
   }
-  // function updateTeamScore (team) {
-  //   let teamTotalPoints = 0
-  //   for (const member of team.members) {
-  //     teamTotalPoints += member.earned_chore_points.chore__points__sum
-  //   }
-  //   team.teamTotalPoints = teamTotalPoints
-  //   setTotalPoints(team.teamTotalPoints)
 
-  //   team.teamTotalPoints = teamTotalPoints
-  // }
+  useEffect(getNewTeam, [token, team])
+  function getNewTeam () {
+    if (team) {
+      findLeader(team.members)
+    }
+  }
+
+  function findLeader (whoLeads) {
+    const sortedMember = whoLeads.sort(compare)
+    if (sortedMember.length > 0) {
+      sortedMember[0].isLeader = true
+      console.log(sortedMember[0])
+    }
+    setNewTeam(sortedMember)
+  }
+
+  function titleCase (string) {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase()
+  }
+
+  function compare (b, a) {
+    const percentageScoreA = a.percentageScore
+    const percentageScoreB = b.percentageScore
+    let comparison = 0
+    if (percentageScoreA > percentageScoreB) {
+      comparison = 1
+    } else if (percentageScoreA < percentageScoreB) {
+      comparison = -1
+    }
+    return comparison
+  }
+
   useEffect(updateTeam, [token, teamPk, today, profileUsername, notPosted])
 
   function updateTeam () {
@@ -78,7 +104,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
 
   return (
     <div style={{ textAlign: 'center' }}>
-      {team &&
+      {team && newTeam &&
         (
           <div>
             <div className='flex-col-center'>
@@ -145,41 +171,14 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
 
               </div>
             </div>
-            {/* )} */}
+            {newTeam.map((member, idx) => (
+              <div key={idx}>
+                {member.isLeader &&
+                  <div className='scroll-effect' style={{ paddingTop: '10px', fontSize: '32px' }}><span>{member.username} is in the lead as of {titleCase(today)}</span></div>}
+              </div>
+            ))}
           </div>
-      // <>
-      //   <div className='flex-center'>
-      //     <div className='team-dashboard-container' style={{ backgroundImage: `url(${team.background_image}` }}>
-      //       <div className='team-title'>{team.name}!</div>
-      //       <div className='team-slogan'>{team.slogan}!
-      //       </div>
-      //       <audio controls src={team.theme_song} />
-      //     </div>
-      //     <div style={{ width: '100%', margin: '20px', justifyContent: 'space-between' }} className='flex'>
-      //       <div style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: `${team.dashboard_style}` }} className='team-feed-container'>
-      //         {feedPk && (
-      //           <Feed token={token} profileUsername={profileUsername} today={today} feedPk={feedPk} />
-      //         )}
-      //       </div>
-      //       <div className='team-dashboard-scoreboard-container' style={{ border: `3px solid ${team.dashboard_style}` }}>
-      //         <div style={{ justifyContent: 'center' }} className='team-scoreblock flex-col'>
-      //           {team.members.length > 0
-      //             ? (
-      //               <div>
-      //                 {team.members.map(member => (
-      //                   <ScoreBoard team={team} member={member} key={member.username} />
-      //                 ))}
-      //               </div>
-      //               )
-      //             : <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'><Link to={`/create-team-members/${team.pk}/${team.name}`}>Add Team Members</Link></button>}
-      //         </div>
-      //       </div>
-      //       {/* <button style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button> */}
 
-      //       <button onClick={() => setNotPosted(true)} style={{ border: `3px solid ${team.dashboard_style}`, backgroundColor: team.dashboard_style }} className='team-dash-button'>Send Notifications</button>
-      //     </div>
-      //   </div>
-      // </>
         )}
     </div>
   )
