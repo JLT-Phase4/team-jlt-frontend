@@ -86,24 +86,26 @@ const TeamChoreDashboard = ({ token, teams, myTeam, isCaptain }) => {
                   <Card.Body onClick={() => setIsCreating(false)}>
                     Return to Detail View
                   </Card.Body>
-                </Card>
+                  </Card>
                 : <Card className='flex'>
                   {isCaptain
                     ? <Card.Body className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}>
                       <span onClick={() => setIsCreating(true)}>Create a Chore</span>
-                      </Card.Body>
+                    </Card.Body>
                     : null}
                   <Card.Body onClick={() => setIsShowing(!isShowing)} className='chore-card' style={{ border: `2px solid ${team.dashboard_style}`, color: 'white', backgroundColor: `${team.dashboard_style}`, width: '150px' }}>How it Works
                   </Card.Body>
                   <Card.Body className={isShowing ? 'instruction-detail' : 'hide-me'}>
-                    <p>Each chore is worth a certain number of points assigned by the team captain. Points can be between 1 and 10 for a given chore. </p>
-                    <p>Something like 'make your bed' that is done every day might be worth 2 points, while something like 'wash the car' might be worth more. </p>
-                    {isCaptain && <p>You get to choose for your family! Each player collects points as the week goes along and families can compete based on their percentage complete.</p>}
-                    {isCaptain && <p>After chores are set up <span><Link style={{ color: `${team.dashboard_style}`, fontWeight: '600' }} to={`/chore-assignment/${team.pk}`}>assign away </Link></span>
-                      <span>knowing that everyone will be scored on their percent complete!</span>
-                                  </p>}
+                    <p>Team captains assign chores and determine how many points each chore is worth, on a scale of 1 to 10. </p>
+                    <p>A daily chore like "make your bed" might be worth 2 points, while a tougher chore like "wash the car" might be worth 8.</p>
+                    {isCaptain && <p>It's up to you how to assign points and chores for your family! As the week goes on, each family member collects points.</p>}
+                    {isCaptain && <p>Meanwhile, your family can compete with other families based on the percentage of chores you complete.</p>}
+                    {isCaptain && <p>The family with the highest percentage of completed chores wins!</p>}
+                    {isCaptain && <p>So set up chores and assign them <span><Link style={{ color: `${team.dashboard_style}`, fontWeight: '600' }} to={`/chore-assignment/${team.pk}`}>here, </Link></span>
+                      <span>and at the end of the week, you'll see how your family stacks up.</span>
+                    </p>}
                   </Card.Body>
-                  </Card>}
+                </Card>}
             </div>
             {teamChores.length > 0 &&
               <div className='flex-col'>

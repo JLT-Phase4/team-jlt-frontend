@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const About = (props) => {
   return (
     <div className='center-containers'>
-      <div style={{ marginTop: '30px' }} className='flex-col login-page-container'>
+      <div style={{ marginTop: '30px' }} className='flex-col about-page-container'>
         <h2>About Us</h2>
         <div className='flex-row'>
           <div className='header-bar' style={{ backgroundImage: `url(${washingDishesImage})` }} />
@@ -21,7 +21,7 @@ const About = (props) => {
               <span>It's easy to use, and a whole lot of fun.</span>
             </p>
             <p>
-              <span>Sign up <Link to='/register'>here</Link> to get chores done while having fun! </span>
+              <span>Sign up <Link style={{ color: 'blue' }} to='/register'>here</Link> to get chores done while having fun! </span>
               <span>Compete against family members, </span>
               <span>neighboring households and friends </span>
               <span>to find out who will be the next Chore Wars champion.</span>
