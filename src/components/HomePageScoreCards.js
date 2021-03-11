@@ -63,10 +63,10 @@ const HomePageScoreCards = ({ token, today, myTeam, teams, isCaptain, profileUse
                       <div style={{ marginTop: '20px', alignItems: 'center', backgroundColor: `${team.dashboard_style}`, color: 'white' }} className='team-score-indicator'>
                         {team.teamPercentage !== null && team.teamPercentage !== undefined && team.teamPercentage >= 0
                           ? <div style={{ padding: '3px', fontSize: '28px' }}>{(100 * team.teamPercentage).toFixed(0)}%
-                            {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                            {team.isLeader && team.teamPercentage > 0 && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
                           </div>
                           : <div style={{ padding: '3px', fontSize: '28px' }}>{0}%
-                            {team.isLeader && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
+                            {team.isLeader && team.teamPercentage > 0 && <span style={{ fontSize: '30px' }} className='material-icons'>emoji_events</span>}
                           </div>}
 
                       </div>

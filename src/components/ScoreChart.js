@@ -69,10 +69,18 @@ const ScoreChart = ({ userProfile, today, todayIndex }) => {
   const scoreSummary = {
     dataLine: {
       labels: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
-
+      options: {
+        scales: {
+          y: {
+            min: 0,
+            max: 1
+          }
+        }
+      },
       datasets: [
         {
           label: 'Scores',
+
           // fill: true,
           lineTension: 0.5,
           backgroundColor: 'rgba(225, 204,230, .3)',
