@@ -42,7 +42,7 @@ function FeedComboTeamLevel ({ token, profileUsername, today, feedPk, team }) {
     )
   }
 
-  useEffect(identifyPodMembers, [token])
+  useEffect(identifyPodMembers, [token, team])
   function identifyPodMembers () {
     const myPodMembersUsernames = []
     const myPodMembers = []

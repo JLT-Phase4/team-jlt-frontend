@@ -18,10 +18,10 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   const [spaceEmoji, setSpaceEmoji] = useState([''])
 
   const onEmojiClick = (event, emojiObject, spaceEmoji) => {
-    console.log(message, 'this is our message')
+    // console.log(message, 'this is our message')
     setMessage(message + emojiObject.emoji)
     setChosenEmoji(emojiObject.emoji)
-    console.log(emojiObject.emoji)
+    // console.log(emojiObject.emoji)
   }
 
   // const onEmojiClick = (event, emojiObject, spaceEmoji) => {
@@ -32,7 +32,7 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
 
   // }
 
-  useEffect(updateStatus, [token, teams, feedPk, setStatusUpdates, profileUsername, setFeed])
+  useEffect(updateStatus, [token])
 
   function updateStatus () {
     getStatusUpdate(token).then(feed => {
@@ -46,12 +46,13 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         item.message_change = action
         item.points = parseInt(title[3])
       }
+      // console.log(myUpdates)
       setStatusUpdates(myUpdates)
     }
     )
   }
 
-  useEffect(identifyPodMembers, [token, setPodMembers, setPodMemberUsers])
+  useEffect(identifyPodMembers, [token, teams])
   function identifyPodMembers () {
     const myPodMembersUsernames = []
     const myPodMembers = []
@@ -61,13 +62,14 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
         myPodMembers.push(member)
       }
       myPodMembersUsernames.push(team.captain)
+      myPodMembers.push(team.captain)
     }
 
     setPodMemberUsers(myPodMembersUsernames)
     setPodMembers(myPodMembers)
   }
 
-  useEffect(updateFeed, [token, setFeed])
+  useEffect(updateFeed, [token])
   function updateFeed () {
     getFeed(token, feedPk).then(feed => {
       const myFeed = feed.notifications
@@ -75,12 +77,14 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
     })
   }
 
-  useEffect(updateAllNotifications, [token, feed, statusUpdates, setAllNotifications])
+  useEffect(updateAllNotifications, [token, feed, statusUpdates, podMembers])
   function updateAllNotifications () {
-    if (feed && statusUpdates) {
+    if (feed && statusUpdates && podMembers) {
       const myNotifications = feed.concat(statusUpdates)
+      // console.log('combined notifications', myNotifications)
       const allSortedNotifications = myNotifications.sort(compare)
       setAllNotifications(allSortedNotifications)
+      // console.log(allSortedNotifications, 'all sorted notifications')
     }
   }
   function handleClear () {
@@ -124,49 +128,49 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
   return (
     <div>
       {allNotifications && podMemberUsers && (
-        // <div className='flex-col' style={{ justifyContent: 'space-between', height: '90vh' }}>
+      // <div className='flex-col' style={{ justifyContent: 'space-between', height: '90vh' }}>
+
         <div>
           {allNotifications.map(notification => (
             <div className='message-container' key={notification.published}>
               {notification.message &&
                 <div>
-                  <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
-                  <p className='message-username'> {notification.sender.username}</p>
-
-                  <p>{notification.message}</p>
-                </div>}
-              {notification.title && podMemberUsers.includes(notification.username) &&
+                    <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
+                    <p className='message-username'> {notification.sender.username}</p>
+                    <p>{notification.message}</p>
+                  </div>}
+              {/* {notification.title && podMemberUsers.includes(notification.username) && */}
+              {notification.title && notification.username && podMembers &&
                 <div>
-                  {podMembers.map((member, idx) => (
-                    <div key={idx}>
-                      {member.username === notification.username &&
-                        <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
-                          <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
-                          <p className='message-username'>{notification.username}</p>
-                          <p>
-                            <span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>
-                            <span>{notification.message_change}</span>
-                            <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
-                            {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
-                          </p>
-
-                        </div>}
-                    </div>
-                  ))}
-
-                </div>}
+                    {podMembers.map((member, idx) => (
+                      <div key={idx}>
+                        {/* <div>Hello</div> */}
+                        {member.username === notification.username &&
+                          <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
+                            <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
+                            <p className='message-username'>{notification.username}</p>
+                            <p>
+                              <span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>
+                              <span>{notification.message_change}</span>
+                              <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
+                              {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
+                            </p>
+                          </div>}
+                      </div>
+                    ))}
+                  </div>}
             </div>
           ))}
+
         </div>
+
       )}
       <div>
 
         <form className='comment-box' onSubmit={handleSubmit}>
           <input className='comment-input' type='text' placeholder='Write a comment...' value={message} onChange={event => setMessage(event.target.value)} />
-
           <button className='comment-submit-button' type='submit'>Send</button>
           <button className='emoji-show' onClick={(event) => showEmojis(event)}>☺</button>
-
         </form>
 
         <div id='hide-emoji' style={{ display: 'none' }}>
