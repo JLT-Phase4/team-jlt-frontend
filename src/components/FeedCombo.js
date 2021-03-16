@@ -135,30 +135,30 @@ function FeedCombo ({ token, profileUsername, today, feedPk, teams }) {
             <div className='message-container' key={notification.published}>
               {notification.message &&
                 <div>
-                    <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
-                    <p className='message-username'> {notification.sender.username}</p>
-                    <p>{notification.message}</p>
-                  </div>}
+                  <div className='avatar-holder message-avatar' style={(notification.sender.avatar === undefined || notification.sender.avatar === '' || notification.sender.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${notification.sender.avatar})` }} />
+                  <p className='message-username'> {notification.sender.username}</p>
+                  <p>{notification.message}</p>
+                </div>}
               {/* {notification.title && podMemberUsers.includes(notification.username) && */}
               {notification.title && notification.username && podMembers &&
                 <div>
-                    {podMembers.map((member, idx) => (
-                      <div key={idx}>
-                        {/* <div>Hello</div> */}
-                        {member.username === notification.username &&
-                          <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
-                            <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
-                            <p className='message-username'>{notification.username}</p>
-                            <p>
-                              <span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>
-                              <span>{notification.message_change}</span>
-                              <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
-                              {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
-                            </p>
-                          </div>}
-                      </div>
-                    ))}
-                  </div>}
+                  {podMembers.map((member, idx) => (
+                    <div key={idx}>
+                      {/* <div>Hello</div> */}
+                      {member.username === notification.username &&
+                        <div style={(member.username === profileUsername) ? { backgroundColor: '#a5ff008c', borderRadius: '10px' } : { backgroundColor: '#BDBDD6', borderRadius: '10px' }}>
+                          <div className='avatar-holder message-avatar' style={(member.avatar === undefined || member.avatar === '' || member.avatar === null) ? { backgroundImage: `url(${AVATAR})` } : { backgroundImage: `url(${member.avatar})` }} />
+                          <p className='message-username'>{notification.username}</p>
+                          <p>
+                            <span style={{ color: 'dodgerblue' }} className='material-icons'>{notification.message_change === 'completed' ? 'verified' : 'add_task'}</span>
+                            <span>{notification.message_change}</span>
+                            <span style={{ textAlign: 'right' }}>({notification.message_day})</span> {notification.message_update}
+                            {(notification.message_change === 'completed') && <span> for {notification.points} points</span>}
+                          </p>
+                        </div>}
+                    </div>
+                  ))}
+                </div>}
             </div>
           ))}
 
