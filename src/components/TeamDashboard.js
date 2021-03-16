@@ -43,7 +43,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
     const sortedMember = whoLeads.sort(compare)
     if (sortedMember.length > 0) {
       sortedMember[0].isLeader = true
-      console.log(sortedMember[0])
+      // console.log(sortedMember[0])
     }
     setNewTeam(sortedMember)
   }
@@ -165,7 +165,7 @@ const TeamDashboard = ({ token, profileUsername, today, myPod, feedPk, isCreatin
                 {/* <div className='flex-col' style={{ alignItems: 'center' }}> */}
                 {feedPk &&
                   <div className='team-feed-container'>
-                    <FeedComboTeamLevel token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} team={team} className='footer-feed'>Latest Notification Feed</FeedComboTeamLevel>
+                    <FeedComboTeamLevel token={token} profileUsername={profileUsername} feedPk={feedPk} today={today} team={team} />
                   </div>}
                 {/* </div> */}
 
